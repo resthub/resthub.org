@@ -104,7 +104,7 @@ RESThub Web client module goal is to give you an easy way to request other REST 
 	
 		<dependency>
 			<groupId>org.resthub</groupId>
-			<artifactId>resthub-web-server</artifactId>
+			<artifactId>resthub-web-client</artifactId>
 			<version>2.0-SNAPSHOT</version>
 		</dependency>
 
