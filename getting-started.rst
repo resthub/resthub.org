@@ -26,11 +26,12 @@ Or if you want to use bleeding edge branch :
 	mvn archetype:generate -DarchetypeCatalog=http://nexus.pullrequest.org/content/repositories/snapshots/
 
 You will have to choose between the following RESThub archetypes :
-	* **resthub-archetype-spring-jpa-webservice** : simple webservice project with JPA persistence
-	* **resthub-archetype-spring-mongodb-webservice** : simple webservice project with MongoDB persistence
-	* **resthub-archetype-spring-jpa-backbonejs** : simple HTML5 web application with JPA persistence (TODO)
-	* **resthub-archetype-spring-mongodb-backbonejs-multimodules** : Multimodules HTML5 web application with MongoDB persistence (TODO)
-	* **resthub-archetype-spring-mongodb-backbonejs-multimodules** : Multimodules HTML5 web application with MongoDB persistence (TODO)
+	* **resthub-jpa-webservice-archetype** : simple webservice project with JPA persistence
+	* **resthub-mongodb-webservice-archetype** : simple webservice project with MongoDB persistence
+	* **resthub-jpa-backbonejs-archetype** : simple HTML5 web application with JPA persistence
+	* **resthub-mongodb-backbonejs-archetype** : simple HTML5 web application with MongoDB persistence
+	* **resthub-mongodb-backbonejs-multimodules-archetype** : Multimodules HTML5 web application with MongoDB persistence (TODO)
+	* **resthub-mongodb-backbonejs-multimodules-archetype** : Multimodules HTML5 web application with MongoDB persistence (TODO)
  
 After choosing the right archetype and answering a few questions, your project is generated and ready to use.
 You can run it thanks to built-in Jetty support :
