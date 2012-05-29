@@ -10,8 +10,15 @@ The Backbone.js stack includes the following librairies :
 	* Require.js 1.0 with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins (`documentation <http://requirejs.org/docs/api.html>`_)
 	* A console shim for browser that don't support it
 	* A RESThub PubSub implementation
+	* `Twitter Bootstrap 2.0 <http://twitter.github.com/bootstrap/>`_ with Require.js compatible JS files
 
-In order to use it in your project, add the following code snippet to your pom.xml :
+How should I use it in my project
+=================================
+
+There is 3 ways to use it in your project :
+	* If you are starting a new Java project, the better way to use RESThub Backbone.js stack is to use one of the Backbone.js webappp Maven Archetypes described on the `Getting Started page <getting-started.html>`_
+	* You can simply go to `RESThub Backbone.js stack GitHub repository <https://github.com/resthub/resthub-backbone-stack>`_, download the repository content and copy it at the root of your webapp
+	* Last option (but deprecated since you don't see the stack files in your project), you can add the following code snippet to your pom.xml :
 
 .. code-block:: xml
 
@@ -36,44 +43,59 @@ You should read carefully the awesome blog post `Organizing your application usi
 Bootstrapping
 =============
 
+Please find bellow the default files in order to bootstrap your webapp (An easier and error proof method is to use RESThub archetypes in order to bootstrap your project).
+
+index.html
+----------
+
+.. code-block:: html
+
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+	    <meta charset="utf-8">
+	    <title>RESThub Backbone.js Bootstrap</title>
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+
+	    <link href="css/bootstrap.css" rel="stylesheet">
+
+	    <!--[if lt IE 9]>
+	      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	    <![endif]-->
+
+	  </head>
+
+	  <body>
+		
+		<div id="main"> </div>
+	    
+	    <!-- Placed at the end of the document so the pages load faster -->
+	    <script data-main="js/main" src="js/libs/require.js"></script>
+	  </body>
+	</html>
+
+
 index.html is provided by Backbone stack, so you don't have to create it. Your application bootstrap file is the main.js located at your webapp root (usually src/main/webapp). Please find bellow a sample one :
 
 .. code-block:: javascript
 
 	// Set the require.js configuration for your application.
 	require.config({
-	  
-		// Libraries
-		paths: {
-			jquery: "libs/jquery",
-			underscore: "libs/underscore",
-			'underscore.string': "libs/underscore.string",
-			backbone: "libs/backbone",
-			localstorage: "libs/localstorage",
-			text: "libs/text",
-			i18n: "libs/i18n"
-		},
-		locale: localStorage.getItem('locale') || 'en-us'
-		});
+	  paths: {
+	    'jquery': 'libs/jquery',
+	    'underscore': 'libs/underscore',
+	    'backbone': 'libs/backbone',
+	    'text': 'libs/text'
+	  }
+	});
 
-		// Load our app module and pass it to our definition function
-		require(['jquery', 'underscore', 'underscore.string', 'router', 'views/app', 'text!templates/main.html', 'i18n!nls/labels'] , function($, _, _s, AppRouter, AppView, mainTemplate, labels) {
-
-		// Merge Underscore and Underscore.String
-		_.str = _s;
-		_.mixin(_.str.exports());
-		_.str.include('Underscore.string', 'string');
-
-		// Compile main template
-		var compiledMainTemplate = _.template(mainTemplate);
-		va result = compiledMainTemplate(labels);
-		$("body").html(result);
-		// Create application view
-		new AppView({el: $("#todoapp")});
-		// Launch router
-		new AppRouter;
-		// Launch history manager
-		Backbone.history.start();
+	// Load our app module and pass it to our definition function
+	require(['jquery', 'router', 'views/samples'] , function($, AppRouter, SamplesView) {   
+	    new AppRouter;
+	    Backbone.history.start();
 	});
 
 Templating

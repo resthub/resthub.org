@@ -3,6 +3,8 @@
 .. image:: _static/spring+backbone.png
 	:align: center
 
+Presentation
+============
 
 **RESThub** is a stack based on **Spring** and **Backbone.js** designed to allow you to build **HTML5** applications easily and efficiently.
 It provides some toolings, libraies and documentation in order to build modular web applications with **client side state**, **stateless server** and REST webservices or Websocket communication between both.
@@ -15,9 +17,11 @@ RESThub is a stack, not a framework. It has been created to get in one place too
 .. image:: _static/blocks.png
 	:align: center
 
+Table of contents
+=================
 
 .. toctree::
-	:hidden:
+	:maxdepth: 2
 	
 	getting-started
 	spring-stack
