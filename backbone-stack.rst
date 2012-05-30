@@ -8,14 +8,14 @@ The Backbone.js stack includes the following librairies :
 	* Underscore.js 1.3 (`documentation <http://documentcloud.github.com/underscore/>`_)
 	* Underscore.String (`documentation <https://github.com/epeli/underscore.string#readme>`_)
 	* Require.js 1.0 with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins (`documentation <http://requirejs.org/docs/api.html>`_)
-	* A console shim for browser that don't support it
+	* A console shim for browser that doesn't support it
 	* A RESThub PubSub implementation
 	* `Twitter Bootstrap 2.0 <http://twitter.github.com/bootstrap/>`_ with Require.js compatible JS files
 
 How should I use it in my project
 =================================
 
-There is 3 ways to use it in your project :
+There are 3 ways to use it in your project :
 	* If you are starting a new Java project, the better way to use RESThub Backbone.js stack is to use one of the Backbone.js webappp Maven Archetypes described on the `Getting Started page <getting-started.html>`_
 	* You can simply go to `RESThub Backbone.js stack GitHub repository <https://github.com/resthub/resthub-backbone-stack>`_, download the repository content and copy it at the root of your webapp
 	* Last option (but deprecated since you don't see the stack files in your project), you can add the following code snippet to your pom.xml :
@@ -38,7 +38,7 @@ There is 3 ways to use it in your project :
 Project structure
 =================
 
-You should read carefully the awesome blog post `Organizing your application using Require.js Modules <http://backbonetutorials.com/organizing-backbone-using-modules/>`_ since it describe the project structure and principles recommanded in RESThub Backbone stack based projects.
+You should read carefully the awesome blog post `Organizing your application using Require.js Modules <http://backbonetutorials.com/organizing-backbone-using-modules/>`_ since it describes the project structure and principles recommanded in RESThub Backbone stack based projects.
 
 Bootstrapping
 =============
@@ -72,13 +72,13 @@ index.html
 		
 		<div id="main"> </div>
 	    
-	    <!-- Placed at the end of the document so the pages load faster -->
+	    <!-- Placed at the end of the document so the pages would load faster -->
 	    <script data-main="js/main" src="js/libs/require.js"></script>
 	  </body>
 	</html>
 
 
-index.html is provided by Backbone stack, so you don't have to create it. Your application bootstrap file is the main.js located at your webapp root (usually src/main/webapp). Please find bellow a sample one :
+index.html is provided by Backbone stack, so you don't have to create it. Your application bootstrap file is the main.js located at your webapp root (usually src/main/webapp). Please find bellow a sample :
 
 .. code-block:: javascript
 
@@ -92,7 +92,7 @@ index.html is provided by Backbone stack, so you don't have to create it. Your a
 	  }
 	});
 
-	// Load our app module and pass it to our definition function
+	// Load the app module and pass it to the definition function
 	require(['jquery', 'router', 'views/samples'] , function($, AppRouter, SamplesView) {   
 	    new AppRouter;
 	    Backbone.history.start();
@@ -103,7 +103,7 @@ Templating
 
 Client side templating capabilities are based by default on `Underscore template <http://underscorejs.org/#template>`_.
 
-Templates are HTML fragments, without with <html>, <header> or <body> tag :
+Templates are HTML fragments, without the <html>, <header> or <body> tag :
 
 .. code-block:: html
 
@@ -118,7 +118,7 @@ Templates are HTML fragments, without with <html>, <header> or <body> tag :
 		</div>
 	</div>
 
-Templates are injected into Views thnaks to RequireJS text plugin. So it should be defined in your main.js :
+Templates are injected into Views thanks to RequireJS text plugin. So it should be defined in your main.js :
 
 .. code-block:: javascript
 
@@ -153,7 +153,7 @@ Sample usage in a Backbone.js View :
 Avoid caching issues
 --------------------
 
-In order to avoid caching issues when, for example, you update your JS or HTML files, you should use the `urlArgs RequireJS attribute <http://requirejs.org/docs/api.html#config>`_. You could filter the ${buildNumber} with you build tool at each build.
+In order to avoid caching issues when, for example, you update your JS or HTML files, you should use the `urlArgs RequireJS attribute <http://requirejs.org/docs/api.html#config>`_. You can filter the ${buildNumber} with your build tool at each build.
 
 
 main.js:
@@ -188,7 +188,7 @@ Please find bellow the steps needed to internationalize your application.
 Configure i18n plugin
 ---------------------
 
-In your main.js file you should define a shortcut path for i18n plugin and default language for your application :
+In your main.js file you should define a shortcut path for i18n plugin and the default language for your application :
 
 .. code-block:: javascript
 
@@ -204,7 +204,7 @@ In your main.js file you should define a shortcut path for i18n plugin and defau
 Define labels
 -------------
 
-Create a labels.js file in the js/nls directory, it will contain labels in the default locale used by your application. You can change labels.js to another name (messages.js ou functionnality related name like user.js or product.js) but js/nls is the default location. Specify at the same level than the root node the available translations.
+Create a labels.js file in the js/nls directory, it will contain labels in the default locale used by your application. You can change labels.js to another name (messages.js or functionnality related name like user.js or product.js) but js/nls is the default location. Specify at the same level than the root node the available translations.
 
 Sample js/nls/labels.js file:
 
@@ -267,7 +267,7 @@ In in your html template :
 Change locale
 -------------
 
-Changing locale require a page reloading, so it is usually implmented with a Backbone.js router configuration like the following one :
+Changing locale require a page reloading, so it is usually implemented with a Backbone.js router configuration like the following one :
 
 .. code-block:: javascript
 
@@ -299,7 +299,7 @@ Changing locale require a page reloading, so it is usually implmented with a Bac
 sprintf to the rescue
 ---------------------
 
-Internalionalization can sometimes be tricky since word ard not always at the same position depending on the language. In order to make it easier to use, RESThub backbone stack include Underscore.String. It contains a sprintf function that your can use for our translations.
+Internalionalization can sometimes be tricky since words are not always at the same position depending on the language. In order to make it easier to use, RESThub backbone stack include Underscore.String. It contains a sprintf function that you can use for your translations.
 
 In order to make it available in templates, add the following lines in your main.js file :
 
@@ -310,7 +310,7 @@ In order to make it available in templates, add the following lines in your main
     _.mixin(_.str.exports());
     _.str.include('Underscore.string', 'string');
 
-You can use the _.sprintf() function to have some replacement in your labels.
+You can use the _.sprintf() function in order to have some replacement in your labels.
 
 labels.js
 
@@ -330,7 +330,7 @@ And in your template
 Inheritance
 ===========
 
-As described by `k33g <https://twitter.com/#!/k33g_org>`_ on his `Gist Use Object Model of BackBone <https://gist.github.com/2287018>`_, it is possible de reuse Backbone.js extend() function in order to get simple inheritance in Javascript.
+As described by `k33g <https://twitter.com/#!/k33g_org>`_ on his `Gist Use Object Model of BackBone <https://gist.github.com/2287018>`_, it is possible to reuse Backbone.js extend() function in order to get simple inheritance in Javascript.
 
 .. code-block:: javascript
 
@@ -380,8 +380,8 @@ As described by `k33g <https://twitter.com/#!/k33g_org>`_ on his `Gist Use Objec
 Publish Subscribe
 =================
 
-pubsub.js implements a simple event bus, allowing loosely coupled software design in you application.
-It's an elegant way to enable communcation between Views without introducing strong coupling between them.
+pubsub.js implements a simple event bus, allowing loosely coupled software design in your application.
+It is an elegant way to enable communcation between Views without introducing strong coupling between them.
 
 API
 ---
