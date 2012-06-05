@@ -53,8 +53,8 @@ pom.xml
 		<name>My project</name>
 
 		<properties>
-			<resthub.spring.stack.version>2.0-SNAPSHOT</resthub.spring.stack.version>
-			<resthub.backbone.stack.version>2.0-SNAPSHOT</resthub.backbone.stack.version>
+			<resthub.spring.stack.version>2.0-beta1</resthub.spring.stack.version>
+			<resthub.backbone.stack.version>2.0-beta1</resthub.backbone.stack.version>
 		</properties>
 
 		<dependencies>
@@ -405,7 +405,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
 	<dependency>
 		<groupId>org.resthub</groupId>
 		<artifactId>resthub-jpa</artifactId>
-		<version>2.0-SNAPSHOT</version>
+		<version>2.0-beta1</version>
 	</dependency>
 
 MongoDB support
@@ -467,7 +467,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
 	<dependency>
 		<groupId>org.resthub</groupId>
 		<artifactId>resthub-mongodb</artifactId>
-		<version>2.0-SNAPSHOT</version>
+		<version>2.0-beta1</version>
 	</dependency>
 
 Web Common
@@ -498,7 +498,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
 	<dependency>
 		<groupId>org.resthub</groupId>
 		<artifactId>resthub-web-common</artifactId>
-		<version>2.0-SNAPSHOT</version>
+		<version>2.0-beta1</version>
 	</dependency>
 
 Web server
@@ -611,7 +611,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
 	<dependency>
 		<groupId>org.resthub</groupId>
 		<artifactId>resthub-web-server</artifactId>
-		<version>2.0-SNAPSHOT</version>
+		<version>2.0-beta1</version>
 	</dependency>
 
 Web client
@@ -661,7 +661,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
 	<dependency>
 		<groupId>org.resthub</groupId>
 		<artifactId>resthub-web-client</artifactId>
-		<version>2.0-SNAPSHOT</version>
+		<version>2.0-beta1</version>
 	</dependency>
  
 Testing
@@ -742,6 +742,12 @@ In order to use it in your project, add the following snippet to your pom.xml :
 	<dependency>
 		<groupId>org.resthub</groupId>
 		<artifactId>resthub-test</artifactId>
-		<version>2.0-SNAPSHOT</version>
+		<version>2.0-beta1</version>
 		<scope>test</scope>
 	</dependency>
+
+Spring MVC Router
+=================
+
+Spring MVC Router adds route mapping capacity to any "Spring MVC based" webapp à la PlayFramework or Ruby on Rails. For more details, check its `detailed documentation <https://github.com/resthub/springmvc-router>` _.
+
