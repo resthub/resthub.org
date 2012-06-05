@@ -757,5 +757,5 @@ In order to use it in your project, add the following snippet to your pom.xml :
 Spring MVC Router
 =================
 
-Spring MVC Router adds route mapping capacity to any "Spring MVC based" webapp à la PlayFramework or Ruby on Rails. For more details, check its `detailed documentation <https://github.com/resthub/springmvc-router>` _.
+Spring MVC Router adds route mapping capacity to any "Spring MVC based" webapp à la PlayFramework or Ruby on Rails. For more details, check its `detailed documentation <https://github.com/resthub/springmvc-router>`_.
 
