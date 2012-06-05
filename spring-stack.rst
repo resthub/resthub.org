@@ -12,10 +12,10 @@ Project layout
 Let's take a look at a typical RESThub based application...
 
 RESThub stack based projects follow the "Maven standard" project layout :
-	* /pom.xml : the Maven configuration file, it defines dependencies, plugins, etc.
+	* /pom.xml : the Maven configuration file which defines dependencies, plugins, etc.
 	* /src/main/java : your java classes go there
 	* /src/main/resources : your xml and properties files go there
-	* /src/main/resources/applicationContext.xml : this is your application Spring configuration file. Since we mainly use annotation based configuration, this file will usually be short
+	* /src/main/resources/applicationContext.xml : this is your Spring application configuration file. Since we mainly use annotation based configuration, this file will usually be short
 	* /src/main/webapp : your HTML, CSS and javascript files go there
  
 In bigger projects, functionalities are divided in several JAR modules (customer management, product management ...). Those modules are included as dependencies in a WAR module.  
@@ -25,9 +25,9 @@ Common
 
 Maven 3.0 (`complete reference <http://www.sonatype.com/books/mvnref-book/reference/public-book.html>`_) is the reference build tool used.
 
-RESThub 2 based application are designed to use Java 7 for both compile and runtime.
+RESThub 2 based applications are designed to use Java 7 for both compile and runtime.
 
-RESThub define a set of dependencies common for all RESThub modules except web client :	
+RESThub defines a set of dependencies common for all RESThub modules except web client :	
  	* Spring 3.1 (`reference manual <http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html>`_ and `Javadoc <http://static.springsource.org/spring/docs/3.1.x/javadoc-api/>`_)
  	* SQL and NoSQL Persistence with `Spring Data <http://www.springsource.org/spring-data>`_
  	* Logging with SLF4J (`manual <http://www.slf4j.org/manual.html>`_) and Logback (`manual <http://logback.qos.ch/manual/index.html>`_)
@@ -42,8 +42,10 @@ pom.xml
 
 .. code-block:: xml
 
-	<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+	<?xml version="1.0" encoding="UTF-8"?>
+	<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		<modelVersion>4.0.0</modelVersion>
 
 		<groupId>com.mycompany</groupId>
 		<artifactId>myproject</artifactId>
@@ -142,33 +144,33 @@ applicationContext.xml
 
 By default RESThub webservices and unit tests scan and automatically include all resthubContext.xml (RESThub stack related context) and all applicationContext.xml files (your application context files) available in your application classpath, including its dependencies.
 
-Here is an example of a a RESThub based typical src/main/resources/applicationContext.xml (this one use MongoDB, adapt it if your use JPA) :
+Here is an example of a a RESThub based typical src/main/resources/applicationContext.xml (this one use MongoDB, adapt it if you use JPA) :
 
 .. code-block:: xml
 
-	<beans 	xmlns="http://www.springframework.org/schema/beans" 
-			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-			xmlns:context="http://www.springframework.org/schema/context"
-			xmlns:mongo="http://www.springframework.org/schema/data/mongo"
-			xmlns:mvc="http://www.springframework.org/schema/mvc"
-			xsi:schemaLocation="http://www.springframework.org/schema/beans
-			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-			http://www.springframework.org/schema/context
-			http://www.springframework.org/schema/context/spring-context-3.1.xsd
-			http://www.springframework.org/schema/data/mongo
-			http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
-			http://www.springframework.org/schema/mvc
-			http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
-	           
+	<beans xmlns="http://www.springframework.org/schema/beans" 
+	       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	       xmlns:context="http://www.springframework.org/schema/context"
+	       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	       xmlns:mvc="http://www.springframework.org/schema/mvc"
+	       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                           http://www.springframework.org/schema/beans/spring-beans.xsd
+	                           http://www.springframework.org/schema/context
+	                           http://www.springframework.org/schema/context/spring-context.xsd
+	                           http://www.springframework.org/schema/data/mongo
+	                           http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
+	                           http://www.springframework.org/schema/mvc
+	                           http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	
 	    <!-- Default Spring MVC configuration for JSON + XML webservices -->
 	    <import resource="classpath*:resthubDefaultWebServerContext.xml" />
-	    
+	
 	    <!-- Scan your services and controllers -->
 	    <context:component-scan base-package="com.mycompany.myproject" />
 
 	    <!-- Create your repositories implementation from their interface -->
 	    <mongo:repositories base-package="com.mycompany.myproject" />
-		
+	
 	</beans>
 
 If some functionalities are not intended to be always used, you may customize your context filename (for example securityDisabledContext.xml) and customize your unit tests and WebApplicationInitializer in order to specify it, for example annotate your unit test with :
@@ -239,7 +241,7 @@ Or to inject a bean by name (more specific than injection by type):
 CRUD services
 -------------
 
-RESThub is designed for let your choose between 2 layers (Controller -> Repository) or 3 layers (Controller -> Service -> Repository)  software design. If your use 3 layers software design, you can use the RESThub CRUD service when it is accurate :
+RESThub is designed to give you the choice between 2 layers (Controller -> Repository) or 3 layers (Controller -> Service -> Repository)  software design. If you choose the 3 layer software design, you can use the RESThub CRUD service when it is accurate :
 
 .. code-block:: java
 
@@ -256,11 +258,11 @@ RESThub is designed for let your choose between 2 layers (Controller -> Reposito
 Environment specific properties
 -------------------------------
 
-There is various way to configure your environment specific properties in your application, the one described bellow is the more simple and flexible one we have found.
+There are various ways to configure your environment specific properties in your application: the one described bellow is the most simple and flexible way we have found to do it. 
 
 Maven filtering (search and replace variables) is not recommended because it is done at compile time (not runtime) and makes usually your JAR/WAR specific to an environment. This feature can be useful when defining your target path (${project.build.directory}) in your src/test/applicationContext.xml for testing purpose.
 
-Spring properties placeholders allow you to reference in your application context files some values defined in external properties. This is useful in order to keep your application context generic (located in src/main/resources or src/test/resources), and put all values that depends on the environment (local, dev, staging, production) in external properties. These dynamic properties values are resolved during application startup.
+Spring properties placeholders allow you to reference in your application context files some values defined in external properties. This is useful in order to keep your application context generic (located in src/main/resources or src/test/resources), and put all values that depend on the environment (local, dev, staging, production) in external properties. These dynamic properties values are resolved during application startup.
 
 In order to improve testabilty and extensibility of your modules, you should set default values in case no properties are found in the classpath - if properties are found, then default values are obviously overridden. It is achieved by declaring the following lines in your applicationContext.xml :
 
@@ -304,7 +306,7 @@ Or :
 Disable context XSD validation
 ------------------------------
 
-By default, Spring validate XML schemas declared in your application context. Depending on the schemas used, this validation could prevent you to use properties placeholder described previously, because you will put a value like ${paramStatus} in a boolean attribute that can take only true or false value.
+By default, Spring validates XML schemas declared in your application context. Depending on the schemas used, this validation could prevent you to use properties placeholder described previously, because you will put a value like ${paramStatus} in a boolean attribute that can take only true or false value.
 
 Since there is no way to fix that in vanilla Spring, RESThub provides a way to disable application context XSD validations.
 
@@ -329,12 +331,12 @@ In order to disable validation in your web application, you should declare it in
 JPA support
 ===========
 
-JPA support is based on Spring Data JPA and include by default the H2 in memory database and is based on the following dependencies :
+JPA support is based on Spring Data JPA and includes by default the H2 in memory database and is based on the following dependencies :
 	 	* Spring Data JPA (`reference manual <http://static.springsource.org/spring-data/data-jpa/docs/current/reference/html/>`_ and `Javadoc <http://static.springsource.org/spring-data/data-jpa/docs/current/api/>`_)
 	 	* Hibernate `documentation <http://www.hibernate.org/docs.html>`_
 	 	* `H2 embedded database <http://www.h2database.com/html/main.html>`_
 
-Thanks to Spring Data, it is possible to create Repositories (also sometimes named DAO) by writter only the interface.
+Thanks to Spring Data, it is possible to create Repositories (also sometimes named DAO) by writting only the interface.
 
 Entity scan
 -----------
@@ -351,7 +353,7 @@ Now, entities within the com.myproject.model packages will be scanned.
 Configuration
 -------------
 
-RESThub JPA resthubContext.xml define some default values. You can customize them by adding a database.properties in src/main/resources with one or more following keys customized with your values.You should include only the customized ones.
+RESThub JPA resthubContext.xml define some default values. You can customize them by adding a database.properties in src/main/resources with one or more of the following keys customized with your values.You should include only the customized ones.
 
 REShub JPA default properties are :
     * dataSource.url = jdbc:h2:mem:resthub;DB_CLOSE_DELAY=-1
@@ -385,11 +387,11 @@ You also need to add an applicationContext.xml file in order to scan your reposi
 .. code-block:: xml
 
 	<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-	    xsi:schemaLocation="http://www.springframework.org/schema/beans
-	                        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-	                        http://www.springframework.org/schema/data/jpa
-		                	http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd">
+	       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                           http://www.springframework.org/schema/beans/spring-beans.xsd
+	                           http://www.springframework.org/schema/data/jpa
+	                           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
 	    <jpa:repositories base-package="com.myproject.repository" />
 
@@ -451,7 +453,13 @@ You also need to add an applicationContext.xml file in order to scan your reposi
 
 .. code-block:: xml
 
-	<beans 	xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mongo="http://www.springframework.org/schema/data/mongo" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
+	<beans xmlns="http://www.springframework.org/schema/beans" 
+	       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	       xmlns:mongo="http://www.springframework.org/schema/data/mongo" 
+	       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                           http://www.springframework.org/schema/beans/spring-beans.xsd 
+	                           http://www.springframework.org/schema/data/mongo
+	                           http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
 	
 		<mongo:repositories base-package="com.myproject.repository" />
 	

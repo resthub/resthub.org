@@ -8,7 +8,7 @@ Requirements
 Before coding, you should download and install the following development tools if needed : 
  * `Java 7 <http://java.sun.com/javase/downloads/index.jsp>`_
  * `Maven 3 <http://maven.apache.org/>`_
- * A Java and Javascript IDE. If you don't know which what IDE to chose, `Netbeans <http://netbeans.org/>`_ is recommended since it is free and have great Java and Javascript capabilities.
+ * A Java and Javascript IDE. If you don't know which IDE to chose, `Netbeans <http://netbeans.org/>`_ is recommended since it is free and has great Java and Javascript capabilities.
 
 Project templates 
 =================
