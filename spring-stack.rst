@@ -353,22 +353,38 @@ Now, entities within the com.myproject.model packages will be scanned.
 Configuration
 -------------
 
-RESThub JPA resthubContext.xml define some default values. You can customize them by adding a database.properties in src/main/resources with one or more of the following keys customized with your values.You should include only the customized ones.
+RESThub JPA module define some default values. You can customize them by adding a database.properties in src/main/resources with one or more of the following keys customized with your values.You should include only the customized ones.
 
 REShub JPA default properties are :
+	* dataSource.driverClassName = org.h2.Driver
     * dataSource.url = jdbc:h2:mem:resthub;DB_CLOSE_DELAY=-1
     * dataSource.maxActive = 50
     * dataSource.maxWait = 1000
     * dataSource.poolPreparedStatements = true
     * dataSource.username = sa
     * dataSource.password = 
+
+REShub Hibernate default properties are :
     * hibernate.dialect = org.hibernate.dialect.H2Dialect
+    * hibernate.show_sql = false
     * hibernate.format_sql = true
     * hibernate.hbm2ddl.auto = update
     * hibernate.cache.use_second_level_cache = true
     * hibernate.cache.provider_class = net.sf.ehcache.hibernate.SingletonEhCacheProvider
     * hibernate.id.new_generator_mappings = true
     * persistenceUnit.packagesToScan = 
+
+ If your need to do more advanced configuration, juste override dataSource and entityManagerFactory beans in your applicationContext.xml file like bellow :
+
+ .. code-block:: xml
+
+ 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="xxxx" value="..." />
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="xxxx" value="..." />
+    </bean>
 
 Usage
 -----
