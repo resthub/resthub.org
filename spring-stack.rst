@@ -378,13 +378,13 @@ REShub Hibernate default properties are :
 
  .. code-block:: xml
 
- 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="xxxx" value="..." />
-    </bean>
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="xxxx" value="..." />
+	</bean>
 
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="xxxx" value="..." />
-    </bean>
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="xxxx" value="..." />
+	</bean>
 
 Usage
 -----
