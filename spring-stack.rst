@@ -655,12 +655,13 @@ You can use resthub web client in a synchronous or asynchronous way. The API is 
 .. code-block:: java
 	
 	// 3 line example
-	Future<Response> fr = Client.url("http//...").jsonPost(new Sample("toto"));
+        Client httpClient = new Client();
+	Future<Response> fr = httpClient.url("http//...").jsonPost(new Sample("toto"));
 	Response r = fr.get();
 	Sample s = r.jsonDeserialize(Sample.class);
 
 	// Same but in a one line
-	Sample s = Client.url("http//...").jsonPost(new Sample("toto")).get().jsonDeserialize(Sample.class);
+	Sample s = httpClient.url("http//...").jsonPost(new Sample("toto")).get().jsonDeserialize(Sample.class);
 
 Here is an example of the OAuth2 support
 
@@ -672,7 +673,8 @@ Here is an example of the OAuth2 support
     String clientSecret = "";
     String accessTokenUrl = "http://.../oauth/token";
 
-    String result = Client.url("http://.../api/sample").setOAuth2(username, password, accessTokenUrl, clientId, clientSecret).get().get().getBody();
+    Client httpClient = new Client();
+    String result = httpClient.url("http://.../api/sample").setOAuth2(username, password, accessTokenUrl, clientId, clientSecret).get().get().getBody();
 
 
 Maven dependency
