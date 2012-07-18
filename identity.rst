@@ -17,7 +17,7 @@ Model
 Indentity Manager is a SOA service that needs its own database. 
 Therefore, it has several JPA entities that are its model layer.
 
-* User. Represents a user, and stores its login (unic identifier), first and last names, and password as well
+* User. Represents a user, and stores its login (unique identifier), first and last names, and password as well
 * Group. A group has a name, and can contain users and other groups.
 * Role. A role has a name, and can be applied to users and groups.
 
@@ -42,8 +42,8 @@ Modules
 Identity Manager is a maven multi module project, containing:
 
 * resthub-identity-core: 3 layered SOA service, with model
-* resthub-identity-manager: depends on the core, adds a web.xml for deployement in Server Container, and an Javascript RIA application for administration purposes.
-* resthub-identity-acl: depends on the core, provides integration with SpringSecurity 3's ACL mecanism.
+* resthub-identity-manager: depends on the core, adds a web.xml for deployment in Server Container, and an Javascript RIA application for administration purposes.
+* resthub-identity-acl: depends on the core, provides integration with SpringSecurity 3's ACL mechanism.
 
 Identity manager test users are :
 
@@ -53,10 +53,10 @@ Identity manager test users are :
 Security
 --------
 
-Identity Manager can be turned in an OAuth2 provider, thanks to the resthub-oauth2-spring-security module.
-It means that, in a SOA application, Identity Manager centralizes identities and is requested by other services when HTTP request authentication is needed.
+Identity Manager can be turned into an OAuth2 provider, thanks to the resthub-oauth2-spring-security module.
+It means that, in a SOA application, Identity Manager centralizes identities and is called by other services when HTTP request authentication is needed.
 
 As said before, the REST APIs are protected.
-That means that you'll need OAuth2 tokens to access it, token that could be provided by the application itself.
+That means that you'll need OAuth2 tokens to access it, tokens that could be provided by the application itself.
 
-Thus, Identity Manager acts as an OAuth2 provider AND an OAuth2 secured resources.
+Thus, Identity Manager acts as an OAuth2 provider AND OAuth2 secured resources.

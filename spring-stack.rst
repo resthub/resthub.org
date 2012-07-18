@@ -27,7 +27,7 @@ Maven 3.0 (`complete reference <http://www.sonatype.com/books/mvnref-book/refere
 
 RESThub 2 based applications are designed to use Java 7 for both compile and runtime.
 
-RESThub defines a set of dependencies common for all RESThub modules except web client :	
+RESThub defines a set of common dependencies for all RESThub modules except web client :	
  	* Spring 3.1 (`reference manual <http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html>`_ and `Javadoc <http://static.springsource.org/spring/docs/3.1.x/javadoc-api/>`_)
  	* SQL and NoSQL Persistence with `Spring Data <http://www.springsource.org/spring-data>`_
  	* Logging with SLF4J (`manual <http://www.slf4j.org/manual.html>`_) and Logback (`manual <http://logback.qos.ch/manual/index.html>`_)
@@ -35,7 +35,7 @@ RESThub defines a set of dependencies common for all RESThub modules except web 
 Configuration
 -------------
 
-You will find bellow typical configuration file for your application.
+You will find below the typical configuration file for your application.
 
 pom.xml
 ~~~~~~~
@@ -258,7 +258,7 @@ RESThub is designed to give you the choice between 2 layers (Controller -> Repos
 Environment specific properties
 -------------------------------
 
-There are various ways to configure your environment specific properties in your application: the one described bellow is the most simple and flexible way we have found to do it. 
+There are various ways to configure your environment specific properties in your application: the one described below is the most simple and flexible way we have found to do it. 
 
 Maven filtering (search and replace variables) is not recommended because it is done at compile time (not runtime) and makes usually your JAR/WAR specific to an environment. This feature can be useful when defining your target path (${project.build.directory}) in your src/test/applicationContext.xml for testing purpose.
 
@@ -336,7 +336,7 @@ JPA support is based on Spring Data JPA and includes by default the H2 in memory
 	 	* Hibernate `documentation <http://www.hibernate.org/docs.html>`_
 	 	* `H2 embedded database <http://www.h2database.com/html/main.html>`_
 
-Thanks to Spring Data, it is possible to create Repositories (also sometimes named DAO) by writting only the interface.
+Thanks to Spring Data, it is possible to create Repositories (also sometimes named DAO) by writing only the interface.
 
 Entity scan
 -----------
@@ -353,7 +353,7 @@ Now, entities within the com.myproject.model packages will be scanned.
 Configuration
 -------------
 
-RESThub JPA module define some default values. You can customize them by adding a database.properties in src/main/resources with one or more of the following keys customized with your values.You should include only the customized ones.
+RESThub JPA module defines some default values. You can customize them by adding a database.properties in src/main/resources with one or more of the following keys customized with your values. You should include only the customized ones.
 
 REShub JPA default properties are :
 	* dataSource.driverClassName = org.h2.Driver
@@ -374,7 +374,7 @@ REShub Hibernate default properties are :
 	* hibernate.id.new_generator_mappings = true
 	* persistenceUnit.packagesToScan = 
 
- If your need to do more advanced configuration, juste override dataSource and entityManagerFactory beans in your applicationContext.xml file like bellow :
+ If you need to do more advanced configuration, just override dataSource and entityManagerFactory beans in your applicationContext.xml file like below :
 
  .. code-block:: xml
 
@@ -532,14 +532,14 @@ RESThub Web Server module is designed to allow you to develop REST webservices. 
 
 **Warning**: currently Jackson XML dataformat does not support non wrapped List serialization. As a consequence, the findAll (GET /) method is not supported for XML content type yet. `You can follow the related Jackson issue on GitHub <https://github.com/FasterXML/jackson-dataformat-xml/issues/6>`_.
 
-It provides some abstract REST controller classes, and include the following dependencies :
+It provides some abstract REST controller classes, and includes the following dependencies :
 	* Spring MVC 3.1 (`reference manual <http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html/mvc.html>`_)
 	* Jackson 2.0 (`documentation <http://wiki.fasterxml.com/JacksonDocumentation>`_)
 
 Configuration
 -------------
 
-RESThub 2 based web application do not contains web.xml file, but use Servlet 3.0 and Spring 3.1 new capabilities in order to initialize your webapp with a Java classes and extend WebApplicationInitializer. This class just need to be in the classpath, here is the default one (the RESThub archetypes can create it for you if needed) :
+RESThub 2 based web applications do not contain web.xml files, but use Servlet 3.0 and Spring 3.1 new capabilities in order to initialize your webapp with a Java class and extend WebApplicationInitializer. This class just need to be in the classpath, here is the default one (the RESThub archetypes can create it for you if needed) :
 
 .. code-block:: java
 	
@@ -574,7 +574,7 @@ In your webapp applicationContext.xml files, you may want to add these configura
 Usage
 -----
 
-RESThub comes with a REST controller that allows your to create a CRUD webservice in a few lines. You have the choice to use 2 layers (Controller -> Repository) or 3 layers (Controller -> Service -> Repository) software design :
+RESThub comes with a REST controller that allows you to create a CRUD webservice in a few lines. You have the choice to use 2 layers (Controller -> Repository) or 3 layers (Controller -> Service -> Repository) software design :
 
 **2 layers software design**
 
@@ -641,7 +641,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
 Web client
 ==========
 
-RESThub Web client module goal is to give you an easy way to request other REST webservices. It is based on AsyncHttpClient and provide a `client API wrapper <http://jenkins.pullrequest.org/job/resthub-spring-stack-resthub2/javadoc/>`_ and a OAuth2 support.
+RESThub Web client module goal is to give you an easy way to request other REST webservices. It is based on AsyncHttpClient and provides a `client API wrapper <http://jenkins.pullrequest.org/job/resthub-spring-stack-resthub2/javadoc/index.html?org/resthub/web/Client.html>`_ and a OAuth2 support.
 
 In order to limit conflicts it has no dependency on Spring, but only on :
  	* AsyncHttpClient `documentation <https://github.com/sonatype/async-http-client>`_ and `Javadoc <http://sonatype.github.com/async-http-client/apidocs/reference/packages.html>`_
@@ -650,18 +650,18 @@ In order to limit conflicts it has no dependency on Spring, but only on :
 Usage
 -----
 
-You can use resthub web client in a synchronous or asynchronous way. The API is the same, every Http request return a `Future <http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html>`_<Response> object. Just call get() on this object in order to make the call synchronous.
+You can use resthub web client in a synchronous or asynchronous way. The API is the same, every Http request returns a `Future <http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html>`_<Response> object. Just call get() on this object in order to make the call synchronous.
 
 .. code-block:: java
 	
-	// 3 line example
-  Client httpClient = new Client();
-	Future<Response> fr = httpClient.url("http//...").jsonPost(new Sample("toto"));
-	Response r = fr.get();
-	Sample s = r.getResource(Sample.class);
+		// 3 line example
+		Client httpClient = new Client();
+		Future<Response> fr = httpClient.url("http//...").jsonPost(new Sample("toto"));
+		Response r = fr.get();
+		Sample s = r.resource(Sample.class);
 
-	// Same but in a one line
-	Sample s = httpClient.url("http//...").jsonPost(new Sample("toto")).get().getResource(Sample.class);
+		// Same but in a one line
+		Sample s = httpClient.url("http//...").jsonPost(new Sample("toto")).get().resource(Sample.class);
 
 Here is an example of the OAuth2 support
 
@@ -693,7 +693,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
 Testing
 =======
 	
-The following test stack is inclusing in the RESThub test module :
+The following test stack is included in the RESThub test module :
 	* Test framework with `TestNG <http://testng.org/doc/documentation-main.html>`_. If you use Eclipse, don't forget to install the `TestNG plugin <http://testng.org/doc/eclipse.html>`_.
 	* Assertion with `Fest Assert 2 <https://github.com/alexruiz/fest-assert-2.x/wiki>`_
 	* Mock with `Mokito <http://code.google.com/p/mockito/>`_
@@ -704,10 +704,10 @@ RESThub also provides generic classes in order to make testing easier.
    * AbstractTransactionalTest : base class for your transactional unit tests, preconfigure Spring test framework
    * AbstractWebTest : base class for your unit test that need to run and embedded servlet container
 
-Data provisionning and cleanup
+Data provisioning and cleanup
 ------------------------------
 
-It is recommanded to initialize and cleanup test data common to all your tests thanks to methods with TestNG annotations @BeforeMethod and @AfterMethod and using your repository or service classes.
+It is recommended to initialize and cleanup test data common to all your tests thanks to methods with TestNG annotations @BeforeMethod and @AfterMethod and using your repository or service classes.
 
 **Warning:** : with JPA the default deleteAll() method does not manage cascade delete, so for your data cleanup you should use the following code in order to get your entities removed with cascade delete support:
 
@@ -734,8 +734,8 @@ A sample REST webservice test
 	    // Cleanup after each test
 	    @AfterMethod
 	    public void tearDown() {
-	    	try {
-	            Client.url(rootUrl()).delete().get();
+	    	try (Client httpClient = new Client()) {
+	            httpClient.url(rootUrl()).delete().get();
 	        } catch (InterruptedException | ExecutionException e) {
 	            Assertions.fail("Exception during delete all request", e);
 	        }
@@ -744,8 +744,9 @@ A sample REST webservice test
 	    @Test
 	    public void testCreateResource() throws IllegalArgumentException, InterruptedException, ExecutionException, IOException {
 	        Sample r = new Sample("toto");
-	        Response response = Client.url(rootUrl()).jsonPost(r).get();
-	        r = (Sample)response.jsonDeserialize(r.getClass());
+	        Client httpClient = new Client()
+	        Response response = httpClient.url(rootUrl()).jsonPost(r).get();
+	        r = (Sample)response.resource(r.getClass());
 	        Assertions.assertThat(r).isNotNull();
 	        Assertions.assertThat(r.getName()).isEqualTo("toto");
 	    }

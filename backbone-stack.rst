@@ -8,7 +8,7 @@ The Backbone.js stack includes the following librairies :
 	* Underscore.js 1.3 (`documentation <http://documentcloud.github.com/underscore/>`_)
 	* Underscore.String (`documentation <https://github.com/epeli/underscore.string#readme>`_)
 	* Require.js 1.0 with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins (`documentation <http://requirejs.org/docs/api.html>`_)
-	* A console shim for browser that doesn't support it
+	* A console shim for browsers that don't support it
 	* A RESThub PubSub implementation
 	* `Twitter Bootstrap 2.0 <http://twitter.github.com/bootstrap/>`_ with Require.js compatible JS files
 
@@ -38,12 +38,12 @@ There are 3 ways to use it in your project :
 Project structure
 =================
 
-You should read carefully the awesome blog post `Organizing your application using Require.js Modules <http://backbonetutorials.com/organizing-backbone-using-modules/>`_ since it describes the project structure and principles recommanded in RESThub Backbone stack based projects.
+You should read carefully the awesome blog post `Organizing your application using Require.js Modules <http://backbonetutorials.com/organizing-backbone-using-modules/>`_ since it describes the project structure and principles recommended in RESThub Backbone stack based projects.
 
 Bootstrapping
 =============
 
-Please find bellow the default files in order to bootstrap your webapp (An easier and error proof method is to use RESThub archetypes in order to bootstrap your project).
+Please find below the default files needed to bootstrap your webapp (An easier and error proof method is to use RESThub archetypes in order to bootstrap your project).
 
 index.html
 ----------
@@ -78,7 +78,7 @@ index.html
 	</html>
 
 
-index.html is provided by Backbone stack, so you don't have to create it. Your application bootstrap file is the main.js located at your webapp root (usually src/main/webapp). Please find bellow a sample :
+index.html is provided by Backbone stack, so you don't have to create it. Your application bootstrap file is the main.js located at your webapp root (usually src/main/webapp). Please find below a sample :
 
 .. code-block:: javascript
 
@@ -143,7 +143,7 @@ Sample usage in a Backbone.js View :
 		template: _.template(todoTemplate),
 
 		render: function() {
-			// todoTemplate a function that take context (labels, model) and return the dynamaized output.
+			// todoTemplate a function that take context (labels, model) and return the dynamized output.
 			var result = this.template(this.model.toJSON());
 			$(this.el).html(result);
 			return this;
@@ -183,7 +183,7 @@ Internationalization
 
 You should never use directly labels or texts in your source files. All labels should be externalized in order to prepare your application internationalization. Doing such thing is pretty simple with RESThub Backbone.js stack thanks to `requireJS i18n plugin <http://requirejs.org/docs/api.html#i18n>`_.
 
-Please find bellow the steps needed to internationalize your application.
+Please find below the steps needed to internationalize your application.
 
 Configure i18n plugin
 ---------------------
@@ -204,7 +204,7 @@ In your main.js file you should define a shortcut path for i18n plugin and the d
 Define labels
 -------------
 
-Create a labels.js file in the js/nls directory, it will contain labels in the default locale used by your application. You can change labels.js to another name (messages.js or functionnality related name like user.js or product.js) but js/nls is the default location. Specify at the same level than the root node the available translations.
+Create a labels.js file in the js/nls directory, it will contain labels in the default locale used by your application. You can change labels.js to another name (messages.js or functionality related name like user.js or product.js) but js/nls is the default location. Specify at the same level than the root node the available translations.
 
 Sample js/nls/labels.js file:
 
@@ -220,7 +220,7 @@ Sample js/nls/labels.js file:
 		"fr-fr": true
 	});
 
-Add translations in subfolder named with the locale, for example js/nls/fr-fr ...
+Add translations in subfolders named with the locale, for example js/nls/fr-fr ...
 You should always keep the same file name, and the file located at the root will be used by default.
 
 Sample js/nls/fr-fr/labels.js file:
@@ -381,7 +381,7 @@ Publish Subscribe
 =================
 
 pubsub.js implements a simple event bus, allowing loosely coupled software design in your application.
-It is an elegant way to enable communcation between Views without introducing strong coupling between them.
+It is an elegant way to enable communication between Views without introducing strong coupling between them.
 
 API
 ---
