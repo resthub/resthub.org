@@ -663,7 +663,10 @@ You can use resthub web client in a synchronous or asynchronous way. The API is 
 		// Same but in a one line
 		Sample s = httpClient.url("http//...").jsonPost(new Sample("toto")).get().resource(Sample.class);
 
-Here is an example of the OAuth2 support
+OAuth2.0 integration
+--------------------
+
+Here is an example of a simple OAuth2 support
 
 .. code-block:: java
 
@@ -673,13 +676,23 @@ Here is an example of the OAuth2 support
     String clientSecret = "";
     String accessTokenUrl = "http://.../oauth/token";
 
-    Client httpClient = new Client();
-    String result = httpClient.url("http://.../api/sample").setOAuth2(username, password, accessTokenUrl, clientId, clientSecret).get().get().getBody();
+    Client httpClient = new Client().setOAuth2(username, password, accessTokenUrl, clientId, clientSecret);
+    String result = httpClient.url("http://.../api/sample").get().get().getBody();
 
-OAuth2.0 integration
---------------------
+You can also configure a specific OAuth2 configuration. For example, you can override the HTTP Header
+used to send the OAuth token.
 
-You can use resthub web client in a synchronous or asynchronous way. The API is the same, every Http request returns a `Future <http://docs.oracle.
+.. code-block:: java
+
+    OAuth2Config.Builder builder = new OAuth2Config.Builder();
+    builder.setAccessTokenEndpoint("http://.../oauth/token")
+      .setUsername("test").setPassword("t&5t")
+      .setClientId("app1").setClientSecret("")
+      // override default OAuth HTTP Header name
+      .setOAuth2Scheme("OAuth");
+
+    Client httpClient = new Client().setOAuth2Builder(builder);
+    String result = httpClient.url("http://.../api/sample").get().get().getBody();
 
 Maven dependency
 ----------------
