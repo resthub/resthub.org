@@ -55,8 +55,8 @@ pom.xml
 		<name>My project</name>
 
 		<properties>
-			<resthub.spring.stack.version>2.0-beta1</resthub.spring.stack.version>
-			<resthub.backbone.stack.version>2.0-beta1</resthub.backbone.stack.version>
+			<resthub.spring.stack.version>2.0-beta2</resthub.spring.stack.version>
+			<resthub.backbone.stack.version>2.0-beta2</resthub.backbone.stack.version>
 		</properties>
 
 		<dependencies>
@@ -423,7 +423,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
 	<dependency>
 		<groupId>org.resthub</groupId>
 		<artifactId>resthub-jpa</artifactId>
-		<version>2.0-beta1</version>
+		<version>2.0-beta2</version>
 	</dependency>
 
 MongoDB support
@@ -491,7 +491,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
 	<dependency>
 		<groupId>org.resthub</groupId>
 		<artifactId>resthub-mongodb</artifactId>
-		<version>2.0-beta1</version>
+		<version>2.0-beta2</version>
 	</dependency>
 
 Web Common
@@ -522,7 +522,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
 	<dependency>
 		<groupId>org.resthub</groupId>
 		<artifactId>resthub-web-common</artifactId>
-		<version>2.0-beta1</version>
+		<version>2.0-beta2</version>
 	</dependency>
 
 Web server
@@ -635,7 +635,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
 	<dependency>
 		<groupId>org.resthub</groupId>
 		<artifactId>resthub-web-server</artifactId>
-		<version>2.0-beta1</version>
+		<version>2.0-beta2</version>
 	</dependency>
 
 Web client
@@ -650,7 +650,7 @@ In order to limit conflicts it has no dependency on Spring, but only on :
 Usage
 -----
 
-You can use resthub web client in a synchronous or asynchronous way. The API is the same, every Http request returns a `Future <http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html>`_<Response> object. Just call get() on this object in order to make the call synchronous.
+You can use resthub web client in a synchronous or asynchronous way. The API is the same, every Http request returns a `Future <http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html>`_ <Response> object. Just call get() on this object in order to make the call synchronous.
 
 .. code-block:: java
 	
@@ -676,6 +676,10 @@ Here is an example of the OAuth2 support
     Client httpClient = new Client();
     String result = httpClient.url("http://.../api/sample").setOAuth2(username, password, accessTokenUrl, clientId, clientSecret).get().get().getBody();
 
+OAuth2.0 integration
+--------------------
+
+You can use resthub web client in a synchronous or asynchronous way. The API is the same, every Http request returns a `Future <http://docs.oracle.
 
 Maven dependency
 ----------------
@@ -687,7 +691,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
 	<dependency>
 		<groupId>org.resthub</groupId>
 		<artifactId>resthub-web-client</artifactId>
-		<version>2.0-beta1</version>
+		<version>2.0-beta2</version>
 	</dependency>
  
 Testing
@@ -769,7 +773,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
 	<dependency>
 		<groupId>org.resthub</groupId>
 		<artifactId>resthub-test</artifactId>
-		<version>2.0-beta1</version>
+		<version>2.0-beta2</version>
 		<scope>test</scope>
 	</dependency>
 
