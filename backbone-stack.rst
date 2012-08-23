@@ -119,9 +119,9 @@ index.html is provided by Backbone stack, so you don't have to create it. Your a
            use:"libs/use",
            text:"libs/text",
            i18n:"libs/i18n",
-           pubsub:"libs/resthub/pubsub",
+           pubsub:"resthub/pubsub",
            handlebars:"libs/handlebars",
-           'handlebars-helpers':"libs/handlebars-helpers"
+           'handlebars-helpers':"resthub/handlebars-helpers"
        }
    });
 
