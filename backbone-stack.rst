@@ -356,7 +356,7 @@ labels.js
 
 And in your template
 
-.. todo:: rewrite this § with a sprintf handlebars helper
+.. todo:: rewrite this paragraph with a sprintf handlebars helper
 
 .. code-block:: html
 
