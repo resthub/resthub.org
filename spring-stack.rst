@@ -142,7 +142,9 @@ pom.xml
 applicationContext.xml
 ~~~~~~~~~~~~~~~~~~~~~~
 
-By default RESThub webservices and unit tests scan and automatically include all resthubContext.xml (RESThub stack related context) and all applicationContext.xml files (your application context files) available in your application classpath, including its dependencies.
+By default RESThub webservices and unit tests scan and automatically include all applicationContext.xml files (your application context files) available in your application classpath, including its dependencies.
+
+RESThub default context files should be included thanks to <import /> elements. The name of each module RESThub context are specified in the configuration section of each module documentation.
 
 Here is an example of a a RESThub based typical src/main/resources/applicationContext.xml (this one use MongoDB, adapt it if you use JPA) :
 
@@ -162,8 +164,11 @@ Here is an example of a a RESThub based typical src/main/resources/applicationCo
 	                           http://www.springframework.org/schema/mvc
 	                           http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	
-	    <!-- Default Spring MVC configuration for JSON + XML webservices -->
-	    <import resource="classpath*:resthubDefaultWebServerContext.xml" />
+        <!-- Default Spring MVC configuration for JSON + XML webservices -->
+	    <import resource="classpath*:resthubWebServerContext.xml" />
+
+	    <!-- Default JPA conguration -->
+	    <import resource="classpath*:resthubJpaContext.xml" />
 	
 	    <!-- Scan your services and controllers -->
 	    <context:component-scan base-package="com.mycompany.myproject" />
@@ -353,7 +358,13 @@ Now, entities within the com.myproject.model packages will be scanned.
 Configuration
 -------------
 
-RESThub JPA module defines some default values. You can customize them by adding a database.properties in src/main/resources with one or more of the following keys customized with your values. You should include only the customized ones.
+In order to import default configuration, your should add the following line in your applicationContext.xml :
+
+ .. code-block:: xml
+
+    <import resource="classpath*:resthubJpaContext.xml" />
+
+resthubJpaContext.xml defines some default values. You can customize them by adding a database.properties in src/main/resources with one or more of the following keys customized with your values. You should include only the customized ones.
 
 REShub JPA default properties are :
 	* dataSource.driverClassName = org.h2.Driver
@@ -363,6 +374,7 @@ REShub JPA default properties are :
 	* dataSource.poolPreparedStatements = true
 	* dataSource.username = sa
 	* dataSource.password = 
+    * dataSource.validationQuery = SELECT 1
 
 REShub Hibernate default properties are :
 	* hibernate.dialect = org.hibernate.dialect.H2Dialect
@@ -409,6 +421,8 @@ You also need to add an applicationContext.xml file in order to scan your reposi
 	                           http://www.springframework.org/schema/data/jpa
 	                           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
+        <import resource="classpath*:resthubJpaContext.xml" />
+
 	    <jpa:repositories base-package="com.myproject.repository" />
 
 	</beans>
@@ -435,7 +449,13 @@ MongoDB support is based on Spring Data MongoDB :
 Configuration
 -------------
 
-RESThub MongoDB resthubContext.xml defines some default values. You can customize them by adding a database.properties in src/main/resources with one or more following keys customized with your values. You should include only the customized ones.
+In order to import default configuration, your should add the following line in your applicationContext.xml :
+
+ .. code-block:: xml
+
+    <import resource="classpath*:resthubMongodbContext.xml" />
+
+resthubMongodbContext.xml defines some default values. You can customize them by adding a database.properties in src/main/resources with one or more following keys customized with your values. You should include only the customized ones.
 
 REShub MongoDB default properties are :
 	* database.dbname = resthub
@@ -539,6 +559,12 @@ It provides some abstract REST controller classes, and includes the following de
 Configuration
 -------------
 
+In order to import default configuration, your should add the following line in your applicationContext.xml :
+
+ .. code-block:: xml
+
+    <import resource="classpath*:resthubWebServerContext.xml" />
+
 RESThub 2 based web applications do not contain web.xml files, but use Servlet 3.0 and Spring 3.1 new capabilities in order to initialize your webapp with a Java class and extend WebApplicationInitializer. This class just need to be in the classpath, here is the default one (the RESThub archetypes can create it for you if needed) :
 
 .. code-block:: java
@@ -560,16 +586,6 @@ RESThub 2 based web applications do not contain web.xml files, but use Servlet 3
 
 	    }
 	}
-
-In your webapp applicationContext.xml files, you may want to add these configuration usually needed :
-
-.. code-block:: xml
-
-	    <!-- Default Spring MVC configuration for JSON + XML webservices -->
-	    <import resource="classpath*:resthubDefaultWebServerContext.xml" />
-	    
-	    <!-- Distribute static files like css, html org image files -->
-	    <mvc:default-servlet-handler />
 
 Usage
 -----
