@@ -120,12 +120,13 @@ index.html is provided by Backbone stack, so you don't have to create it. Your a
            text:"libs/text",
            i18n:"libs/i18n",
            pubsub:"libs/resthub/pubsub",
-           handlebars:"libs/handlebars"
+           handlebars:"libs/handlebars",
+           'handlebars-helpers':"libs/handlebars-helpers"
        }
    });
 
    // Preload main libs
-   require(['app', 'backbone', 'handlebars'], function (App) {
+   require(['app', 'backbone', 'handlebars', 'handlebars-helpers'], function (App) {
 
        App.initialize();
    });
@@ -188,6 +189,185 @@ Sample usage in a Backbone.js View :
             return this;
         }
     });
+    
+Helpers
+-------
+
+Resthub provide some usefull **Handlebars helpers** included by default in ``main.js`` :
+
+ifinline
+++++++++
+
+This helper provides a more fluent syntax for inline ifs. i.e. if embedded in quoted strings.
+
+e.g:
+
+.. code-block:: html
+
+   <div class='{{ifinline done "done"}}'>Issue number 1</div>
+
+with the following context:
+
+.. code-block:: javascript
+
+   {done:true}
+   
+will produce:
+
+.. code-block:: html
+
+   <div class='done'>Issue number 1</div>
+
+unlessinline
+++++++++++++
+
+Opposite of ifinline helper.
+
+e.g:
+
+.. code-block:: html
+
+   <div class='{{unlessinline done "todo"}}'>Issue number 1</div>
+
+with the following context:
+
+.. code-block:: javascript
+
+   {done:false}
+   
+will produce:
+
+.. code-block:: html
+
+   <div class='todo'>Issue number 1</div>
+
+ifequalsinline
+++++++++++++++
+
+This helper provides a if inline comparing two values.
+
+e.g:
+
+.. code-block:: html
+
+   <div class='{{ifequalsinline type "details" "active"}}'>Details</div>
+
+with the following context:
+
+.. code-block:: javascript
+
+   {type:"details"}
+   
+will produce:
+
+.. code-block:: html
+
+   <div class='active'>Details</div>
+
+unlessequalsinline
+++++++++++++++++++
+
+Opposite of ifequalsinline helper.
+
+e.g:
+
+.. code-block:: html
+
+   <div class='{{unlessequalsinline type "details" "active"}}'>Edit</div>
+
+with the following context:
+
+.. code-block:: javascript
+
+   {type:"edit"}
+   
+will produce:
+
+.. code-block:: html
+
+   <div class='active'>Edit</div>
+
+ifequals
+++++++++
+
+This helper provides a if comparing two values.
+
+e.g:
+
+.. code-block:: html
+
+   {{#ifequals type "details"}}
+      <span>This is details page</span>
+   {{/ifequals}}
+
+with the following context:
+
+.. code-block:: javascript
+
+   {type:"details"}
+   
+will produce:
+
+.. code-block:: html
+
+   <span>This is details page</span>
+
+unlessequals
+++++++++++++
+
+Opposite of ifequals helper.
+
+e.g:
+
+.. code-block:: html
+
+   {{#unlessequals type "details"}}
+      <span>This is not details page</span>
+   {{/unlessequals}}
+
+with the following context:
+
+.. code-block:: javascript
+
+   {type:"edit"}
+   
+will produce:
+
+.. code-block:: html
+
+   <span>This is not details page</span>
+
+for
++++
+
+This helper provides a for i in range loop.
+
+e.g:
+
+.. code-block:: html
+
+   <ul>
+      {{#for 1 5}}
+         <li><a href='?page={{this}}'>{{this}}</a></li>
+      {{/for}}
+   </ul>
+   
+will produce:
+
+.. code-block:: html
+
+   <ul>
+      <li><a href='?page=1'>1</a></li>
+      <li><a href='?page=2'>2</a></li>
+      <li><a href='?page=3'>3</a></li>
+      <li><a href='?page=4'>4</a></li>
+      <li><a href='?page=5'>5</a></li>
+   </ul>
+   
+sprintf
++++++++
+
+.. todo:: document sprintf helper
 
 Avoid caching issues
 ====================
