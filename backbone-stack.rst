@@ -134,7 +134,7 @@ index.html is provided by Backbone stack, so you don't have to create it. Your a
   scripts that do not use define() to declare the dependencies and set a module value`. See `<http://requirejs.org/docs/api.html#config-shim>`_ for details.
 - **path** config is also part of Require_ and allows to define paths for libs not found durectly under baseUrl. See `<http://requirejs.org/docs/api.html#config-paths>`_ for details.
 - resthub suggests to **preload some libs** that will be used surely as soon the app start (typically backbone itself and our template engine). This mechanism also
-  permits us to load other linked libs transparently without having to define it repeatedly (e.g. ``underscore.string`` loading - this libs is strongly correlated
+  allows us to load other linked libs transparently without having to define it repeatedly (e.g. ``underscore.string`` loading - this libs is strongly correlated
   to ``underscore`` - and merged with it and thus should not have to be defined anymore)
 
 Templating
