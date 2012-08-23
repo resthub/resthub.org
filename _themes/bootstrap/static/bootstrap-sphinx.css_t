@@ -45,3 +45,9 @@ span.pre {
 cite {
  font-style: italic;
 }
+
+div.admonition-todo {
+  color: #3a87ad;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
