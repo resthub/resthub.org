@@ -8,6 +8,7 @@ The Backbone.js stack includes the following librairies :
     * **Underscore.js 1.3.3** (`documentation <http://documentcloud.github.com/underscore/>`_)
     * **Underscore.String 2.0.0** (`documentation <https://github.com/epeli/underscore.string#readme>`_)
     * **Require 2.0** with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins (`documentation <http://requirejs.org/docs/api.html>`_)
+    * **Handlebars 1.0** (`documentation <http://handlebarsjs.com>`_)
     * A **console shim** for browsers that don't support it
     * A RESThub **PubSub implementation**
     * **Twitter Bootstrap 2.0** (`documentation <http://twitter.github.com/bootstrap/>`_) with Require.js compatible JS files
@@ -139,20 +140,20 @@ index.html is provided by Backbone stack, so you don't have to create it. Your a
 Templating
 ==========
 
-Client side templating capabilities are based by default on `Underscore template <http://underscorejs.org/#template>`_.
+Client side templating capabilities are based by default on Handlebars_.
 
 Templates are HTML fragments, without the <html>, <header> or <body> tag :
 
 .. code-block:: html
 
-    <div class="todo <%= done ? 'done' : '' %>">
+    <div class="todo {{#if done}}done{{/if}}">
         <div class="display">
-            <input class="check" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
-            <div class="todo-content"><%= content %></div>
+            <input class="check" type="checkbox" {{#if done}}checked="checked"{{/if}}/>
+            <div class="todo-content">{{content}}</div>
             <span class="todo-destroy"></span>
         </div>
         <div class="edit">
-            <input class="todo-input" type="text" value="<%= content %>" />
+            <input class="todo-input" type="text" value="{{content}}" />
         </div>
     </div>
 
@@ -171,14 +172,14 @@ Sample usage in a Backbone.js View :
 
 .. code-block:: javascript
 
-    define(['jquery', 'backbone', 'text!templates/todo.html'],function($, Backbone, todoTemplate) {
+    define(['jquery', 'backbone', 'handlebars', 'text!templates/todo.html'],function($, Backbone, Handlebars, todoTemplate) {
         var TodoView = Backbone.View.extend({
 
         //... is a list tag.
         tagName:  "li",
 
         // Compile and cache the template function for a single item.
-        template: _.template(todoTemplate),
+        template: Handlebars.compile(todoTemplate),
 
         render: function() {
             // todoTemplate a function that take context (labels, model) and return the dynamized output.
@@ -337,18 +338,12 @@ Changing locale require a page reloading, so it is usually implemented with a Ba
 sprintf to the rescue
 ---------------------
 
-Internalionalization can sometimes be tricky since words are not always at the same position depending on the language. In order to make it easier to use, RESThub backbone stack include Underscore.String. It contains a sprintf function that you can use for your translations.
+Internalionalization can sometimes be tricky since words are not always at the same position depending on the language. In order to make it easier to use, 
+RESThub backbone stack include Underscore.String. It contains a sprintf function that you can use for your translations.
 
-In order to make it available in templates, add the following lines in your main.js file :
+RESThub also provide a ``sprintf`` handlebars helper to use directly in your templates.
 
-.. code-block:: javascript
-
-    // Merge Underscore and Underscore.String
-    _.str = _s;
-    _.mixin(_.str.exports());
-    _.str.include('Underscore.string', 'string');
-
-You can use the _.sprintf() function in order to have some replacement in your labels.
+You can use the ``_.sprintf()`` function and the ``sprintf`` helper in order to have some replacement in your labels.
 
 labels.js
 
@@ -360,6 +355,8 @@ labels.js
     }
 
 And in your template
+
+.. todo:: rewrite this § with a sprintf handlebars helper
 
 .. code-block:: html
 
@@ -464,3 +461,4 @@ Usage
     
 .. _Require 2.0: http://requirejs.org
 .. _Require: http://requirejs.org
+.. _Handlebars: http://handlebarsjs.com
