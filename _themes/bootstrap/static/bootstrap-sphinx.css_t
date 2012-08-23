@@ -30,6 +30,8 @@ img {
 span.pre {
   background-color: #f5f5f5;
   display: inline;
+  margin: 0 2px;
+  padding: 0px 5px;
   line-height: 18px;
   font-size: 12px;
   border: 1px solid #ccc;
