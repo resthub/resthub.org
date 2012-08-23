@@ -7,7 +7,7 @@ The Backbone.js stack includes the following librairies :
     * Backbone.js 0.9 (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter <http://documentcloud.github.com/backbone/docs/backbone-localstorage.html>`_
     * Underscore.js 1.3 (`documentation <http://documentcloud.github.com/underscore/>`_)
     * Underscore.String (`documentation <https://github.com/epeli/underscore.string#readme>`_)
-    * Require.js 1.0 with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins (`documentation <http://requirejs.org/docs/api.html>`_)
+    * **Require 2.0** with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins (`documentation <http://requirejs.org/docs/api.html>`_)
     * A console shim for browsers that don't support it
     * A RESThub PubSub implementation
     * `Twitter Bootstrap 2.0 <http://twitter.github.com/bootstrap/>`_ with Require.js compatible JS files
@@ -82,21 +82,59 @@ index.html is provided by Backbone stack, so you don't have to create it. Your a
 
 .. code-block:: javascript
 
-    // Set the require.js configuration for your application.
-    require.config({
-      paths: {
-        'jquery': 'libs/jquery',
-        'underscore': 'libs/underscore',
-        'backbone': 'libs/backbone',
-        'text': 'libs/text'
-      }
-    });
+   // Set the require.js configuration for your application.
+   require.config({
 
-    // Load the app module and pass it to the definition function
-    require(['jquery', 'router', 'views/samples'] , function($, AppRouter, SamplesView) {   
-        new AppRouter;
-        Backbone.history.start();
-    });
+       shim:{
+           'underscore':{
+               exports:'_'
+           },
+           'underscore.string':{
+               deps:[
+                   'underscore'
+               ],
+               exports:'_s'
+           },
+           'handlebars':{
+               exports:'Handlebars'
+           },
+           'backbone':{
+               deps:[
+                   'underscore',
+                   'underscore.string',
+                   'jquery'
+               ],
+               exports:'Backbone'
+           }
+       },
+
+       // Libraries
+       paths:{
+           jquery:"libs/jquery",
+           underscore:"libs/underscore",
+           'underscore.string':"libs/underscore.string",
+           backbone:"libs/backbone",
+           localstorage:"libs/localstorage",
+           use:"libs/use",
+           text:"libs/text",
+           i18n:"libs/i18n",
+           pubsub:"libs/resthub/pubsub",
+           handlebars:"libs/handlebars"
+       }
+   });
+
+   // Preload main libs
+   require(['backbone', 'handlebars', 'app'], function (App) {
+
+       App.initialize();
+   });
+   
+- **shim** config is part of `Require 2.0`_ and allows to `Configure the dependencies and exports for older, traditional "browser globals" 
+  scripts that do not use define() to declare the dependencies and set a module value`. See `<http://requirejs.org/docs/api.html#config-shim>`_ for details.
+- **path** config is also part of Require_ and allows to define paths for libs not found durectly under baseUrl. See `<http://requirejs.org/docs/api.html#config-paths>`_ for details.
+- resthub suggests to **preload some libs** that will be used surely as soon the app start (typically backbone itself and our template engine). This mechanism also
+  permits us to load other linked libs transparently without having to define it repeatedly (e.g. ``underscore.string`` loading - this libs is strongly correlated
+  to ``underscore`` - and merged with it and thus should not have to be defined anymore)
 
 Templating
 ==========
@@ -422,3 +460,7 @@ Usage
     define(['pubsub'], function(Pubsub) {
         // TODO
     }        
+    
+    
+.. _Require 2.0: http://requirejs.org
+.. _Require: http://requirejs.org
