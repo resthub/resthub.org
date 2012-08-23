@@ -125,7 +125,7 @@ index.html is provided by Backbone stack, so you don't have to create it. Your a
    });
 
    // Preload main libs
-   require(['backbone', 'handlebars', 'app'], function (App) {
+   require(['app', 'backbone', 'handlebars'], function (App) {
 
        App.initialize();
    });
