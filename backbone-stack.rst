@@ -190,7 +190,7 @@ Sample usage in a Backbone.js View :
     });
 
 Avoid caching issues
---------------------
+====================
 
 In order to avoid caching issues when, for example, you update your JS or HTML files, you should use the `urlArgs RequireJS attribute <http://requirejs.org/docs/api.html#config>`_. You can filter the ${buildNumber} with your build tool at each build.
 
