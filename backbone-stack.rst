@@ -954,7 +954,15 @@ interrupting your calls:
 Dispatching keyboard shortcuts : Keymaster
 ------------------------------------------
 
-.. todo:: write Keymaster doc
+Keymaster_ is a micro library allowing to define listeners on keyboard shortcuts and propagate them. 
+The syntax is elegant, it is very simple while very complete:
+
+- Management of multiple hotkeys
+- Chaining through an important number of "modifiers"
+- Source DOM element type filtering
+- ...
+
+It is so simple that the doc is self sufficient - see `here <http://github.com/madrobby/keymaster>`_
 
 .. _resthub-extensions:
 
@@ -1294,10 +1302,10 @@ Usage
 .. _Require 2.0: http://requirejs.org
 .. _Require: http://requirejs.org
 .. _Handlebars: http://handlebarsjs.com
-.. _Backbone Validation: https://github.com/thedersen/backbone.validation
+.. _Backbone Validation: http://github.com/thedersen/backbone.validation
 .. _Twitter Bootstrap: http://twitter.github.com/bootstrap/
 .. _Backbone Paginator: http://addyosmani.github.com/backbone.paginator/
-.. _Backbone Query Parameters: https://github.com/jhudson8/backbone-query-parameters
-.. _Async: https://github.com/caolan/async/
-.. _Keymaster: https://github.com/madrobby/keymaster
+.. _Backbone Query Parameters: http://github.com/jhudson8/backbone-query-parameters
+.. _Async: http://github.com/caolan/async/
+.. _Keymaster: http://github.com/madrobby/keymaster
 .. _Backbone: http://backbonejs.org/
