@@ -2,7 +2,7 @@
 Backbone.js Stack
 =================
 
-The Backbone.js stack includes the following librairies :
+The Backbone.js stack includes the following main librairies :
     * **jQuery 1.7** (`documentation <http://docs.jquery.com/Main_Page>`_)
     * **Backbone.js 0.9.2** (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter 
       <http://documentcloud.github.com/backbone/docs/backbone-localstorage.html>`_
@@ -13,7 +13,9 @@ The Backbone.js stack includes the following librairies :
     * **Handlebars 1.0** (`documentation <http://handlebarsjs.com>`_)
     * A **console shim** for browsers that don't support it
     * A RESThub **PubSub implementation**
-    * **Twitter Bootstrap 2.0** (`documentation <http://twitter.github.com/bootstrap/>`_) with Require.js compatible JS files
+    * **Twitter Bootstrap 2.0** (`documentation <http://twitter.github.com/bootstrap/>`_) JS plugins
+    
+And some other complementary librairies : cf. :ref:`complementary-libs`
 
 How should I use it in my project
 =================================
@@ -421,8 +423,87 @@ sprintf
 
 .. todo:: document sprintf helper
 
-Libs extensions
-===============
+.. _complementary-libs:
+
+Complementary libs
+==================
+
+Resthub selected and embed some complementary utility libs provinding advanced functionalities for a complete and real backbone (and resthub)
+based application. These libs are : 
+
+- **Form Validation:** `Backbone Validation`_
+- **Parameters support on view routing:** `Backbone Query Parameters`_
+- **Paginated lists:** `Backbone Paginator`_
+- **Asynchronous calls:** Async_
+- **Dispatching keyboard shortcuts:** Keymaster_
+
+Resthub only provide require config shims and paths for these libs in ``main.js`` and you are totaly free to use these libs or not:
+
+.. code-block:: javascript
+
+   require.config({
+
+    shim:{
+        ...
+        'backbone-queryparams':{
+            deps:[
+                'backbone',
+                'underscore'
+            ]
+        },
+        'backbone-paginator':{
+            deps:[
+                'backbone',
+                'underscore',
+                'jquery'
+            ],
+            exports:'Backbone.Paginator'
+        },
+        async:{
+            deps:[
+                'underscore'
+            ]
+        }
+    },
+
+    // Libraries
+    paths:{
+        'backbone-validation':'libs/backbone-validation',
+        'resthub-backbone-validation':'resthub/backbone-validation.ext',
+        'backbone-queryparams':'libs/backbone.queryparams',
+        'backbone-paginator':'libs/backbone.paginator',
+        async:'libs/async.js',
+        keymaster:'libs/keymaster'
+    }
+});
+
+Form Validation : Backbone Validation
+-------------------------------------
+
+.. todo:: write Backbone Validation doc
+
+Parameters support on view routing : Backbone Query Parameters
+--------------------------------------------------------------
+
+.. todo:: write Backbone Query Parameters doc
+
+Paginated lists : Backone Paginator
+-----------------------------------
+
+.. todo:: write Backone Paginator doc
+
+Asynchronous calls : Async
+--------------------------
+
+.. todo:: write Async doc
+
+Dispatching keyboard shortcuts : Keymaster
+------------------------------------------
+
+.. todo:: write Keymaster doc
+
+Resthub extensions
+==================
 
 For some of suggested embedded libs, resthub provides extensions.
 
@@ -759,3 +840,7 @@ Usage
 .. _Handlebars: http://handlebarsjs.com
 .. _Backbone Validation: https://github.com/thedersen/backbone.validation
 .. _Twitter Bootstrap: http://twitter.github.com/bootstrap/
+.. _Backbone Paginator: http://addyosmani.github.com/backbone.paginator/
+.. _Backbone Query Parameters: https://github.com/jhudson8/backbone-query-parameters
+.. _Async: https://github.com/caolan/async/
+.. _Keymaster: https://github.com/madrobby/keymaster
