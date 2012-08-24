@@ -697,7 +697,139 @@ of these parameters**. It can then be passed to the view constructor for initial
 Paginated lists : Backone Paginator
 -----------------------------------
 
-.. todo:: write Backone Paginator doc
+`Backbone Paginator`_ offers both client side pagination (``Paginator.clientPager``) and integration with server side pagination
+(``Paginator.requestPager``). It includes management of filters, sorting, etc.
+
+Client side pagination
+++++++++++++++++++++++
+
+This lib extends Backbone_ collections. So adding options to collections is necessary:
+
+.. code-block:: javascript
+
+   var participantsCollection = Backbone.Paginator.clientPager.extend({
+       model:participantModel,
+       paginator_core:{
+           // the type of the request (GET by default)
+           type:'GET',
+
+           // the type of reply (jsonp by default)
+           dataType:'json',
+
+           // the URL (or base URL) for the service
+           url:App.Config.serverRootURL + '/participants'
+       },
+       paginator_ui:{
+           // the lowest page index your API allows to be accessed
+           firstPage:1,
+
+           // which page should the paginator start from
+           // (also, the actual page the paginator is on)
+           currentPage:1,
+
+           // how many items per page should be shown
+           perPage:12,
+
+           // a default number of total pages to query in case the API or
+           // service you are using does not support providing the total
+           // number of pages for us.
+           // 10 as a default in case your service doesn't return the total
+           totalPages:10
+       },
+       parse:function (response) {
+           return response;
+       }
+   });
+
+Then we ``fetch`` the collection and then ask for the right page:
+
+.. code-block:: javascript
+
+    this.collection = new ParticipantsCollection();
+
+    // get the participants collection from server
+    this.collection.fetch(
+     {
+         success:function () {
+             this.collection.goTo(this.askedPage);
+         }.bind(this),
+         error:function (collection, response) {
+             ...
+         }
+     });
+
+Once the collection retrieved, ``collection.info()`` allows to get information about current state:
+
+.. code-block:: javascript
+
+   totalUnfilteredRecords
+   totalRecords
+   currentPage
+   perPage
+   totalPages
+   lastPage
+   previous
+   next
+   startRecord
+   endRecord
+
+Server side pagination
+++++++++++++++++++++++
+
+Once client side pagination implemented, server adaptation is very easy:
+
+We set **parameters to send to server** in ``collections/participants.js``:
+
+.. code-block:: javascript
+
+   server_api:{
+       'page':function () {
+           return this.currentPage;
+       },
+
+       'size':function () {
+           return this.perPage;
+       }
+   },
+
+Then, in the same file, we provide a parser to get the response back and initialize collection and pager:
+
+.. code-block:: javascript
+
+   parse:function (response) {
+       var participants = response.content;
+       this.totalPages = response.totalPages;
+       this.totalRecords = response.totalElements;
+       this.lastPage = this.totalPages;
+       return participants;
+   }
+
+Finally, we change server call : this time the ``goTo`` method extend ``fetch`` and should be called instead
+(``views/participants/list.js``) :
+
+.. code-block:: javascript
+
+   // get the participants collection from server
+   this.collection.goTo(this.askedPage,
+       {
+           success:function () {
+               ...
+           }.bind(this),
+           error:function () {
+               ...
+           }
+       });
+
+All other code stay inchanged but the ``collection.info()`` is a little bit thinner:
+
+.. code-block:: javascript
+
+   totalRecords
+   currentPage
+   perPage
+   totalPages
+   lastPage
+
 
 Asynchronous calls : Async
 --------------------------
