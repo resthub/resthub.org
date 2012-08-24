@@ -93,8 +93,7 @@ index.html is provided by Backbone stack, so you don't have to create it. Your a
            'underscore.string':{
                deps:[
                    'underscore'
-               ],
-               exports:'_s'
+               ]
            },
            'handlebars':{
                exports:'Handlebars'
@@ -106,29 +105,54 @@ index.html is provided by Backbone stack, so you don't have to create it. Your a
                    'jquery'
                ],
                exports:'Backbone'
+           },
+           'backbone-queryparams':{
+               deps:[
+                   'backbone',
+                   'underscore'
+               ]
+           },
+           'backbone-paginator':{
+               deps:[
+                   'backbone',
+                   'underscore',
+                   'jquery'
+               ],
+               exports:'Backbone.Paginator'
+           },
+           async:{
+               deps:[
+                   'underscore'
+               ]
            }
        },
 
        // Libraries
        paths:{
-           jquery:"libs/jquery",
-           underscore:"libs/underscore",
-           'underscore.string':"libs/underscore.string",
-           backbone:"libs/backbone",
-           localstorage:"libs/localstorage",
-           use:"libs/use",
-           text:"libs/text",
-           i18n:"libs/i18n",
-           pubsub:"resthub/pubsub",
-           handlebars:"libs/handlebars",
-           'handlebars-helpers':"resthub/handlebars-helpers"
+           jquery:'libs/jquery',
+           underscore:'libs/underscore',
+           'underscore.string':'libs/underscore.string',
+           backbone:'libs/backbone',
+           localstorage:'libs/localstorage',
+           text:'libs/text',
+           i18n:'libs/i18n',
+           pubsub:'resthub/pubsub',
+           'bootstrap':'libs/bootstrap',
+           'backbone-validation':'libs/backbone-validation',
+           'resthub-backbone-validation':'resthub/backbone-validation.ext',
+           handlebars:'libs/handlebars',
+           'resthub-handlebars':'resthub/handlebars-helpers',
+           'backbone-queryparams':'libs/backbone.queryparams',
+           'backbone-paginator':'libs/backbone.paginator',
+           async:'libs/async.js',
+           keymaster:'libs/keymaster'
        }
    });
 
    // Preload main libs
-   require(['app', 'backbone', 'handlebars', 'handlebars-helpers'], function (App) {
+   require(['router'], function (Router) {
 
-       App.initialize();
+       Router.initialize();
    });
    
 - **shim** config is part of `Require 2.0`_ and allows to `Configure the dependencies and exports for older, traditional "browser globals" 
