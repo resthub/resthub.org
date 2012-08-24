@@ -200,6 +200,9 @@ ifinline
 
 This helper provides a more fluent syntax for inline ifs. i.e. if embedded in quoted strings.
 
+As with Handlebars ``#if``, if its first argument returns ``false``, ``undefined``, ``null``
+or ``[]`` (a "falsy" value), ``''`` is returned, otherwise ``returnVal`` argument is rendered.
+
 e.g:
 
 .. code-block:: html
@@ -222,6 +225,9 @@ unlessinline
 ++++++++++++
 
 Opposite of ifinline helper.
+
+As with Handlebars ``#unless``, if its first argument returns ``false``, ``undefined``, ``null``
+or ``[]`` (a "falsy" value), ``returnVal`` is returned, otherwise ``''`` argument is rendered.
 
 e.g:
 
@@ -246,6 +252,8 @@ ifequalsinline
 
 This helper provides a if inline comparing two values.
 
+If the two values are strictly equals (``===``) return the returnValue argument, ``''`` otherwise.
+
 e.g:
 
 .. code-block:: html
@@ -269,6 +277,8 @@ unlessequalsinline
 
 Opposite of ifequalsinline helper.
 
+If the two values are not strictly equals (``!==``) return the returnValue  argument, ``''`` otherwise.
+
 e.g:
 
 .. code-block:: html
@@ -291,6 +301,8 @@ ifequals
 ++++++++
 
 This helper provides a if comparing two values.
+
+If only the two values are strictly equals (``===``) display the block
 
 e.g:
 
@@ -317,6 +329,8 @@ unlessequals
 
 Opposite of ifequals helper.
 
+If only the two values are not strictly equals (``!==``) display the block
+
 e.g:
 
 .. code-block:: html
@@ -341,6 +355,9 @@ for
 +++
 
 This helper provides a for i in range loop.
+
+start and end parameters have to be integers >= 0 or their string representation. start should be <= end.
+In all other cases, the block is not rendered.
 
 e.g:
 
