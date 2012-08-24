@@ -488,7 +488,151 @@ Resthub only provide require config shims and paths for these libs in ``main.js`
 Form Validation : Backbone Validation
 -------------------------------------
 
-.. todo:: write Backbone Validation doc
+Backbone_ does not provide natively **any tool for form or validation management**. It is not necessary
+to specify model attributes or related constraints.
+
+In terms of validation, Backbone_ provides only empty methods ``validate`` and ``isValid`` that have to be implemented by each developer. 
+The only guarantee that the ``validate`` method is called before a ``save`` (canceled on error). But a complete form validation is 
+not obvious (custom error array management ... ) and the errors are not distinguishable from inherent ``save`` errors (server communication and so on).
+
+`Backbone Validation`_ **only focus on validation aspects** and leaves us free to write our form. The lib has **a very large number of built-in 
+validators** and **provides effective validators customization and extension mechanisms**.
+
+`Backbone Validation`_ does not neither propose automatic linking between form and model and leaves us the choice to use a dedicated lib or 
+to implement custom behaviour (before the validation, process all form values to set to model). The behaviour of `Backbone Validation`_ perfectly matches standard
+Backbone_ workflow through ``validate`` and ``isValid`` methods.
+
+**Model** : constraints definition:
+
+.. code-block:: javascript
+
+   define([
+       'underscore',
+       'backbone',
+       'resthub-backbone-validation'
+   ], function (_, Backbone) {
+
+       /**
+        * Definition of a Participant model object
+        */
+       var ParticipantModel = Backbone.Model.extend({
+           urlRoot:App.Config.serverRootURL + "/participant",
+           defaults:{
+
+           },
+
+           // Defines validation options (see Backbone-Validation)
+           validation:{
+               firstname:{
+                   required:true
+               },
+               lastname:{
+                   required:true
+               },
+               email:{
+                   required:false,
+                   pattern:'email'
+               }
+           },
+
+           initialize:function () {
+           }
+
+       });
+       return ParticipantModel;
+
+   });
+
+**HTML5 Form** :
+
+.. code-block:: html
+
+   {{#with participant}}
+       <form class="form-horizontal">
+           <fieldset>
+               <div class="row">
+                   <div class="span8">
+                       <div class="control-group">
+                           {{#if id}}
+                               <label for="participantId" class="control-label">Id:</label>
+                               <div class="controls">
+                                   <input id="participantId" name="id" type="text" value="{{id}}" disabled/>
+                               </div>
+                           {{/if}}
+                       </div>
+
+                       <div class="control-group">
+                           <label for="firstname" class="control-label">First name:</label>
+                           <div class="controls">
+                               <input type="text" id="firstname" name="firstname" required="true" value="{{firstname}}" tabindex="1" autofocus="autofocus"/>
+                               <span class="help-inline"></span>
+                           </div>
+                       </div>
+
+                       <div class="control-group">
+                           <label for="lastname" class="control-label">Last name:</label>
+                           <div class="controls">
+                               <input type="text" id="lastname" name="lastname" required="true" value="{{lastname}}" tabindex="2"/>
+                               <span class="help-inline"></span>
+                           </div>
+                       </div>
+
+                       <div class="control-group">
+                           <label for="email" class="control-label">email address:</label>
+                           <div class="controls">
+                               <input type="email" id="email" name="email" value="{{email}}" tabindex="3"/>
+                               <span class="help-inline"></span>
+                           </div>
+                       </div>
+
+                   </div>
+           </fieldset>
+       </form>
+   {{/with}}
+
+
+**View** : initialization and usage:
+
+.. code-block:: javascript
+
+   initialize:function () {
+
+       ...
+
+       // allow backbone-validation view callbacks (for error display)
+       Backbone.Validation.bind(this);
+
+       ...
+   },
+
+   ...
+
+   /**
+    * Save the current participant (update or create depending of the existence of a valid model.id)
+    */
+   saveParticipant:function () {
+
+       // build array of form attributes to refresh model
+       var attributes = {};
+       this.$el.find("form input[type!='submit']").each(function (index, value) {
+           attributes[value.name] = value.value;
+           this.model.set(value.name, value.value);
+       }.bind(this));
+
+       // save model if it's valid, display alert otherwise
+       if (this.model.isValid()) {
+           this.model.save(null, {
+               success:this.onSaveSuccess.bind(this),
+               error:this.onSaveError.bind(this)
+           });
+       }
+       else {
+           ...
+       }
+
+If you're using ``resthub-backbone-validation`` instead of the original lib (cf. :ref:`resthub-extensions`), you also natively
+beneficate of custom validation callbacks allowing to render validation errors in a form structured with `Twitter Bootstrap`_.
+
 
 Parameters support on view routing : Backbone Query Parameters
 --------------------------------------------------------------
@@ -510,6 +654,8 @@ Dispatching keyboard shortcuts : Keymaster
 
 .. todo:: write Keymaster doc
 
+.. _resthub-extensions:
+
 Resthub extensions
 ==================
 
@@ -519,9 +665,9 @@ These extensions can be found, as any other custom resthub lib, in ``js/resthub`
 
 Resthub provides currently two basic extensions : 
 
-- Handlebars_ extension : Addition of some usefull Handlebars helpers. cf :ref:`handlebars-helpers`.
+- Handlebars_ extension : Addition of some usefull Handlebars helpers. cf :ref:`handlebars-helpers` and `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/handlebars-helpers.js>`_.
 - `Backbone Validation`_ extension : Validation callbacks (``valid`` and ``invalid``) extension to provide a native integration 
-  with `Twitter Bootstrap`_ form structure (``controls`` and ``control-group``).
+  with `Twitter Bootstrap`_ form structure (``controls`` and ``control-group``). cf. `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/backbone-validation.ext.js>`_
 
 To beneficate of these extensions, we suggest you to replace standard lib inclusion in your require define by the inclusion
 of these libs.
@@ -852,3 +998,4 @@ Usage
 .. _Backbone Query Parameters: https://github.com/jhudson8/backbone-query-parameters
 .. _Async: https://github.com/caolan/async/
 .. _Keymaster: https://github.com/madrobby/keymaster
+.. _Backbone: http://backbonejs.org/
