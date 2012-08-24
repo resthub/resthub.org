@@ -637,7 +637,62 @@ beneficate of custom validation callbacks allowing to render validation errors i
 Parameters support on view routing : Backbone Query Parameters
 --------------------------------------------------------------
 
-.. todo:: write Backbone Query Parameters doc
+Backbone_ routes management allows to define permet such routes :
+``"participants":"listParticipants"`` and ``"participants?:param":"listParticipantsParameters"``. But the native 
+behaviour seems not sufficient:
+
+- **management of an unknown number of parameters** (ex ``?page=2&filter=filter``) is not obvious
+- we have to define (at least) **two routes to handle calls with or without parameters** without duplication
+and without too much technical code
+
+Expected behaviour was that the **map a single route to a method with an array of request parameter as optional parameter.**
+
+`Backbone Query Parameters`_ provides this functionality.
+
+With this lib, included once and for all in the main router, You 'll get the following:
+
+**router.js** :
+
+.. code-block:: javascript
+
+   define(['backbone', 'backbone-queryparams'], function (Backbone) {
+       var AppRouter = Backbone.Router.extend({
+         routes:{
+             // Define some URL routes
+             ...
+
+             "participants":"listParticipants",
+
+             ...
+         },
+
+         ...
+
+         listParticipants:function (params) {
+             // params contains the list of all query params of is empty if no param
+         }
+      });
+   });
+
+Query parameters array is automatically recovered **without any further operation** and **whatever the number
+of these parameters**. It can then be passed to the view constructor for initialization:
+
+**list.js** :
+
+.. code-block:: javascript
+
+   askedPage:1,
+
+   initialize:function (params) {
+
+       ...
+
+       if (params) {
+           if (params.page && this.isValidPageNumber(params.page)) this.askedPage = parseInt(params.page);
+       }
+
+       ..
+   },
 
 Paginated lists : Backone Paginator
 -----------------------------------
