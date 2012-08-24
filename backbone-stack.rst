@@ -4,10 +4,12 @@ Backbone.js Stack
 
 The Backbone.js stack includes the following librairies :
     * **jQuery 1.7** (`documentation <http://docs.jquery.com/Main_Page>`_)
-    * **Backbone.js 0.9.2** (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter <http://documentcloud.github.com/backbone/docs/backbone-localstorage.html>`_
+    * **Backbone.js 0.9.2** (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter 
+      <http://documentcloud.github.com/backbone/docs/backbone-localstorage.html>`_
     * **Underscore.js 1.3.3** (`documentation <http://documentcloud.github.com/underscore/>`_)
     * **Underscore.String 2.0.0** (`documentation <https://github.com/epeli/underscore.string#readme>`_)
-    * **Require 2.0** with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins (`documentation <http://requirejs.org/docs/api.html>`_)
+    * **Require 2.0** with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins 
+      (`documentation <http://requirejs.org/docs/api.html>`_)
     * **Handlebars 1.0** (`documentation <http://handlebarsjs.com>`_)
     * A **console shim** for browsers that don't support it
     * A RESThub **PubSub implementation**
@@ -17,8 +19,10 @@ How should I use it in my project
 =================================
 
 There are 3 ways to use it in your project :
-    * If you are starting a new Java project, the better way to use RESThub Backbone.js stack is to use one of the Backbone.js webappp Maven Archetypes described on the `Getting Started page <getting-started.html>`_
-    * You can simply go to `RESThub Backbone.js stack GitHub repository <https://github.com/resthub/resthub-backbone-stack>`_, download the repository content and copy it at the root of your webapp
+    * If you are starting a new Java project, the better way to use RESThub Backbone.js stack is to use one of the Backbone.js webappp 
+      Maven Archetypes described on the `Getting Started page <getting-started.html>`_
+    * You can simply go to `RESThub Backbone.js stack GitHub repository <https://github.com/resthub/resthub-backbone-stack>`_, download the 
+      repository content and copy it at the root of your webapp
     * Last option (but deprecated since you don't see the stack files in your project), you can add the following code snippet to your pom.xml :
 
 .. code-block:: xml
@@ -39,12 +43,15 @@ There are 3 ways to use it in your project :
 Project structure
 =================
 
-You should read carefully the awesome blog post `Organizing your application using Require.js Modules <http://backbonetutorials.com/organizing-backbone-using-modules/>`_ since it describes the project structure and principles recommended in RESThub Backbone stack based projects.
+You should read carefully the awesome blog post `Organizing your application using Require.js Modules 
+<http://backbonetutorials.com/organizing-backbone-using-modules/>`_ since it describes the project structure and principles recommended 
+in RESThub Backbone stack based projects.
 
 Bootstrapping
 =============
 
-Please find below the default files needed to bootstrap your webapp (An easier and error proof method is to use RESThub archetypes in order to bootstrap your project).
+Please find below the default files needed to bootstrap your webapp (An easier and error proof method is to use RESThub archetypes in 
+order to bootstrap your project).
 
 index.html
 ----------
@@ -79,7 +86,8 @@ index.html
     </html>
 
 
-index.html is provided by Backbone stack, so you don't have to create it. Your application bootstrap file is the main.js located at your webapp root (usually src/main/webapp). Please find below a sample :
+index.html is provided by Backbone stack, so you don't have to create it. Your application bootstrap file is the main.js located 
+at your webapp root (usually src/main/webapp). Please find below a sample :
 
 .. code-block:: javascript
 
@@ -157,7 +165,8 @@ index.html is provided by Backbone stack, so you don't have to create it. Your a
    
 - **shim** config is part of `Require 2.0`_ and allows to `Configure the dependencies and exports for older, traditional "browser globals" 
   scripts that do not use define() to declare the dependencies and set a module value`. See `<http://requirejs.org/docs/api.html#config-shim>`_ for details.
-- **path** config is also part of Require_ and allows to define paths for libs not found durectly under baseUrl. See `<http://requirejs.org/docs/api.html#config-paths>`_ for details.
+- **path** config is also part of Require_ and allows to define paths for libs not found durectly under baseUrl. 
+  See `<http://requirejs.org/docs/api.html#config-paths>`_ for details.
 - resthub suggests to **preload some libs** that will be used surely as soon the app start (typically backbone itself and our template engine). This mechanism also
   allows us to load other linked libs transparently without having to define it repeatedly (e.g. ``underscore.string`` loading - this libs is strongly correlated
   to ``underscore`` - and merged with it and thus should not have to be defined anymore)
@@ -213,6 +222,8 @@ Sample usage in a Backbone.js View :
             return this;
         }
     });
+    
+.. _handlebars-helpers:
     
 Helpers
 -------
@@ -410,10 +421,67 @@ sprintf
 
 .. todo:: document sprintf helper
 
+Libs extensions
+===============
+
+For some of suggested embedded libs, resthub provides extensions.
+
+These extensions can be found, as any other custom resthub lib, in ``js/resthub`` directory.
+
+Resthub provides currently two basic extensions : 
+
+- Handlebars_ extension : Addition of some usefull Handlebars helpers. cf :ref:`handlebars-helpers`.
+- `Backbone Validation`_ extension : Validation callbacks (``valid`` and ``invalid``) extension to provide a native integration 
+  with `Twitter Bootstrap`_ form structure (``controls`` and ``control-group``).
+
+To beneficate of these extensions, we suggest you to replace standard lib inclusion in your require define by the inclusion
+of these libs.
+
+e.g.
+
+.. code-block:: javascript
+
+   define([
+       'resthub-handlebars',
+       'resthub-backbone-validation'
+   ], function (Handlebars, BackboneValidation) {
+      ...
+   });
+   
+By default, resthub archetype generates view including these extensions instead of original libs. Each extension depends on the original lib.
+
+If you don't want to use these extensions, you only have to use the original lib alone : 
+
+.. code-block:: javascript
+
+   define([
+       'handlebars',
+       'backbone-validation'
+   ], function (Handlebars, BackboneValidation) {
+      ...
+   });
+   
+All extensions paths and shims are defined in ``main.js`` :
+
+.. code-block:: javascript
+
+   paths:{
+      ...
+      'backbone-validation':'libs/backbone-validation',
+      'resthub-backbone-validation':'resthub/backbone-validation.ext',
+      handlebars:'libs/handlebars',
+      'resthub-handlebars':'resthub/handlebars-helpers',
+      ...
+    }
+
+.. todo:: add backbone extension
+
 Avoid caching issues
 ====================
 
-In order to avoid caching issues when, for example, you update your JS or HTML files, you should use the `urlArgs RequireJS attribute <http://requirejs.org/docs/api.html#config>`_. You can filter the ${buildNumber} with your build tool at each build.
+In order to avoid caching issues when, for example, you update your JS or HTML files, you should use the 
+`urlArgs RequireJS attribute <http://requirejs.org/docs/api.html#config>`_. You can filter the ${buildNumber} with your build 
+tool at each build.
 
 
 main.js:
@@ -441,7 +509,9 @@ main.js after filtering:
 Internationalization
 ====================
 
-You should never use directly labels or texts in your source files. All labels should be externalized in order to prepare your application internationalization. Doing such thing is pretty simple with RESThub Backbone.js stack thanks to `requireJS i18n plugin <http://requirejs.org/docs/api.html#i18n>`_.
+You should never use directly labels or texts in your source files. All labels should be externalized in order to prepare your 
+application internationalization. Doing such thing is pretty simple with RESThub Backbone.js stack thanks to `requireJS i18n 
+plugin <http://requirejs.org/docs/api.html#i18n>`_.
 
 Please find below the steps needed to internationalize your application.
 
@@ -464,7 +534,9 @@ In your main.js file you should define a shortcut path for i18n plugin and the d
 Define labels
 -------------
 
-Create a labels.js file in the js/nls directory, it will contain labels in the default locale used by your application. You can change labels.js to another name (messages.js or functionality related name like user.js or product.js) but js/nls is the default location. Specify at the same level than the root node the available translations.
+Create a labels.js file in the js/nls directory, it will contain labels in the default locale used by your application. You 
+can change labels.js to another name (messages.js or functionality related name like user.js or product.js) but js/nls is the 
+default location. Specify at the same level than the root node the available translations.
 
 Sample js/nls/labels.js file:
 
@@ -499,7 +571,8 @@ Sample js/nls/fr-fr/labels.js file:
 Use it
 ------
 
-Add a dependency in the js, typically a View, where you'll need labels. You'll absolutely need to give a scoped variable to the result (in this example ``labels``, but you can choose the one you want). 
+Add a dependency in the js, typically a View, where you'll need labels. You'll absolutely need to give a scoped variable to 
+the result (in this example ``labels``, but you can choose the one you want). 
 
 Prepending 'i18n!' before the file path in the dependency indicates RequireJS to get the file related to the current locale :
 
@@ -586,7 +659,8 @@ And in your template
 Inheritance
 ===========
 
-As described by `k33g <https://twitter.com/#!/k33g_org>`_ on his `Gist Use Object Model of BackBone <https://gist.github.com/2287018>`_, it is possible to reuse Backbone.js extend() function in order to get simple inheritance in Javascript.
+As described by `k33g <https://twitter.com/#!/k33g_org>`_ on his `Gist Use Object Model of BackBone <https://gist.github.com/2287018>`_, 
+it is possible to reuse Backbone.js extend() function in order to get simple inheritance in Javascript.
 
 .. code-block:: javascript
 
@@ -683,3 +757,5 @@ Usage
 .. _Require 2.0: http://requirejs.org
 .. _Require: http://requirejs.org
 .. _Handlebars: http://handlebarsjs.com
+.. _Backbone Validation: https://github.com/thedersen/backbone.validation
+.. _Twitter Bootstrap: http://twitter.github.com/bootstrap/
