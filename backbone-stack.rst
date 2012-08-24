@@ -834,7 +834,122 @@ All other code stay inchanged but the ``collection.info()`` is a little bit thin
 Asynchronous calls : Async
 --------------------------
 
-.. todo:: write Async doc
+Other recurrent problem: parallel asynchronous calls for which we want to have a
+final processing in order to display the results of the entire process: number of errors, successes,
+etc.
+
+Basically, each asynchronous call define a callback invoked at the end of his own treatment (success or error).
+Without tools, we are thus obliged to implement a **manual count of called functions and a count
+of callbacks called to compare**. The final callback is then called at the end of each call unit
+but executed only if there is no more callback to call. This gives:
+
+.. code-block:: javascript
+
+   /**
+    * Effective deletion of all element ids stored in the collection
+    */
+   deleteElements:function () {
+
+       var self = this;
+       var nbWaitingCallbacks = 0;
+
+       $.each(this.collection, function (type, idArray) {
+           $.each(idArray, function (index, currentId) {
+               nbWaitingCallbacks += 1;
+
+               $.ajax({
+                   url:App.Config.serverRootURL + '/participant/' + currentId,
+                   type:'DELETE'
+               })
+                   .done(function () {
+                       nbWaitingCallbacks -= 1;
+                       self.afterRemove(nbWaitingCallbacks);
+                   })
+                   .fail(function (jqXHR) {
+                       if (jqXHR.status != 404) {
+                           self.recordError(type, currentId);
+                       }
+                       nbWaitingCallbacks -= 1;
+                       self.afterRemove(nbWaitingCallbacks);
+                   });
+           });
+       });
+   },
+
+   /**
+    * Callback called after an ajax deletion request
+    *
+    * @param nbWaitingCallbacks number of callbacks that we have still to wait before close request
+    */
+   afterRemove:function (nbWaitingCallbacks) {
+
+       // if there is still callbacks waiting, do nothing. Otherwise it means that all request have
+       // been performed : we can manage global behaviours
+       if (nbWaitingCallbacks == 0) {
+           // do something
+       }
+   },
+
+
+This code work but there is **too much technical code** !
+
+Async_ provides a set of helpers to perform **asynchronous parallel processing** and synchronize the end of 
+these treatments through a final callback called once.
+
+This lib is initially developed for nodeJS server but has been **implemented on browser side**.
+
+Theoretically, the method we currently need is ``forEach``. However, we faced the following problem: all of these helpers
+are designed to stop everything (and call the final callback) when the first error occurs.
+But if we need to perform all server calls and only then, whether successful or fail, return global results
+to the user, there is unfortunately no appropriate option (despite similar requests on mailing lists) ...
+
+You can twick a little and, instead of ``forEach``, use the ``map`` function that returns a result array
+in which you can register successes and errors. error parameter of the final callback cannot be used without
+stopping everything. So, the callback should always be called with a ``null`` err parameter and a custom wrapper containing the
+returned object and the type of the result: ``success`` or ``error``. You can then globally count errors without
+interrupting your calls:
+
+.. code-block:: javascript
+
+   /**
+    * Effective deletion of all element ids stored in the collection
+    */
+   deleteElements:function () {
+
+       ...
+
+       async.map(elements, this.deleteFromServer.bind(this), this.afterRemove.bind(this));
+   },
+
+   deleteFromServer:function (elem, deleteCallback) {
+       $.ajax({
+           url:App.Config.serverRootURL +'/' + elem.type + '/' + elem.id,
+           type:'DELETE'
+       })
+       .done(function () {
+           deleteCallback(null, {type:"success", elem:elem});
+       })
+       .fail(function (jqXHR) {
+           ...
+
+           // callback is called with null error parameter because otherwise it breaks the
+           // loop and top on first error :-(
+           deleteCallback(null, {type:"error", elem:elem});
+       }.bind(this));
+   },
+
+   /**
+    * Callback called after all ajax deletion requests
+    *
+    * @param err always null because default behaviour break map on first error
+    * @param results array of fetched models : contain null value in cas of error
+    */
+   afterRemove:function (err, results) {
+
+       // no more test
+       ...
+   },
+
 
 Dispatching keyboard shortcuts : Keymaster
 ------------------------------------------
