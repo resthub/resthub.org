@@ -43,7 +43,12 @@ There are 3 ways to use it in your project :
 
     </dependencies>
 
-`Todo RESThub 2.0 example <https://github.com/resthub/todo-example>`_ will also be useful to see a real project working with this stack.
+The following examples could also be useful to see real projects working with this stack:
+
+- `Todo RESThub 2.0 example <http://github.com/resthub/todo-example>`_.
+- `Tournament sample app <http://github.com/bmeurant/tournament-front>`_.
+
+Please don't hesitate to send feedbacks `here <https://github.com/resthub/resthub-backbone-stack/issues>`_.
 
 Project structure
 =================
@@ -446,7 +451,7 @@ Resthub only provide require config shims and paths for these libs in ``main.js`
 
    require.config({
 
-    shim:{
+      shim:{
         ...
         'backbone-queryparams':{
             deps:[
@@ -467,18 +472,18 @@ Resthub only provide require config shims and paths for these libs in ``main.js`
                 'underscore'
             ]
         }
-    },
+      },
 
-    // Libraries
-    paths:{
+      // Libraries
+      paths:{
         'backbone-validation':'libs/backbone-validation',
         'resthub-backbone-validation':'resthub/backbone-validation.ext',
         'backbone-queryparams':'libs/backbone.queryparams',
         'backbone-paginator':'libs/backbone.paginator',
         async:'libs/async.js',
         keymaster:'libs/keymaster'
-    }
-});
+      }
+   });
 
 Form Validation : Backbone Validation
 -------------------------------------
