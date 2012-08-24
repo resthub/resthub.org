@@ -2,6 +2,9 @@
 Backbone.js Stack
 =================
 
+.. contents::
+   :depth: 3
+
 The Backbone.js stack includes the following main librairies :
     * **jQuery 1.7** (`documentation <http://docs.jquery.com/Main_Page>`_)
     * **Backbone.js 0.9.2** (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter 
