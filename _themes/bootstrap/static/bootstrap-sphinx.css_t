@@ -53,3 +53,8 @@ div.admonition-todo {
   background-color: #d9edf7;
   border-color: #bce8f1;
 }
+
+a.toc-backref {
+   font-weight: bold;
+   color: #404040;
+}
