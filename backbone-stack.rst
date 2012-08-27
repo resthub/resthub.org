@@ -232,14 +232,14 @@ You can see more details on the `Todo example <http://github.com/resthub/todo-ex
 Always specify the context for event binding
 --------------------------------------------
 
-In order to allow automatic cleanup when the View is removed, you should always specfy the context when binding model or collection events :
+In order to allow automatic cleanup when the View is removed, you should always specify the context when binding model or collection events :
 
 .. code-block:: javascript
     
-    // BAD : no context specify to the handler won't be cleanup when the view will be removed
+    // BAD : no context specified won't clean the view on remove
     Todos.on('all', this.render);
 
-    // GOOD : context will allow automatic cleanup of the handler when the view will be removed
+    // GOOD : context will allow automatic cleanup of the handler on remove
     Todos.on('all', this.render, this);
 
 You should also specify the model or collection attribute of your View in order to make it works.
