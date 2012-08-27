@@ -15,8 +15,7 @@ The Backbone.js stack includes the following main librairies :
       (`documentation <http://requirejs.org/docs/api.html>`_)
     * **Handlebars 1.0** (`documentation <http://handlebarsjs.com>`_)
     * A **console shim** for browsers that don't support it
-    * A RESThub **PubSub implementation**
-    * **Twitter Bootstrap 2.0** (`documentation <http://twitter.github.com/bootstrap/>`_) JS plugins
+    * **Twitter Bootstrap 2.1** (`documentation <http://twitter.github.com/bootstrap/>`_) JS plugins
     
 And some other complementary librairies : cf. :ref:`complementary-libs`
 
@@ -54,8 +53,7 @@ Project structure
 =================
 
 You should read carefully the awesome blog post `Organizing your application using Require.js Modules 
-<http://backbonetutorials.com/organizing-backbone-using-modules/>`_ since it describes the project structure and principles recommended 
-in RESThub Backbone stack based projects.
+<http://backbonetutorials.com/organizing-backbone-using-modules/>`_ since it describes the project structure and principles recommended in RESThub Backbone stack based projects.
 
 Bootstrapping
 =============
@@ -160,6 +158,7 @@ at your webapp root (usually src/main/webapp). Please find below a sample :
            'resthub-backbone-validation':'resthub/backbone-validation.ext',
            handlebars:'libs/handlebars',
            'resthub-handlebars':'resthub/handlebars-helpers',
+           hbs: 'resthub/handlebars-require',
            'backbone-queryparams':'libs/backbone.queryparams',
            'backbone-paginator':'libs/backbone.paginator',
            async:'libs/async.js',
@@ -181,6 +180,112 @@ at your webapp root (usually src/main/webapp). Please find below a sample :
   allows us to load other linked libs transparently without having to define it repeatedly (e.g. ``underscore.string`` loading - this libs is strongly correlated
   to ``underscore`` - and merged with it and thus should not have to be defined anymore)
 
+Guidelines
+==========
+
+View instantiation
+------------------
+
+Backbone views contains an $el attribute that represent the element (a div by default) where the template will be rendered, but it does not provide an attribute that represent the DOM element where the view will be attached.
+
+In order to follow separation of concerns and encapsulation principles, RESThub Backbone stack guideline is to use a this.$root instance variabvle in order to specify where the View will be attached. This will also allow to manage in a nice way View lifecycle (multiple View creation/removal).
+
+You should use the following pattern in all your views :
+
+.. code-block:: javascript
+
+    var MyView = Backbone.View.extend({
+
+        initialize: function(options) {
+            this.$root = options.root;
+            this.$root.html(this.$el);
+            
+            /// ...
+        },
+
+        // For example
+        render: function() {
+            this.$el.html(template({
+                messages:   messages
+            }));
+        }
+    });
+    return MyView;
+
+This allows to avoid to hardcod teh root element in the View, since the root is passed as parameter at instantiation :
+
+.. code-block:: javascript
+    
+    var myView = new MyView({root: $('#content')});
+
+2 remarks :
+ * It is important to do this.$root.html(this.$el) in initialize, if you do it in render it will broke delegate events.
+ * You can use append() or prepend() instead of html() in the this.$root.html(this.$el) line in collection views for example.
+
+Collection View
+---------------
+
+In order to follow with separation of concerns and encapsulation principles, if you need to render a collection with its child elements, you should create a view for the collection and view for the model. The model view should be able to render itself.
+
+You can see more details on the `Todo example <http://github.com/resthub/todo-example>`_ (have a look to TodosView and TodoView).
+
+Always specify the context for event binding
+--------------------------------------------
+
+In order to allow automatic cleanup when the View is removed, you should always specfy the context when binding model or collection events :
+
+.. code-block:: javascript
+    
+    // BAD : no context specify to the handler won't be cleanup when the view will be removed
+    Todos.on('all', this.render);
+
+    // GOOD : context will allow automatic cleanup of the handler when the view will be removed
+    Todos.on('all', this.render, this);
+
+You should also specify the model or collection attribute of your View in order to make it works.
+
+Static versus instance varables
+-------------------------------
+
+If you want to be able to create different View instances, your have to manage properly the DOM element where the view will be attched as described previously. You also have to use instance variable.
+
+Backbone way of declaring a static color variable :
+
+.. code-block:: javascript
+
+    var MyView = Backbone.View.extend({
+
+        color : '#FF0000',
+
+        initialize: function(options) {
+            this.$root = options.root;
+            this.$root.html(this.$el);
+        }
+           
+    });
+    return MyView;
+
+Backbone way of declaring an instance color variable :
+
+.. code-block:: javascript
+
+    var MyView = Backbone.View.extend({
+
+        initialize: function(options) {
+            this.$root = options.root;
+            this.$root.html(this.$el);
+
+            this.color = '#FF0000';
+        }
+           
+    });
+    return MyView;
+
+Events
+------
+
+Backbone default event list is available `here <http://backbonejs.org/#FAQ-events>`_.
+
 Templating
 ==========
 
@@ -201,14 +306,15 @@ Templates are HTML fragments, without the <html>, <header> or <body> tag :
         </div>
     </div>
 
-Templates are injected into Views thanks to RequireJS text plugin. So it should be defined in your main.js :
+Templates are injected into Views thanks to RequireJS Handlebars plugin, based on RequireJS text plugin. This hbs plugin will automatically retreive and compile your template. So it should be defined in your main.js :
 
 .. code-block:: javascript
 
     require.config({
         paths: {
             // ...
-            text: "libs/text"
+            text: 'libs/text',
+            hbs: 'resthub/handlebars-require'
         }
     });
 
@@ -216,18 +322,15 @@ Sample usage in a Backbone.js View :
 
 .. code-block:: javascript
 
-    define(['jquery', 'backbone', 'handlebars', 'text!templates/todo.html'],function($, Backbone, Handlebars, todoTemplate) {
+    define(['jquery', 'backbone', 'handlebars', 'hbs!templates/todo.html'],function($, Backbone, Handlebars, todoTmpl) {
         var TodoView = Backbone.View.extend({
 
         //... is a list tag.
-        tagName:  "li",
-
-        // Compile and cache the template function for a single item.
-        template: Handlebars.compile(todoTemplate),
+        tagName:  'li',
 
         render: function() {
-            // todoTemplate a function that take context (labels, model) and return the dynamized output.
-            var result = this.template(this.model.toJSON());
+            // todoTmpl a function that take context (labels, model) and return the dynamized output.
+            var result = todoTmpl(this.model.toJSON());
             $(this.el).html(result);
             return this;
         }
@@ -429,7 +532,21 @@ will produce:
 sprintf
 +++++++
 
-.. todo:: document sprintf helper
+This helper allows to use sprintf C like string formatting in your templates. It is based on `Underscore String <https://github.com/epeli/underscore.string>`_ implementation. A detailed documentation is available `here <http://www.diveintojavascript.com/projects/javascript-sprintf>`_.
+
+e.g:
+
+.. code-block:: html
+
+   <span>{{sprintf "This is a %s" "test"}}</span>
+
+will produce:
+
+.. code-block:: html
+
+   <span>This is a test</span>
+
+This helper is very usefull for Internationalization_, and can take any number of parameters.
 
 .. _complementary-libs:
 
@@ -694,7 +811,7 @@ of these parameters**. It can then be passed to the view constructor for initial
        ..
    },
 
-Paginated lists : Backone Paginator
+Paginated lists : Backbone Paginator
 -----------------------------------
 
 `Backbone Paginator`_ offers both client side pagination (``Paginator.clientPager``) and integration with server side pagination
@@ -950,7 +1067,6 @@ interrupting your calls:
        ...
    },
 
-
 Dispatching keyboard shortcuts : Keymaster
 ------------------------------------------
 
@@ -973,9 +1089,10 @@ For some of suggested embedded libs, resthub provides extensions.
 
 These extensions can be found, as any other custom resthub lib, in ``js/resthub`` directory.
 
-Resthub provides currently two basic extensions : 
+Resthub provides currently these extensions : 
 
-- Handlebars_ extension : Addition of some usefull Handlebars helpers. cf :ref:`handlebars-helpers` and `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/handlebars-helpers.js>`_.
+- Handlebars_ helpers extension : Addition of some usefull Handlebars helpers. cf :ref:`handlebars-helpers` and `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/handlebars-helpers.js>`_.
+- Handlebars_ RequireJS plugin in order to retreive and compile automatically Handlebars templates
 - `Backbone Validation`_ extension : Validation callbacks (``valid`` and ``invalid``) extension to provide a native integration 
   with `Twitter Bootstrap`_ form structure (``controls`` and ``control-group``). cf. `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/backbone-validation.ext.js>`_
 
@@ -1195,11 +1312,9 @@ labels.js
 
 And in your template
 
-.. todo:: rewrite this paragraph with a sprintf handlebars helper
-
 .. code-block:: html
 
-    <%= done == 1 ? messages.clearitem : _.sprintf(messages.clearitems, done) %>
+    {{#ifequals done 1}} {{messages.clearitem}} {{else}} {{sprintf messages.clearitems done}} {{/ifequals}}
 
 Inheritance
 ===========
@@ -1227,7 +1342,6 @@ it is possible to reuse Backbone.js extend() function in order to get simple inh
     // Call parent constructor
     var SomeOne = Human.extend({
         initialize : function(name){
-            
             SomeOne.__super__.initialize.call(this, name);
         }
     });
