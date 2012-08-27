@@ -212,7 +212,7 @@ You should use the following pattern in all your views :
     });
     return MyView;
 
-This allows to avoid to hardcod teh root element in the View, since the root is passed as parameter at instantiation :
+This allows to avoid to hardcode the root element in the View, since the root is passed as parameter at instantiation :
 
 .. code-block:: javascript
     
