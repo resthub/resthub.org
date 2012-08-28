@@ -1,10 +1,12 @@
+:tocdepth: 2
+
 =================
 Backbone.js Stack
 =================
 
 .. contents::
    :depth: 3
-
+   
 The Backbone.js stack includes the following main librairies :
     * **jQuery 1.7** (`documentation <http://docs.jquery.com/Main_Page>`_)
     * **Backbone.js 0.9.2** (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter 
@@ -286,6 +288,8 @@ Events
 
 Backbone default event list is available `here <http://backbonejs.org/#FAQ-events>`_.
 
+.. _templating:
+
 Templating
 ==========
 
@@ -335,750 +339,16 @@ Sample usage in a Backbone.js View :
             return this;
         }
     });
-    
-.. _handlebars-helpers:
-    
+        
 Helpers
 -------
 
-Resthub provide some usefull **Handlebars helpers** included by default in ``main.js`` :
-
-ifinline
-++++++++
-
-This helper provides a more fluent syntax for inline ifs. i.e. if embedded in quoted strings.
-
-As with Handlebars ``#if``, if its first argument returns ``false``, ``undefined``, ``null``
-or ``[]`` (a "falsy" value), ``''`` is returned, otherwise ``returnVal`` argument is rendered.
-
-e.g:
-
-.. code-block:: html
-
-   <div class='{{ifinline done "done"}}'>Issue number 1</div>
-
-with the following context:
-
-.. code-block:: javascript
-
-   {done:true}
-   
-will produce:
-
-.. code-block:: html
-
-   <div class='done'>Issue number 1</div>
-
-unlessinline
-++++++++++++
-
-Opposite of ifinline helper.
-
-As with Handlebars ``#unless``, if its first argument returns ``false``, ``undefined``, ``null``
-or ``[]`` (a "falsy" value), ``returnVal`` is returned, otherwise ``''`` argument is rendered.
-
-e.g:
-
-.. code-block:: html
-
-   <div class='{{unlessinline done "todo"}}'>Issue number 1</div>
-
-with the following context:
-
-.. code-block:: javascript
-
-   {done:false}
-   
-will produce:
-
-.. code-block:: html
-
-   <div class='todo'>Issue number 1</div>
-
-ifequalsinline
-++++++++++++++
-
-This helper provides a if inline comparing two values.
-
-If the two values are strictly equals (``===``) return the returnValue argument, ``''`` otherwise.
-
-e.g:
-
-.. code-block:: html
-
-   <div class='{{ifequalsinline type "details" "active"}}'>Details</div>
-
-with the following context:
-
-.. code-block:: javascript
-
-   {type:"details"}
-   
-will produce:
-
-.. code-block:: html
-
-   <div class='active'>Details</div>
-
-unlessequalsinline
-++++++++++++++++++
-
-Opposite of ifequalsinline helper.
-
-If the two values are not strictly equals (``!==``) return the returnValue  argument, ``''`` otherwise.
-
-e.g:
-
-.. code-block:: html
-
-   <div class='{{unlessequalsinline type "details" "active"}}'>Edit</div>
-
-with the following context:
-
-.. code-block:: javascript
-
-   {type:"edit"}
-   
-will produce:
-
-.. code-block:: html
-
-   <div class='active'>Edit</div>
-
-ifequals
-++++++++
-
-This helper provides a if comparing two values.
-
-If only the two values are strictly equals (``===``) display the block
-
-e.g:
-
-.. code-block:: html
-
-   {{#ifequals type "details"}}
-      <span>This is details page</span>
-   {{/ifequals}}
-
-with the following context:
-
-.. code-block:: javascript
-
-   {type:"details"}
-   
-will produce:
-
-.. code-block:: html
-
-   <span>This is details page</span>
-
-unlessequals
-++++++++++++
-
-Opposite of ifequals helper.
-
-If only the two values are not strictly equals (``!==``) display the block
-
-e.g:
-
-.. code-block:: html
-
-   {{#unlessequals type "details"}}
-      <span>This is not details page</span>
-   {{/unlessequals}}
-
-with the following context:
-
-.. code-block:: javascript
-
-   {type:"edit"}
-   
-will produce:
-
-.. code-block:: html
-
-   <span>This is not details page</span>
-
-for
-+++
-
-This helper provides a for i in range loop.
-
-start and end parameters have to be integers >= 0 or their string representation. start should be <= end.
-In all other cases, the block is not rendered.
-
-e.g:
-
-.. code-block:: html
-
-   <ul>
-      {{#for 1 5}}
-         <li><a href='?page={{this}}'>{{this}}</a></li>
-      {{/for}}
-   </ul>
-   
-will produce:
-
-.. code-block:: html
-
-   <ul>
-      <li><a href='?page=1'>1</a></li>
-      <li><a href='?page=2'>2</a></li>
-      <li><a href='?page=3'>3</a></li>
-      <li><a href='?page=4'>4</a></li>
-      <li><a href='?page=5'>5</a></li>
-   </ul>
-   
-sprintf
-+++++++
-
-This helper allows to use sprintf C like string formatting in your templates. It is based on `Underscore String <https://github.com/epeli/underscore.string>`_ implementation. A detailed documentation is available `here <http://www.diveintojavascript.com/projects/javascript-sprintf>`_.
-
-e.g:
-
-.. code-block:: html
-
-   <span>{{sprintf "This is a %s" "test"}}</span>
-
-will produce:
-
-.. code-block:: html
-
-   <span>This is a test</span>
-
-This helper is very usefull for Internationalization_, and can take any number of parameters.
-
-.. _complementary-libs:
+**Handlebars Helpers** provided by resthub are documented here: :ref:`handlebars-helpers`
 
 Complementary libs
 ==================
 
-Resthub selected and embed some complementary utility libs provinding advanced functionalities for a complete and real backbone (and resthub)
-based application. These libs are : 
-
-- **Form Validation:** `Backbone Validation`_
-- **Parameters support on view routing:** `Backbone Query Parameters`_
-- **Paginated lists:** `Backbone Paginator`_
-- **Asynchronous calls:** Async_
-- **Dispatching keyboard shortcuts:** Keymaster_
-
-Resthub only provide require config shims and paths for these libs in ``main.js`` and you are totaly free to use these libs or not:
-
-.. code-block:: javascript
-
-   require.config({
-
-      shim:{
-        ...
-        'backbone-queryparams':{
-            deps:[
-                'backbone',
-                'underscore'
-            ]
-        },
-        'backbone-paginator':{
-            deps:[
-                'backbone',
-                'underscore',
-                'jquery'
-            ],
-            exports:'Backbone.Paginator'
-        },
-        async:{
-            deps:[
-                'underscore'
-            ]
-        }
-      },
-
-      // Libraries
-      paths:{
-        'backbone-validation':'libs/backbone-validation',
-        'resthub-backbone-validation':'resthub/backbone-validation.ext',
-        'backbone-queryparams':'libs/backbone.queryparams',
-        'backbone-paginator':'libs/backbone.paginator',
-        async:'libs/async.js',
-        keymaster:'libs/keymaster'
-      }
-   });
-
-Form Validation : Backbone Validation
--------------------------------------
-
-Backbone_ does not provide natively **any tool for form or validation management**. It is not necessary
-to specify model attributes or related constraints.
-
-In terms of validation, Backbone_ provides only empty methods ``validate`` and ``isValid`` that have to be implemented by each developer. 
-The only guarantee that the ``validate`` method is called before a ``save`` (canceled on error). But a complete form validation is 
-not obvious (custom error array management ... ) and the errors are not distinguishable from inherent ``save`` errors (server communication and so on).
-
-`Backbone Validation`_ **only focus on validation aspects** and leaves us free to write our form. The lib has **a very large number of built-in 
-validators** and **provides effective validators customization and extension mechanisms**.
-
-`Backbone Validation`_ does not neither propose automatic linking between form and model and leaves us the choice to use a dedicated lib or 
-to implement custom behaviour (before the validation, process all form values to set to model). The behaviour of `Backbone Validation`_ perfectly matches standard
-Backbone_ workflow through ``validate`` and ``isValid`` methods.
-
-**Model** : constraints definition:
-
-.. code-block:: javascript
-
-   define([
-       'underscore',
-       'backbone',
-       'resthub-backbone-validation'
-   ], function (_, Backbone) {
-
-       /**
-        * Definition of a Participant model object
-        */
-       var ParticipantModel = Backbone.Model.extend({
-           urlRoot:App.Config.serverRootURL + "/participant",
-           defaults:{
-
-           },
-
-           // Defines validation options (see Backbone-Validation)
-           validation:{
-               firstname:{
-                   required:true
-               },
-               lastname:{
-                   required:true
-               },
-               email:{
-                   required:false,
-                   pattern:'email'
-               }
-           },
-
-           initialize:function () {
-           }
-
-       });
-       return ParticipantModel;
-
-   });
-
-**HTML5 Form** :
-
-.. code-block:: html
-
-   {{#with participant}}
-       <form class="form-horizontal">
-           <fieldset>
-               <div class="row">
-                   <div class="span8">
-                       <div class="control-group">
-                           {{#if id}}
-                               <label for="participantId" class="control-label">Id:</label>
-                               <div class="controls">
-                                   <input id="participantId" name="id" type="text" value="{{id}}" disabled/>
-                               </div>
-                           {{/if}}
-                       </div>
-
-                       <div class="control-group">
-                           <label for="firstname" class="control-label">First name:</label>
-                           <div class="controls">
-                               <input type="text" id="firstname" name="firstname" required="true" value="{{firstname}}" tabindex="1" autofocus="autofocus"/>
-                               <span class="help-inline"></span>
-                           </div>
-                       </div>
-
-                       <div class="control-group">
-                           <label for="lastname" class="control-label">Last name:</label>
-                           <div class="controls">
-                               <input type="text" id="lastname" name="lastname" required="true" value="{{lastname}}" tabindex="2"/>
-                               <span class="help-inline"></span>
-                           </div>
-                       </div>
-
-                       <div class="control-group">
-                           <label for="email" class="control-label">email address:</label>
-                           <div class="controls">
-                               <input type="email" id="email" name="email" value="{{email}}" tabindex="3"/>
-                               <span class="help-inline"></span>
-                           </div>
-                       </div>
-
-                   </div>
-           </fieldset>
-       </form>
-   {{/with}}
-
-
-**View** : initialization and usage:
-
-.. code-block:: javascript
-
-   initialize:function () {
-
-       ...
-
-       // allow backbone-validation view callbacks (for error display)
-       Backbone.Validation.bind(this);
-
-       ...
-   },
-
-   ...
-
-   /**
-    * Save the current participant (update or create depending of the existence of a valid model.id)
-    */
-   saveParticipant:function () {
-
-       // build array of form attributes to refresh model
-       var attributes = {};
-       this.$el.find("form input[type!='submit']").each(function (index, value) {
-           attributes[value.name] = value.value;
-           this.model.set(value.name, value.value);
-       }.bind(this));
-
-       // save model if it's valid, display alert otherwise
-       if (this.model.isValid()) {
-           this.model.save(null, {
-               success:this.onSaveSuccess.bind(this),
-               error:this.onSaveError.bind(this)
-           });
-       }
-       else {
-           ...
-       }
-
-If you're using ``resthub-backbone-validation`` instead of the original lib (cf. :ref:`resthub-extensions`), you also natively
-beneficate of custom validation callbacks allowing to render validation errors in a form structured with `Twitter Bootstrap`_.
-
-
-Parameters support on view routing : Backbone Query Parameters
---------------------------------------------------------------
-
-Backbone_ routes management allows to define permet such routes :
-``"participants":"listParticipants"`` and ``"participants?:param":"listParticipantsParameters"``. But the native 
-behaviour seems not sufficient:
-
-- **management of an unknown number of parameters** (ex ``?page=2&filter=filter``) is not obvious
-- we have to define (at least) **two routes to handle calls with or without parameters** without duplication
-and without too much technical code
-
-Expected behaviour was that the **map a single route to a method with an array of request parameter as optional parameter.**
-
-`Backbone Query Parameters`_ provides this functionality.
-
-With this lib, included once and for all in the main router, You 'll get the following:
-
-**router.js** :
-
-.. code-block:: javascript
-
-   define(['backbone', 'backbone-queryparams'], function (Backbone) {
-       var AppRouter = Backbone.Router.extend({
-         routes:{
-             // Define some URL routes
-             ...
-
-             "participants":"listParticipants",
-
-             ...
-         },
-
-         ...
-
-         listParticipants:function (params) {
-             // params contains the list of all query params of is empty if no param
-         }
-      });
-   });
-
-Query parameters array is automatically recovered **without any further operation** and **whatever the number
-of these parameters**. It can then be passed to the view constructor for initialization:
-
-**list.js** :
-
-.. code-block:: javascript
-
-   askedPage:1,
-
-   initialize:function (params) {
-
-       ...
-
-       if (params) {
-           if (params.page && this.isValidPageNumber(params.page)) this.askedPage = parseInt(params.page);
-       }
-
-       ..
-   },
-
-Paginated lists : Backbone Paginator
------------------------------------
-
-`Backbone Paginator`_ offers both client side pagination (``Paginator.clientPager``) and integration with server side pagination
-(``Paginator.requestPager``). It includes management of filters, sorting, etc.
-
-Client side pagination
-++++++++++++++++++++++
-
-This lib extends Backbone_ collections. So adding options to collections is necessary:
-
-.. code-block:: javascript
-
-   var participantsCollection = Backbone.Paginator.clientPager.extend({
-       model:participantModel,
-       paginator_core:{
-           // the type of the request (GET by default)
-           type:'GET',
-
-           // the type of reply (jsonp by default)
-           dataType:'json',
-
-           // the URL (or base URL) for the service
-           url:App.Config.serverRootURL + '/participants'
-       },
-       paginator_ui:{
-           // the lowest page index your API allows to be accessed
-           firstPage:1,
-
-           // which page should the paginator start from
-           // (also, the actual page the paginator is on)
-           currentPage:1,
-
-           // how many items per page should be shown
-           perPage:12,
-
-           // a default number of total pages to query in case the API or
-           // service you are using does not support providing the total
-           // number of pages for us.
-           // 10 as a default in case your service doesn't return the total
-           totalPages:10
-       },
-       parse:function (response) {
-           return response;
-       }
-   });
-
-Then we ``fetch`` the collection and then ask for the right page:
-
-.. code-block:: javascript
-
-    this.collection = new ParticipantsCollection();
-
-    // get the participants collection from server
-    this.collection.fetch(
-     {
-         success:function () {
-             this.collection.goTo(this.askedPage);
-         }.bind(this),
-         error:function (collection, response) {
-             ...
-         }
-     });
-
-Once the collection retrieved, ``collection.info()`` allows to get information about current state:
-
-.. code-block:: javascript
-
-   totalUnfilteredRecords
-   totalRecords
-   currentPage
-   perPage
-   totalPages
-   lastPage
-   previous
-   next
-   startRecord
-   endRecord
-
-Server side pagination
-++++++++++++++++++++++
-
-Once client side pagination implemented, server adaptation is very easy:
-
-We set **parameters to send to server** in ``collections/participants.js``:
-
-.. code-block:: javascript
-
-   server_api:{
-       'page':function () {
-           return this.currentPage;
-       },
-
-       'size':function () {
-           return this.perPage;
-       }
-   },
-
-Then, in the same file, we provide a parser to get the response back and initialize collection and pager:
-
-.. code-block:: javascript
-
-   parse:function (response) {
-       var participants = response.content;
-       this.totalPages = response.totalPages;
-       this.totalRecords = response.totalElements;
-       this.lastPage = this.totalPages;
-       return participants;
-   }
-
-Finally, we change server call : this time the ``goTo`` method extend ``fetch`` and should be called instead
-(``views/participants/list.js``) :
-
-.. code-block:: javascript
-
-   // get the participants collection from server
-   this.collection.goTo(this.askedPage,
-       {
-           success:function () {
-               ...
-           }.bind(this),
-           error:function () {
-               ...
-           }
-       });
-
-All other code stay inchanged but the ``collection.info()`` is a little bit thinner:
-
-.. code-block:: javascript
-
-   totalRecords
-   currentPage
-   perPage
-   totalPages
-   lastPage
-
-
-Asynchronous calls : Async
---------------------------
-
-Other recurrent problem: parallel asynchronous calls for which we want to have a
-final processing in order to display the results of the entire process: number of errors, successes,
-etc.
-
-Basically, each asynchronous call define a callback invoked at the end of his own treatment (success or error).
-Without tools, we are thus obliged to implement a **manual count of called functions and a count
-of callbacks called to compare**. The final callback is then called at the end of each call unit
-but executed only if there is no more callback to call. This gives:
-
-.. code-block:: javascript
-
-   /**
-    * Effective deletion of all element ids stored in the collection
-    */
-   deleteElements:function () {
-
-       var self = this;
-       var nbWaitingCallbacks = 0;
-
-       $.each(this.collection, function (type, idArray) {
-           $.each(idArray, function (index, currentId) {
-               nbWaitingCallbacks += 1;
-
-               $.ajax({
-                   url:App.Config.serverRootURL + '/participant/' + currentId,
-                   type:'DELETE'
-               })
-                   .done(function () {
-                       nbWaitingCallbacks -= 1;
-                       self.afterRemove(nbWaitingCallbacks);
-                   })
-                   .fail(function (jqXHR) {
-                       if (jqXHR.status != 404) {
-                           self.recordError(type, currentId);
-                       }
-                       nbWaitingCallbacks -= 1;
-                       self.afterRemove(nbWaitingCallbacks);
-                   });
-           });
-       });
-   },
-
-   /**
-    * Callback called after an ajax deletion request
-    *
-    * @param nbWaitingCallbacks number of callbacks that we have still to wait before close request
-    */
-   afterRemove:function (nbWaitingCallbacks) {
-
-       // if there is still callbacks waiting, do nothing. Otherwise it means that all request have
-       // been performed : we can manage global behaviours
-       if (nbWaitingCallbacks == 0) {
-           // do something
-       }
-   },
-
-
-This code work but there is **too much technical code** !
-
-Async_ provides a set of helpers to perform **asynchronous parallel processing** and synchronize the end of 
-these treatments through a final callback called once.
-
-This lib is initially developed for nodeJS server but has been **implemented on browser side**.
-
-Theoretically, the method we currently need is ``forEach``. However, we faced the following problem: all of these helpers
-are designed to stop everything (and call the final callback) when the first error occurs.
-But if we need to perform all server calls and only then, whether successful or fail, return global results
-to the user, there is unfortunately no appropriate option (despite similar requests on mailing lists) ...
-
-You can twick a little and, instead of ``forEach``, use the ``map`` function that returns a result array
-in which you can register successes and errors. error parameter of the final callback cannot be used without
-stopping everything. So, the callback should always be called with a ``null`` err parameter and a custom wrapper containing the
-returned object and the type of the result: ``success`` or ``error``. You can then globally count errors without
-interrupting your calls:
-
-.. code-block:: javascript
-
-   /**
-    * Effective deletion of all element ids stored in the collection
-    */
-   deleteElements:function () {
-
-       ...
-
-       async.map(elements, this.deleteFromServer.bind(this), this.afterRemove.bind(this));
-   },
-
-   deleteFromServer:function (elem, deleteCallback) {
-       $.ajax({
-           url:App.Config.serverRootURL +'/' + elem.type + '/' + elem.id,
-           type:'DELETE'
-       })
-       .done(function () {
-           deleteCallback(null, {type:"success", elem:elem});
-       })
-       .fail(function (jqXHR) {
-           ...
-
-           // callback is called with null error parameter because otherwise it breaks the
-           // loop and top on first error :-(
-           deleteCallback(null, {type:"error", elem:elem});
-       }.bind(this));
-   },
-
-   /**
-    * Callback called after all ajax deletion requests
-    *
-    * @param err always null because default behaviour break map on first error
-    * @param results array of fetched models : contain null value in cas of error
-    */
-   afterRemove:function (err, results) {
-
-       // no more test
-       ...
-   },
-
-Dispatching keyboard shortcuts : Keymaster
-------------------------------------------
-
-Keymaster_ is a micro library allowing to define listeners on keyboard shortcuts and propagate them. 
-The syntax is elegant, it is very simple while very complete:
-
-- Management of multiple hotkeys
-- Chaining through an important number of "modifiers"
-- Source DOM element type filtering
-- ...
-
-It is so simple that the doc is self sufficient - see `here <http://github.com/madrobby/keymaster>`_
+**Complementary libs** provided by resthub are documented here: :ref:`complementary-libs`
 
 .. _resthub-extensions:
 
@@ -1091,8 +361,12 @@ These extensions can be found, as any other custom resthub lib, in ``js/resthub`
 
 Resthub provides currently these extensions : 
 
+- Backbone extensions :
+   - PubSub events declaration integration mechanism in ``Backbone.Views``: cf. :ref:`pubsub-in-views`.
+   - Backbone ``dispose`` method extension and automatic el DOM removing binding: cf. TODO
+   - Backbone rendering mechanisms extension: cf. TODO
 - Handlebars_ helpers extension : Addition of some usefull Handlebars helpers. cf :ref:`handlebars-helpers` and `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/handlebars-helpers.js>`_.
-- Handlebars_ RequireJS plugin in order to retreive and compile automatically Handlebars templates
+- Handlebars_ RequireJS plugin in order to retreive and compile automatically Handlebars templates: cf. :ref:`templating`
 - `Backbone Validation`_ extension : Validation callbacks (``valid`` and ``invalid``) extension to provide a native integration 
   with `Twitter Bootstrap`_ form structure (``controls`` and ``control-group``). cf. `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/backbone-validation.ext.js>`_
 
@@ -1104,9 +378,10 @@ e.g.
 .. code-block:: javascript
 
    define([
+       'resthub-backbone',
        'resthub-handlebars',
        'resthub-backbone-validation'
-   ], function (Handlebars, BackboneValidation) {
+   ], function (Backbone, Handlebars, BackboneValidation) {
       ...
    });
    
@@ -1117,9 +392,10 @@ If you don't want to use these extensions, you only have to use the original lib
 .. code-block:: javascript
 
    define([
+       'backbone'
        'handlebars',
        'backbone-validation'
-   ], function (Handlebars, BackboneValidation) {
+   ], function (Backbone, Handlebars, BackboneValidation) {
       ...
    });
    
@@ -1129,6 +405,8 @@ All extensions paths and shims are defined in ``main.js`` :
 
    paths:{
       ...
+      'backbone':'libs/backbone',
+      'resthub-backbone':'resthub/backbone.ext',
       'backbone-validation':'libs/backbone-validation',
       'resthub-backbone-validation':'resthub/backbone-validation.ext',
       handlebars:'libs/handlebars',
@@ -1177,8 +455,7 @@ plugin <http://requirejs.org/docs/api.html#i18n>`_.
 
 Please find below the steps needed to internationalize your application.
 
-Configure i18n plugin
----------------------
+1. **Configure i18n plugin**
 
 In your main.js file you should define a shortcut path for i18n plugin and the default language for your application :
 
@@ -1193,8 +470,7 @@ In your main.js file you should define a shortcut path for i18n plugin and the d
     });
 
 
-Define labels
--------------
+2. **Define labels**
 
 Create a labels.js file in the js/nls directory, it will contain labels in the default locale used by your application. You 
 can change labels.js to another name (messages.js or functionality related name like user.js or product.js) but js/nls is the 
@@ -1230,8 +506,7 @@ Sample js/nls/fr-fr/labels.js file:
         }
     });
 
-Use it
-------
+3. **Use it**
 
 Add a dependency in the js, typically a View, where you'll need labels. You'll absolutely need to give a scoped variable to 
 the result (in this example ``labels``, but you can choose the one you want). 
@@ -1259,8 +534,7 @@ In in your html template :
         <h1><%= labels.titles.login %></h1>
     </div>
 
-Change locale
--------------
+4. **Change locale**
 
 Changing locale require a page reloading, so it is usually implemented with a Backbone.js router configuration like the following one :
 
@@ -1291,13 +565,10 @@ Changing locale require a page reloading, so it is usually implemented with a Ba
         return AppRouter;
     });
 
-sprintf to the rescue
----------------------
+5. **sprintf to the rescue**
 
 Internalionalization can sometimes be tricky since words are not always at the same position depending on the language. In order to make it easier to use, 
 RESThub backbone stack include Underscore.String. It contains a sprintf function that you can use for your translations.
-
-RESThub also provide a ``sprintf`` handlebars helper to use directly in your templates.
 
 You can use the ``_.sprintf()`` function and the ``sprintf`` helper in order to have some replacement in your labels.
 
@@ -1310,7 +581,7 @@ labels.js
         'clearitems' : 'Clear %s completed items',
     }
 
-And in your template
+RESThub also provide a ``sprintf`` handlebars helper to use directly in your templates (cf. :ref:`sprintf-helper`), so you can use it easily in your templates:
 
 .. code-block:: html
 
@@ -1366,52 +637,115 @@ it is possible to reuse Backbone.js extend() function in order to get simple inh
         getCounter : function() { return this.counter; }
     });
 
+.. _pubsub:
+    
 Publish Subscribe
 =================
 
-pubsub.js implements a simple event bus, allowing loosely coupled software design in your application.
-It is an elegant way to enable communication between Views without introducing strong coupling between them.
+Resthub provides publish / subscribe mechanisms over your application with a tiny native ``Backbone.Events`` extension.
+Publishing and subscribing are global scopped and allow to communicate between view all over your app.
 
 API
 ---
 
+``Backbone.Events`` API was not modified : `documentation <http://backbonejs.org/#Events>`_
+
 .. code-block:: javascript
  
-        /**
-         * Define an event handler for this eventType listening on the event bus
-         *
-         * subscribe( type, callback )
-         * @param {String} type A string that identifies your custom javaScript event type
-         * @param {function} callback(args) function to execute each time the event is triggered
-         * 
-         * @return Handle used to unsubscribe.
-         */
-        Pubsub.subscribe(eventType, handler(args));
-      
-        /**
-         * Remove a previously-defined event handler for the matching eventType
-         * 
-         * @param {String} handle The handle returned by the $.subscribe() function
-         */
-        Pubsub.unsubscribe(handle);
-      
-        /**
-         * Publish an event in the event bus
-         * 
-         * @param {String} type A string that identifies your custom javaScript event type
-         * @param {Array} data  Parameters to pass along to the event handler
-         */
-        Pubsub.publish(eventType, [extraParameters]);
+   // Bind one or more space separated events, `events`, to a `callback`
+   // function. Passing `"all"` will bind the callback to all events fired.
+   on: function(events, callback, context);
 
+   // Remove one or many callbacks. If `context` is null, removes all callbacks
+   // with that function. If `callback` is null, removes all callbacks for the
+   // event. If `events` is null, removes all bound callbacks for all events.
+   off: function(events, callback, context);
+
+   // Trigger one or many events, firing all bound callbacks. Callbacks are
+   // passed the same arguments as `trigger` is, apart from the event name
+   // (unless you're listening on `"all"`, which will cause your callback to
+   // receive the true name of the event as the first argument).
+   trigger: function(events);
+
+.. _pubsub-usage:   
+   
 Usage
 -----
 
+PubSub component can be accessed globally but we strongly recommend to import it with Require_.
+
 .. code-block:: javascript
 
-    define(['pubsub'], function(Pubsub) {
-        // TODO
-    }        
+   define(['pubsub'], function(Pubsub) {
+        
+      ...
+        
+      // subscribe to one event (do not forget this)
+      Pubsub.on("!test-event", function () { ... }, this);
+
+      // subscribe to multiple events
+      Pubsub.on("!test-event !test-event2", function () { ... }, this);
+
+      // trigger one event
+      Pubsub.trigger("!test-event");
+
+      // trigger multiple events
+      Pubsub.trigger("!test-event !test-event2");
+
+      // unsubscribe from one event
+      Pubsub.off("!test-event");
+
+      // unsubscribe from multiple events
+      Pubsub.off("!test-event !test-event2");
+
+      // unsubscribe from all
+      Pubsub.off();
+        
+      ...
+        
+   }
+
+Because of ``Bacbone.View`` and PubSub integration mechanisms (see below) the prefix ``!`` on first index of any global PubSub event
+is **strongly recommended**. 
+
+.. warning::
+
+   Do not follow this convention does not have any impact on PubSub behaviour but prevents usage of integrated Backbone.View
+   PubSub events declaration (see below)
+
+.. _pubsub-in-views:
+   
+PubSub and Backbone Views integration
+-------------------------------------
+
+In order to facilitate global PubSub events in Backbone Views, Resthub provides some syntaxic sugar with a ``Backbone.View`` extension.
+You will able to beneficiate of this extension as soon as you included Restbu Backbone extension instead of original Backbone lib (cf. :ref:`resthub-extensions`).
+
+Backbone Views events hash parsing has been extended to be capable of declaring global PubSub events as it is already done for DOM events binding. To declare such
+global events in your Backbone View, you only have to add it in events hash:
+
+.. code-block:: javascript
+
+   events:{
+       // regular DOM event bindings
+       "click #btn1":"buttonClicked",
+       "click #btn2":"buttonClicked",
+       // global PubSub events
+       "!global":"globalFired",
+       "!global1":"globalFired",
+       "!globalParams":"globalFiredParams"
+   },
     
+Please not that it is mandatory to prefix your global events with ``!`` to differenciate them from DOM events. You will always have to use the ``!`` prefix
+to reference events later (see :ref:`pubsub-usage` for samples).
+
+With this mechanism, PubSub subscribings are automatically declared on View construction, as DOM Events : **You don't have to call PubSub.on on these declared events**.
+In the same way, PubSub subscribings for this View are automatically removed during a Backbone ``dispose()`` method call : **You don't have either to call PubSub.off 
+on these declared events**.
+
+Obviously, this is still possible for you to explicitely call ``on`` and ``off`` in your view on other global events that you don't want to or you can't declare on 
+events hash (e.g. for more dynamic needs).
+
     
 .. _Require 2.0: http://requirejs.org
 .. _Require: http://requirejs.org
