@@ -64,6 +64,12 @@ div.admonition-todo {
   border-color: #bce8f1;
 }
 
+div.admonition.warning {
+  color: #b94a48;
+  background-color: #f2dede;
+  border-color: #eed3d7;
+}
+
 a.toc-backref {
    font-weight: bold;
    color: #404040;

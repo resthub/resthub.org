@@ -529,3 +529,14 @@ The syntax is elegant, it is very simple while very complete:
 - ...
 
 It is so simple that the doc is self sufficient - see `here <http://github.com/madrobby/keymaster>`_
+
+.. _Require 2.0: http://requirejs.org
+.. _Require: http://requirejs.org
+.. _Handlebars: http://handlebarsjs.com
+.. _Backbone Validation: http://github.com/thedersen/backbone.validation
+.. _Twitter Bootstrap: http://twitter.github.com/bootstrap/
+.. _Backbone Paginator: http://addyosmani.github.com/backbone.paginator/
+.. _Backbone Query Parameters: http://github.com/jhudson8/backbone-query-parameters
+.. _Async: http://github.com/caolan/async/
+.. _Keymaster: http://github.com/madrobby/keymaster
+.. _Backbone: http://backbonejs.org/

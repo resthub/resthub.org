@@ -288,6 +288,8 @@ Events
 
 Backbone default event list is available `here <http://backbonejs.org/#FAQ-events>`_.
 
+.. _templating:
+
 Templating
 ==========
 
@@ -359,8 +361,12 @@ These extensions can be found, as any other custom resthub lib, in ``js/resthub`
 
 Resthub provides currently these extensions : 
 
+- Backbone extensions :
+   - PubSub events declaration integration mechanism in ``Backbone.Views``: cf. :ref:`pubsub-in-views`.
+   - Backbone ``dispose`` method extension and automatic el DOM removing binding: cf. TODO
+   - Backbone rendering mechanisms extension: cf. TODO
 - Handlebars_ helpers extension : Addition of some usefull Handlebars helpers. cf :ref:`handlebars-helpers` and `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/handlebars-helpers.js>`_.
-- Handlebars_ RequireJS plugin in order to retreive and compile automatically Handlebars templates
+- Handlebars_ RequireJS plugin in order to retreive and compile automatically Handlebars templates: cf. :ref:`templating`
 - `Backbone Validation`_ extension : Validation callbacks (``valid`` and ``invalid``) extension to provide a native integration 
   with `Twitter Bootstrap`_ form structure (``controls`` and ``control-group``). cf. `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/backbone-validation.ext.js>`_
 
@@ -372,9 +378,10 @@ e.g.
 .. code-block:: javascript
 
    define([
+       'resthub-backbone',
        'resthub-handlebars',
        'resthub-backbone-validation'
-   ], function (Handlebars, BackboneValidation) {
+   ], function (Backbone, Handlebars, BackboneValidation) {
       ...
    });
    
@@ -385,9 +392,10 @@ If you don't want to use these extensions, you only have to use the original lib
 .. code-block:: javascript
 
    define([
+       'backbone'
        'handlebars',
        'backbone-validation'
-   ], function (Handlebars, BackboneValidation) {
+   ], function (Backbone, Handlebars, BackboneValidation) {
       ...
    });
    
@@ -397,6 +405,8 @@ All extensions paths and shims are defined in ``main.js`` :
 
    paths:{
       ...
+      'backbone':'libs/backbone',
+      'resthub-backbone':'resthub/backbone.ext',
       'backbone-validation':'libs/backbone-validation',
       'resthub-backbone-validation':'resthub/backbone-validation.ext',
       handlebars:'libs/handlebars',
@@ -627,52 +637,115 @@ it is possible to reuse Backbone.js extend() function in order to get simple inh
         getCounter : function() { return this.counter; }
     });
 
+.. _pubsub:
+    
 Publish Subscribe
 =================
 
-pubsub.js implements a simple event bus, allowing loosely coupled software design in your application.
-It is an elegant way to enable communication between Views without introducing strong coupling between them.
+Resthub provides publish / subscribe mechanisms over your application with a tiny native ``Backbone.Events`` extension.
+Publishing and subscribing are global scopped and allow to communicate between view all over your app.
 
 API
 ---
 
+``Backbone.Events`` API was not modified : `documentation <http://backbonejs.org/#Events>`_
+
 .. code-block:: javascript
  
-        /**
-         * Define an event handler for this eventType listening on the event bus
-         *
-         * subscribe( type, callback )
-         * @param {String} type A string that identifies your custom javaScript event type
-         * @param {function} callback(args) function to execute each time the event is triggered
-         * 
-         * @return Handle used to unsubscribe.
-         */
-        Pubsub.subscribe(eventType, handler(args));
-      
-        /**
-         * Remove a previously-defined event handler for the matching eventType
-         * 
-         * @param {String} handle The handle returned by the $.subscribe() function
-         */
-        Pubsub.unsubscribe(handle);
-      
-        /**
-         * Publish an event in the event bus
-         * 
-         * @param {String} type A string that identifies your custom javaScript event type
-         * @param {Array} data  Parameters to pass along to the event handler
-         */
-        Pubsub.publish(eventType, [extraParameters]);
+   // Bind one or more space separated events, `events`, to a `callback`
+   // function. Passing `"all"` will bind the callback to all events fired.
+   on: function(events, callback, context);
 
+   // Remove one or many callbacks. If `context` is null, removes all callbacks
+   // with that function. If `callback` is null, removes all callbacks for the
+   // event. If `events` is null, removes all bound callbacks for all events.
+   off: function(events, callback, context);
+
+   // Trigger one or many events, firing all bound callbacks. Callbacks are
+   // passed the same arguments as `trigger` is, apart from the event name
+   // (unless you're listening on `"all"`, which will cause your callback to
+   // receive the true name of the event as the first argument).
+   trigger: function(events);
+
+.. _pubsub-usage:   
+   
 Usage
 -----
 
+PubSub component can be accessed globally but we strongly recommend to import it with Require_.
+
 .. code-block:: javascript
 
-    define(['pubsub'], function(Pubsub) {
-        // TODO
-    }        
+   define(['pubsub'], function(Pubsub) {
+        
+      ...
+        
+      // subscribe to one event (do not forget this)
+      Pubsub.on("!test-event", function () { ... }, this);
+
+      // subscribe to multiple events
+      Pubsub.on("!test-event !test-event2", function () { ... }, this);
+
+      // trigger one event
+      Pubsub.trigger("!test-event");
+
+      // trigger multiple events
+      Pubsub.trigger("!test-event !test-event2");
+
+      // unsubscribe from one event
+      Pubsub.off("!test-event");
+
+      // unsubscribe from multiple events
+      Pubsub.off("!test-event !test-event2");
+
+      // unsubscribe from all
+      Pubsub.off();
+        
+      ...
+        
+   }
+
+Because of ``Bacbone.View`` and PubSub integration mechanisms (see below) the prefix ``!`` on first index of any global PubSub event
+is **strongly recommended**. 
+
+.. warning::
+
+   Do not follow this convention does not have any impact on PubSub behaviour but prevents usage of integrated Backbone.View
+   PubSub events declaration (see below)
+
+.. _pubsub-in-views:
+   
+PubSub and Backbone Views integration
+-------------------------------------
+
+In order to facilitate global PubSub events in Backbone Views, Resthub provides some syntaxic sugar with a ``Backbone.View`` extension.
+You will able to beneficiate of this extension as soon as you included Restbu Backbone extension instead of original Backbone lib (cf. :ref:`resthub-extensions`).
+
+Backbone Views events hash parsing has been extended to be capable of declaring global PubSub events as it is already done for DOM events binding. To declare such
+global events in your Backbone View, you only have to add it in events hash:
+
+.. code-block:: javascript
+
+   events:{
+       // regular DOM event bindings
+       "click #btn1":"buttonClicked",
+       "click #btn2":"buttonClicked",
+       // global PubSub events
+       "!global":"globalFired",
+       "!global1":"globalFired",
+       "!globalParams":"globalFiredParams"
+   },
     
+Please not that it is mandatory to prefix your global events with ``!`` to differenciate them from DOM events. You will always have to use the ``!`` prefix
+to reference events later (see :ref:`pubsub-usage` for samples).
+
+With this mechanism, PubSub subscribings are automatically declared on View construction, as DOM Events : **You don't have to call PubSub.on on these declared events**.
+In the same way, PubSub subscribings for this View are automatically removed during a Backbone ``dispose()`` method call : **You don't have either to call PubSub.off 
+on these declared events**.
+
+Obviously, this is still possible for you to explicitely call ``on`` and ``off`` in your view on other global events that you don't want to or you can't declare on 
+events hash (e.g. for more dynamic needs).
+
     
 .. _Require 2.0: http://requirejs.org
 .. _Require: http://requirejs.org
