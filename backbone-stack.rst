@@ -365,9 +365,10 @@ Resthub provides currently these extensions :
    - PubSub events declaration integration mechanism in ``Backbone.Views``: cf. :ref:`pubsub-in-views`.
    - Backbone ``dispose`` method extension and automatic el DOM removing binding: cf. :ref:`backbone-dispose`.
    - Backbone effective pushState extension: cf. :ref:`backbone-pushstate`.
+   - Basic view extension to automatically populate model from a form :ref:`backbone-form-helper`.
 - Handlebars_ helpers extension : Addition of some usefull Handlebars helpers. cf :ref:`handlebars-helpers` and `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/handlebars-helpers.js>`_.
 - Handlebars_ RequireJS plugin in order to retreive and compile automatically Handlebars templates: cf. :ref:`templating`
-- `Backbone Validation`_ extension : Validation callbacks (``valid`` and ``invalid``) extension to provide a native integration 
+- `Backbone Validation`_ extensions : Validation callbacks (``valid`` and ``invalid``) extension to provide a native integration 
   with `Twitter Bootstrap`_ form structure (``controls`` and ``control-group``). cf. `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/backbone-validation.ext.js>`_
 
 To beneficate of these extensions, we suggest you to replace standard lib inclusion in your require define by the explicit inclusion
@@ -445,6 +446,8 @@ Resthub provides two extensions related to this workflow:
    
    i.e. : each time jQuery ``.html(something)``, ``.remove()`` or ``.empty()`` is performed on view el parent or each time a ``remove()`` is done
    on the el itself, **the view will be properly destroyed**.
+
+.. _backbone-pushstate:
    
 Backbone effective pushState extension
 --------------------------------------
