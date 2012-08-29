@@ -222,7 +222,7 @@ This allows to avoid to hardcode the root element in the View, since the root is
 
 2 remarks :
  * It is important to do this.$root.html(this.$el) in initialize, if you do it in render it will broke delegate events.
- * You can use append() or prepend() instead of html() in the this.$root.html(this.$el) line in collection views for example.
+ * You can use append() or prepend() instead of html() in the this.$root.html(this.$el) line in collection views for instance.
 
 Collection View
 ---------------
@@ -366,10 +366,12 @@ Resthub provides currently these extensions :
    - Backbone ``dispose`` method extension and automatic el DOM removing binding: cf. :ref:`backbone-dispose`.
    - Backbone effective pushState extension: cf. :ref:`backbone-pushstate`.
    - Basic view extension to automatically populate model from a form :ref:`backbone-form-helper`.
-- Handlebars_ helpers extension : Addition of some usefull Handlebars helpers. cf :ref:`handlebars-helpers` and `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/handlebars-helpers.js>`_.
+- Handlebars_ helpers extension : Addition of some usefull Handlebars helpers. cf :ref:`handlebars-helpers` and 
+ `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/handlebars-helpers.js>`_.
 - Handlebars_ RequireJS plugin in order to retreive and compile automatically Handlebars templates: cf. :ref:`templating`
 - `Backbone Validation`_ extensions : Validation callbacks (``valid`` and ``invalid``) extension to provide a native integration 
-  with `Twitter Bootstrap`_ form structure (``controls`` and ``control-group``). cf. `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/backbone-validation.ext.js>`_
+  with `Twitter Bootstrap`_ form structure (``controls`` and ``control-group``). cf. 
+  `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/backbone-validation.ext.js>`_
 
 To beneficate of these extensions, we suggest you to replace standard lib inclusion in your require define by the explicit inclusion
 of these libs.
@@ -439,7 +441,7 @@ Resthub provides two extensions related to this workflow:
 2. Automatic bind ``dispose`` call on element remove event:
 
    ``dispose`` method described beside is called by ``remove`` Backbone_ view method. But this method still have to be manually called
-   by users (for example in your router).
+   by users (for instance in your router).
    
    Resthub offers an extension to this mechanism that listen any removing on the ``view.el`` DOM element and **automatically call dispose
    on remove**. This means that you don't have to manage this workflow anymore and any replacement done in el parent will trigger a dispose call.
@@ -475,11 +477,81 @@ provide **external links**, you only have to use the ``data-bypass`` attribute:
 
    <a data-bypass href="http://github.com/bmeurant/tournament-front" target="_blank">
 
+.. _backbone-form-helper:
+
+Automatically population of view model from a form
+--------------------------------------------------
+
+`Backbone Validation`_ provides some helpers to validate a model against constraints and Backbone_ defines some methods (such as ``save``) to valid
+a model and then save it on server. But neither `Backbone Validation`_ nor Backbone_ allow to fill a model stored in a view with form values. 
+
+Resthub comes with a really simple (naive ?) ``Backbone.View`` extension that copy each input field of a given form in a model. This helper is
+a new View method called ``populateModel()``. This function has to be explicitely called (e.g. before a ``save()``):
+
+.. code-block:: javascript
+
+   Backbone.View.extend({
+
+      ...
+   
+      saveUser:function () {
+         this.populateModel();
+
+          // save model if its valid, display alert otherwise
+          if (this.model.isValid()) {
+              this.model.save(null, {
+                  success:this.onSaveSuccess.bind(this),
+                  error:this.onSaveError.bind(this)
+              });
+          }   
+       }
+   });
+   
+``populateModel`` search for the form element provided and copy each form input value into the provided model attribute that match the
+copied form input name. API is: 
+
+.. code-block:: javascript
+
+   /** utility method providing a default and basic handler that
+    * populate model from a form input
+    *
+    * @param form form element to 'parse'. form parameter could be a css selector or a
+    * jQuery element. if undefined, the first form of this view el is used.
+    * @param model model instance to populate. if no model instance is provided,
+    * search for 'this.model'
+   **/
+   populateModel:function (form, model);
+   
+So you can use it in multiple ways from your view: 
+
+.. code-block:: javascript
+
+   // take the first el form element and copy values into 'this.model' instance
+   this.populateModel();
+   
+   // get the form element maching provided selector (form with id "myForm") and copy values into 'this.model' instance
+   this.populateModel("#myForm");
+   
+   // get the provided jquery form element and copy values into 'this.model' instance
+   this.populateModel($("#myForm");
+   
+   // take the first el form element and copy values into provided myModel instance
+   this.populateModel(null, myModel);
+   
+   // get the form element maching provided selector (form with id "myForm") and copy values into provided myModel instance
+   this.populateModel("#myForm", myModel);
+   
+   // get the provided jquery form element and copy values into provided myModel instance
+   this.populateModel($("#myForm", myModel);
+
+As said before, this approach could appear naive but will probably fit your needs in most of cases. If not, you are free to not use this helper,
+to extend this method, globally or locally with your own logic or to use a third party lib to bind model and form (see 
+`Backbone.ModelBinder <http://github.com/theironcook/Backbone.ModelBinder>`_ or `Rivets.js <http://rivetsjs.com/>`_ for instance).
     
 Avoid caching issues
 ====================
 
-In order to avoid caching issues when, for example, you update your JS or HTML files, you should use the 
+In order to avoid caching issues when, for instance, you update your JS or HTML files, you should use the 
 `urlArgs RequireJS attribute <http://requirejs.org/docs/api.html#config>`_. You can filter the ${buildNumber} with your build 
 tool at each build.
 
@@ -550,7 +622,7 @@ Sample js/nls/labels.js file:
         "fr-fr": true
     });
 
-Add translations in subfolders named with the locale, for example js/nls/fr-fr ...
+Add translations in subfolders named with the locale, for instance js/nls/fr-fr ...
 You should always keep the same file name, and the file located at the root will be used by default.
 
 Sample js/nls/fr-fr/labels.js file:
