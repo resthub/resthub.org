@@ -437,7 +437,7 @@ Resthub provides two extensions related to this workflow:
 
 2. Automatic bind ``dispose`` call on element remove event:
 
-   ``dispose`` method described beside is called by ``remove`` Backbone view method. But this method still have to be manually called
+   ``dispose`` method described beside is called by ``remove`` Backbone_ view method. But this method still have to be manually called
    by users (for example in your router).
    
    Resthub offers an extension to this mechanism that listen any removing on the ``view.el`` DOM element and **automatically call dispose
@@ -445,6 +445,33 @@ Resthub provides two extensions related to this workflow:
    
    i.e. : each time jQuery ``.html(something)``, ``.remove()`` or ``.empty()`` is performed on view el parent or each time a ``remove()`` is done
    on the el itself, **the view will be properly destroyed**.
+   
+Backbone effective pushState extension
+--------------------------------------
+
+Backbone_ allows ``pushState`` activation that permits usage of real links instead of simple anchors `#`.
+PushState offers better navigation experience and better indexation and search engine ranking:
+
+.. code-block:: javascript
+
+   Backbone.history.start({pushState:true, root:"/"});
+
+
+`root` option allows to ask Backbone_ to define this path as application context;
+
+However, Backbone_ stops here. Direct access to views by url works fine but, each link leads to
+**a full reload**! Backbone_ does not intercept html links and it is necessary to implement it ourselves.
+
+Branyen Tim, the creator of `Backbone boilerplate <http://github.com/tbranyen/backbone-boilerplate>`_ proposes the following solution that
+resthub integrates in its extensions with a complementary a test to check pushState activation.
+
+If ``Backbone.history`` is started with the ``pushState`` option, **any click on a link will be intercepted and bound to a Backbone navigation instead**. I you want to
+provide **external links**, you only have to use the ``data-bypass`` attribute:
+
+.. code-block:: html
+
+   <a data-bypass href="http://github.com/bmeurant/tournament-front" target="_blank">
+
     
 Avoid caching issues
 ====================
