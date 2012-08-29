@@ -363,8 +363,8 @@ Resthub provides currently these extensions :
 
 - Backbone extensions :
    - PubSub events declaration integration mechanism in ``Backbone.Views``: cf. :ref:`pubsub-in-views`.
-   - Backbone ``dispose`` method extension and automatic el DOM removing binding: cf. TODO
-   - Backbone rendering mechanisms extension: cf. TODO
+   - Backbone ``dispose`` method extension and automatic el DOM removing binding: cf. :ref:`backbone-dispose`.
+   - Backbone effective pushState extension: cf. :ref:`backbone-pushstate`.
 - Handlebars_ helpers extension : Addition of some usefull Handlebars helpers. cf :ref:`handlebars-helpers` and `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/handlebars-helpers.js>`_.
 - Handlebars_ RequireJS plugin in order to retreive and compile automatically Handlebars templates: cf. :ref:`templating`
 - `Backbone Validation`_ extension : Validation callbacks (``valid`` and ``invalid``) extension to provide a native integration 
@@ -418,6 +418,34 @@ All extensions paths and shims are defined in ``main.js`` :
       ...
     }
 
+.. _backbone-dispose:
+    
+Backbone dispose extension and automatic remove binding
+-------------------------------------------------------
+
+``Backone.View`` includes now a ``dispose`` method that clean all view, model and collection bindings to properly clean up a view.
+This method is called by another View method ``remove`` that also perform a jquery ``view.el`` DOM remove.
+
+Resthub provides two extensions related to this workflow:
+
+1. ``dispose`` extension to add ``Backbone.Validation`` unbind:
+
+   When removing a view and, if ``Backbone.Validation`` is defined, you have also to unbind validation events that call ``validate``,
+   ``preValidate`` and ``isValid`` methods.
+   
+   **This is now automatically done for you by resthub** in ``dispose``.
+
+2. Automatic bind ``dispose`` call on element remove event:
+
+   ``dispose`` method described beside is called by ``remove`` Backbone view method. But this method still have to be manually called
+   by users (for example in your router).
+   
+   Resthub offers an extension to this mechanism that listen any removing on the ``view.el`` DOM element and **automatically call dispose
+   on remove**. This means that you don't have to manage this workflow anymore and any replacement done in el parent will trigger a dispose call.
+   
+   i.e. : each time jQuery ``.html(something)``, ``.remove()`` or ``.empty()`` is performed on view el parent or each time a ``remove()`` is done
+   on the el itself, **the view will be properly destroyed**.
+    
 Avoid caching issues
 ====================
 
