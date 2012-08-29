@@ -429,7 +429,7 @@ Backbone dispose extension and automatic remove binding
 ``Backone.View`` includes now a ``dispose`` method that clean all view, model and collection bindings to properly clean up a view.
 This method is called by another View method ``remove`` that also perform a jquery ``view.el`` DOM remove.
 
-Resthub provides two extensions related to this workflow:
+Resthub provides three extensions related to this workflow:
 
 1. ``dispose`` extension to add ``Backbone.Validation`` unbind:
 
@@ -437,8 +437,20 @@ Resthub provides two extensions related to this workflow:
    ``preValidate`` and ``isValid`` methods.
    
    **This is now automatically done for you by resthub** in ``dispose``.
+   
+2. Addition of an ``onDispose()`` method called on top of ``dispose``:
 
-2. Automatic bind ``dispose`` call on element remove event:
+   This method is empty by default but can be implemented to perform some complementary actions (unbind, etc.) immediately
+   before effective view disposing. You simply have to define such a method in your views:
+
+   .. code-block:: javascript
+
+      onDispose: function() {
+         // do something
+      }
+
+
+3. Automatic bind ``dispose`` call on element remove event:
 
    ``dispose`` method described beside is called by ``remove`` Backbone_ view method. But this method still have to be manually called
    by users (for instance in your router).
@@ -876,7 +888,11 @@ In the same way, PubSub subscribings for this View are automatically removed dur
 on these declared events**.
 
 Obviously, this is still possible for you to explicitely call ``on`` and ``off`` in your view on other global events that you don't want to or you can't declare on 
-events hash (e.g. for more dynamic needs).
+events hash (e.g. for more dynamic needs). But don't forget to bind this when declaring subscription:
+
+.. code-block:: javascript
+
+   PubSub.on("!event", function () {...}, this);
 
     
 .. _Require 2.0: http://requirejs.org
