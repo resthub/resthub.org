@@ -370,15 +370,17 @@ Resthub provides currently these extensions :
 - `Backbone Validation`_ extension : Validation callbacks (``valid`` and ``invalid``) extension to provide a native integration 
   with `Twitter Bootstrap`_ form structure (``controls`` and ``control-group``). cf. `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/backbone-validation.ext.js>`_
 
-To beneficate of these extensions, we suggest you to replace standard lib inclusion in your require define by the inclusion
+To beneficate of these extensions, we suggest you to replace standard lib inclusion in your require define by the explicit inclusion
 of these libs.
+
+Backbone extension is an exception because, to facilitate integration, we override standard ``backbone`` to map it to extented backbone file.
 
 e.g.
 
 .. code-block:: javascript
 
    define([
-       'resthub-backbone',
+       'backbone',
        'resthub-handlebars',
        'resthub-backbone-validation'
    ], function (Backbone, Handlebars, BackboneValidation) {
@@ -392,12 +394,14 @@ If you don't want to use these extensions, you only have to use the original lib
 .. code-block:: javascript
 
    define([
-       'backbone'
+       'backbone-orig'
        'handlebars',
        'backbone-validation'
    ], function (Backbone, Handlebars, BackboneValidation) {
       ...
    });
+   
+Please note that, as explained before, original backbone distribution is accessible with ``backbone-orig`` path.
    
 All extensions paths and shims are defined in ``main.js`` :
 
@@ -405,16 +409,14 @@ All extensions paths and shims are defined in ``main.js`` :
 
    paths:{
       ...
-      'backbone':'libs/backbone',
-      'resthub-backbone':'resthub/backbone.ext',
+      'backbone':'resthub/backbone',
+      'backbone-orig':'lib/backbone.ext',
       'backbone-validation':'libs/backbone-validation',
       'resthub-backbone-validation':'resthub/backbone-validation.ext',
       handlebars:'libs/handlebars',
       'resthub-handlebars':'resthub/handlebars-helpers',
       ...
     }
-
-.. todo:: add backbone extension
 
 Avoid caching issues
 ====================
