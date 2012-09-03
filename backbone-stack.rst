@@ -182,52 +182,114 @@ at your webapp root (usually src/main/webapp). Please find below a sample :
   allows us to load other linked libs transparently without having to define it repeatedly (e.g. ``underscore.string`` loading - this libs is strongly correlated
   to ``underscore`` - and merged with it and thus should not have to be defined anymore)
 
-Guidelines
-==========
 
 View instantiation
-------------------
+==================
+
+RESThub Backbone stack provides a default rendering strategy with root element, template and context management.
 
 Backbone views contains an $el attribute that represent the element (a div by default) where the template will be rendered, but it does not provide an attribute that represent the DOM element where the view will be attached.
 
-In order to follow separation of concerns and encapsulation principles, RESThub Backbone stack guideline is to use a this.$root instance variabvle in order to specify where the View will be attached. This will also allow to manage in a nice way View lifecycle (multiple View creation/removal).
+In order to follow separation of concerns and encapsulation principles, RESThub Backbone stack manage a root element that respresent where the view will be attached. In order to avoid hardcoding view root element, you sould always pass it as constructor parameter. Like el, model or collection, it will be automatically added to the view.
 
-You should use the following pattern in all your views :
+.. code-block:: javascript
+
+    new MyView({root: this.$('.container'), collection: myCollection});
+
+In this example, we create the MyView view and attach it to the .container DOM element of the parent view. You can also pass a String selector parameter.
+
+.. code-block:: javascript
+
+    new MyView({root: '#container', collection: myCollection});
+
+RESThub provides a default render implementation that will render your template with model or collection in the context if these properties are defined.
+
+.. code-block:: javascript
+
+    define(['underscore', 'backbone', 'hbs!templates/my.html'], function(_, Backbone, myTmpl){
+        var MyView = Backbone.View.extend({
+            
+            template: myTemplate,
+            
+            initialize: function() {
+                _.bind(this.render, this);
+                this.collection.on('reset', this.render);
+            }
+
+        });
+    });
+
+After instantiation, this.$root contains a cached jQuery element and this.root the DOM element. By default, when render() is called, Backbone stack empty root element, and add el to root as a child element. You can change this behaviour thanks to the strategy parameter (could be 'replace', 'append' or 'prepend') :
+
+.. code-block:: javascript
+
+    var MyView = Backbone.View.extend({
+            
+        template: myTemplate,
+        tagName:  'li',
+        strategy: 'append'
+        
+    });
+
+You can customize the rendering context by defining a context property :
+
+.. code-block:: javascript
+
+    var MyView = Backbone.View.extend({
+            
+        template: myTemplate,
+        context: {
+            messages: messages,
+            collection: this.collection
+        }
+       
+    });
+
+Or by passing the context to the render function :
+
+.. code-block:: javascript
+
+    this.render({messages: messages, collection: this.collection});
+
+If you need to customize render() function, you can replace or extend it. Here is an example about how to extend it. This sample call default render and add some child element:
 
 .. code-block:: javascript
 
     var MyView = Backbone.View.extend({
 
-        initialize: function(options) {
-            this.$root = options.root;
-            this.$root.html(this.$el);
-            
-            /// ...
-        },
-
-        // For example
         render: function() {
-            this.$el.html(template({
-                messages:   messages
-            }));
+            MyView.__super__.render.apply(this, arguments);
+            this.collection.each(function(child) {
+                this.add(child);
+            }, this);
+        },
+        add: function(todo) {
+            var childView = new ChildView({
+                model: child,
+                root: this.$('.childcontainer')
+            });
         }
+
     });
-    return MyView;
 
-This allows to avoid to hardcode the root element in the View, since the root is passed as parameter at instantiation :
-
-.. code-block:: javascript
-    
-    var myView = new MyView({root: $('#content')});
-
-2 remarks :
- * It is important to do this.$root.html(this.$el) in initialize, if you do it in render it will broke delegate events.
- * You can use append() or prepend() instead of html() in the this.$root.html(this.$el) line in collection views for instance.
+Guidelines
+==========
 
 Collection View
 ---------------
 
-In order to follow with separation of concerns and encapsulation principles, if you need to render a collection with its child elements, you should create a view for the collection and view for the model. The model view should be able to render itself.
+If you need to render a simple list of elements, just make a single view with a each loop in the template :
+
+.. code-block:: html
+
+    <h1>My TodoList</h1>
+    <ul>
+      {{#each this}}
+        <li>{{title}}</li>
+      {{/each}}
+    </ul>
+
+But if each element of your collection is a real view (usually when you listen some event on it or if it is a form), in order to comply with separation of concerns and encapsulation principles, you should create a view for the collection and view for the model. The model view should be able to render itself.
 
 You can see more details on the `Todo example <http://github.com/resthub/todo-example>`_ (have a look to TodosView and TodoView).
 
@@ -282,6 +344,11 @@ Backbone way of declaring an instance color variable :
            
     });
     return MyView;
+
+Use this.$() selector
+---------------------
+
+this.$() is a shortcut for this.$el.find(). You should use it for all your view DOM selector code in order to find elements only in your view content, not in the wall page. It allows your to follow encapsulation pattern, and will make it possible to have several instance of your view on the same page. Even with singleton view, it is a good idea to use this pattern.
 
 Events
 ------
@@ -383,9 +450,7 @@ e.g.
 .. code-block:: javascript
 
    define([
-       'backbone',
-       'resthub-handlebars',
-       'resthub-backbone-validation'
+       'backbone', 'resthub-handlebars', 'resthub-backbone-validation'
    ], function (Backbone, Handlebars, BackboneValidation) {
       ...
    });
@@ -397,9 +462,7 @@ If you don't want to use these extensions, you only have to use the original lib
 .. code-block:: javascript
 
    define([
-       'backbone-orig'
-       'handlebars',
-       'backbone-validation'
+       'backbone-orig' 'handlebars', 'backbone-validation'
    ], function (Backbone, Handlebars, BackboneValidation) {
       ...
    });
