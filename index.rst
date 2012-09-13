@@ -21,9 +21,10 @@ Table of contents
 =================
 
 .. toctree::
-	:maxdepth: 2
-	
-	getting-started
-	spring-stack
-	backbone-stack
+    :maxdepth: 2
+
+    getting-started
+    spring-stack
+    backbone-stack
+    training/spring
 	
