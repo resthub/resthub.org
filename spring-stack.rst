@@ -4,7 +4,7 @@ Spring Stack
 
 Here is the description of each RESThub modules, with related dependencies, code snippets and documentation.
 
-The whole RESThub 2.0 Spring stack `Javadoc <http://jenkins.pullrequest.org/job/resthub-spring-stack-resthub2/javadoc/>`_ is available.
+The whole RESThub 2.0 Spring stack `Javadoc <http://jenkins.pullrequest.org/job/resthub-spring-stack-master/javadoc/>`_ is available.
 
 Project layout
 ==============
