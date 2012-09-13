@@ -37,7 +37,7 @@ img {
   margin: 10px;
 }
 
-span.pre {
+tt {
   background-color: #f5f5f5;
   display: inline;
   margin: 0 2px;
@@ -52,6 +52,10 @@ span.pre {
   white-space: pre;
   white-space: pre-wrap;
   word-wrap: break-word;
+}
+
+body blockquote p {
+    margin-bottom: 9px;
 }
 
 cite {
