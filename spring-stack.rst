@@ -761,7 +761,7 @@ A sample REST webservice test
 	public class SampleRestControllerTest extends AbstractWebTest {
 
 	    protected String rootUrl() {
-	        return "http://localhost:8080/api/sample";
+	        return "http://localhost:9797/api/sample";
 	    }    
 	    
 	    // Cleanup after each test
