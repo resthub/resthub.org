@@ -979,6 +979,10 @@ Find:
 1. **Backbone documentation about model validation**
 
     see `<http://backbonejs.org/#Model-validate>`_
+    
+2. **Resthub documentation for populateModel**
+
+    see `<http://resthub.org/2/backbone-stack.html#automatically-population-of-view-model-from-a-form>`_
 
 Do:
 +++
@@ -1103,6 +1107,25 @@ If necessary, add requirejs paths in main: ``'backbone-validation':'libs/backbon
           Backbone.Validation.bind(this);
         },
         ...
+        
+7. **Rewrite save method using resthub** ``populateModel`` and backbone ``isValid``
+
+    .. code-block:: javascript
+    
+        save: function() {
+
+          this.populateModel(this.$el);
+
+          // If validation passed, manually force trigger
+          // change event even if there were no actual
+          // changes to the fields.
+          if (this.model.isValid()) {
+            this.model.trigger('change');
+          }
+
+          return false;
+        },
+
 
 Step 7: Persist & Sync
 ----------------------

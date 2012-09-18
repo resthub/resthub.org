@@ -253,6 +253,8 @@ Find:
 
 1. **Backbone documentation about model validation**
 
+2. **Resthub documentation for populateModel**
+
 
 Do:
 +++
@@ -275,6 +277,8 @@ If necessary, add requirejs paths in main: ``'backbone-validation':'libs/backbon
 6. **Note that Backbone.Validation can handle for you error displaying in your
    views: remove error bindings and method and ensure that you form input have
    a name attribute equals to the model attribute name**
+   
+7. **Rewrite save method using resthub** ``populateModel`` and backbone ``isValid``
 
 
 Step 7: Persist & Sync
