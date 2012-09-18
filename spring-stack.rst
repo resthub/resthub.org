@@ -343,6 +343,19 @@ JPA support is based on Spring Data JPA and includes by default the H2 in memory
 
 Thanks to Spring Data, it is possible to create Repositories (also sometimes named DAO) by writing only the interface.
 
+Maven dependency
+----------------
+
+In order to use it in your project, add the following snippet to your pom.xml :
+
+.. code-block:: xml
+
+    <dependency>
+        <groupId>org.resthub</groupId>
+        <artifactId>resthub-jpa</artifactId>
+        <version>2.0-beta2</version>
+    </dependency>
+
 Entity scan
 -----------
 
@@ -427,6 +440,34 @@ You also need to add an applicationContext.xml file in order to scan your reposi
 
 	</beans>
 
+Console
+-------
+
+H2 console allow you to provide a SQL requester for your embeded default H2 database. It is included by default in JPA archetypes.
+
+In order to add it to your JPA based application, add these lines to your WebAppInitializer class : 
+
+.. code-block:: java
+
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        ...
+        ServletRegistration.Dynamic h2Servlet = servletContext.addServlet("h2console", WebServlet.class);
+        h2Servlet.setLoadOnStartup(2);
+        h2Servlet.addMapping("/console/database/*");
+           
+    }
+
+When running the webapp, the database console will be available at http://localhost:8080/console/database/ URL with following parameters :
+ * JDBC URL : jdbc:h2:mem:resthub
+ * Username : sa
+ * Password :
+
+MongoDB support
+===============
+
+MongoDB support is based on Spring Data MongoDB :
+	* Spring Data MongoDB `reference manual <http://static.springsource.org/spring-data/data-mongodb/docs/current/reference/html/>`_ and `Javadoc <http://static.springsource.org/spring-data/data-mongodb/docs/current/api/>`_
+
 Maven dependency
 ----------------
 
@@ -434,17 +475,11 @@ In order to use it in your project, add the following snippet to your pom.xml :
 
 .. code-block:: xml
 
-	<dependency>
-		<groupId>org.resthub</groupId>
-		<artifactId>resthub-jpa</artifactId>
-		<version>2.0-beta2</version>
-	</dependency>
-
-MongoDB support
-===============
-
-MongoDB support is based on Spring Data MongoDB :
-	* Spring Data MongoDB `reference manual <http://static.springsource.org/spring-data/data-mongodb/docs/current/reference/html/>`_ and `Javadoc <http://static.springsource.org/spring-data/data-mongodb/docs/current/api/>`_
+    <dependency>
+        <groupId>org.resthub</groupId>
+        <artifactId>resthub-mongodb</artifactId>
+        <version>2.0-beta2</version>
+    </dependency>
 
 Configuration
 -------------
@@ -501,6 +536,11 @@ You also need to add an applicationContext.xml file in order to scan your reposi
 	
 	</beans>
 
+Web Common
+==========
+
+RESThub Web Common comes with built-in XML and JSON support for serialization based on `Jackson 2.0 <http://wiki.fasterxml.com/JacksonHome>`_. RESThub uses `Jackson 2.0 XML capabilities <https://github.com/FasterXML/jackson-dataformat-xml>`_ instead of JAXB since it is more flexible. For example, you don't need to add classes your need to a context. Please read `Jackson annotation guide <http://wiki.fasterxml.com/JacksonAnnotations>`_ for details about configuration capabilities.
+
 Maven dependency
 ----------------
 
@@ -508,16 +548,11 @@ In order to use it in your project, add the following snippet to your pom.xml :
 
 .. code-block:: xml
 
-	<dependency>
-		<groupId>org.resthub</groupId>
-		<artifactId>resthub-mongodb</artifactId>
-		<version>2.0-beta2</version>
-	</dependency>
-
-Web Common
-==========
-
-RESThub Web Common comes with built-in XML and JSON support for serialization based on `Jackson 2.0 <http://wiki.fasterxml.com/JacksonHome>`_. RESThub uses `Jackson 2.0 XML capabilities <https://github.com/FasterXML/jackson-dataformat-xml>`_ instead of JAXB since it is more flexible. For example, you don't need to add classes your need to a context. Please read `Jackson annotation guide <http://wiki.fasterxml.com/JacksonAnnotations>`_ for details about configuration capabilities.
+    <dependency>
+        <groupId>org.resthub</groupId>
+        <artifactId>resthub-web-common</artifactId>
+        <version>2.0-beta2</version>
+    </dependency>
 
 Usage
 -----
@@ -532,19 +567,6 @@ Usage
 	SampleResource r = (SampleResource) XmlHelper.deserialize(xml, SampleResource.class);
 	XmlHelper.deserialize("<sampleResource><description>desc</description><id>123</id><name>Albert</name></sampleResource>", SampleResource.class);
 
-Maven dependency
-----------------
-
-In order to use it in your project, add the following snippet to your pom.xml :
-
-.. code-block:: xml
-
-	<dependency>
-		<groupId>org.resthub</groupId>
-		<artifactId>resthub-web-common</artifactId>
-		<version>2.0-beta2</version>
-	</dependency>
-
 Web server
 ==========
 
@@ -555,6 +577,19 @@ RESThub Web Server module is designed to allow you to develop REST webservices. 
 It provides some abstract REST controller classes, and includes the following dependencies :
 	* Spring MVC 3.1 (`reference manual <http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html/mvc.html>`_)
 	* Jackson 2.0 (`documentation <http://wiki.fasterxml.com/JacksonDocumentation>`_)
+
+Maven dependency
+----------------
+
+In order to use it in your project, add the following snippet to your pom.xml :
+
+.. code-block:: xml
+
+    <dependency>
+        <groupId>org.resthub</groupId>
+        <artifactId>resthub-web-server</artifactId>
+        <version>2.0-beta2</version>
+    </dependency>
 
 Configuration
 -------------
@@ -641,19 +676,6 @@ RESThub comes with a REST controller that allows you to create a CRUD webservice
 	    }
 	}
 
-Maven dependency
-----------------
-
-In order to use it in your project, add the following snippet to your pom.xml :
-
-.. code-block:: xml
-
-	<dependency>
-		<groupId>org.resthub</groupId>
-		<artifactId>resthub-web-server</artifactId>
-		<version>2.0-beta2</version>
-	</dependency>
-
 Web client
 ==========
 
@@ -662,6 +684,19 @@ RESThub Web client module goal is to give you an easy way to request other REST 
 In order to limit conflicts it has no dependency on Spring, but only on :
  	* AsyncHttpClient `documentation <https://github.com/sonatype/async-http-client>`_ and `Javadoc <http://sonatype.github.com/async-http-client/apidocs/reference/packages.html>`_
  	* Jackson 2.0 (`documentation <http://wiki.fasterxml.com/JacksonDocumentation>`_)
+
+Maven dependency
+----------------
+
+In order to use it in your project, add the following snippet to your pom.xml :
+
+.. code-block:: xml
+
+    <dependency>
+        <groupId>org.resthub</groupId>
+        <artifactId>resthub-web-client</artifactId>
+        <version>2.0-beta2</version>
+    </dependency>
 
 Usage
 -----
@@ -709,6 +744,20 @@ used to send the OAuth token.
 
     Client httpClient = new Client().setOAuth2Builder(builder);
     String result = httpClient.url("http://.../api/sample").get().get().getBody();
+ 
+Testing
+=======
+	
+The following test stack is included in the RESThub test module :
+	* Test framework with `TestNG <http://testng.org/doc/documentation-main.html>`_. If you use Eclipse, don't forget to install the `TestNG plugin <http://testng.org/doc/eclipse.html>`_.
+	* Assertion with `Fest Assert 2 <https://github.com/alexruiz/fest-assert-2.x/wiki>`_
+	* Mock with `Mockito <http://code.google.com/p/mockito/>`_
+	* Webapp testing with `FluentLenium <http://www.fluentlenium.org/>`_
+
+RESThub also provides generic classes in order to make testing easier.
+   * AbstractTest : base class for your non transactional Spring aware unit tests
+   * AbstractTransactionalTest : base class for your transactional unit tests, preconfigure Spring test framework
+   * AbstractWebTest : base class for your unit test that need to run and embedded servlet container
 
 Maven dependency
 ----------------
@@ -717,25 +766,12 @@ In order to use it in your project, add the following snippet to your pom.xml :
 
 .. code-block:: xml
 
-	<dependency>
-		<groupId>org.resthub</groupId>
-		<artifactId>resthub-web-client</artifactId>
-		<version>2.0-beta2</version>
-	</dependency>
- 
-Testing
-=======
-	
-The following test stack is included in the RESThub test module :
-	* Test framework with `TestNG <http://testng.org/doc/documentation-main.html>`_. If you use Eclipse, don't forget to install the `TestNG plugin <http://testng.org/doc/eclipse.html>`_.
-	* Assertion with `Fest Assert 2 <https://github.com/alexruiz/fest-assert-2.x/wiki>`_
-	* Mock with `Mokito <http://code.google.com/p/mockito/>`_
-	* Webapp testing with `FluentLenium <http://www.fluentlenium.org/>`_
-
-RESThub also provides generic classes in order to make testing easier.
-   * AbstractTest : base class for your non transactional Spring aware unit tests
-   * AbstractTransactionalTest : base class for your transactional unit tests, preconfigure Spring test framework
-   * AbstractWebTest : base class for your unit test that need to run and embedded servlet container
+    <dependency>
+        <groupId>org.resthub</groupId>
+        <artifactId>resthub-test</artifactId>
+        <version>2.0-beta2</version>
+        <scope>test</scope>
+    </dependency>
 
 Data provisioning and cleanup
 ------------------------------
@@ -791,20 +827,6 @@ A sample assertion
 .. code-block:: java
 
 	Assertions.assertThat(result).contains("Albert");
-
-Maven dependency
-----------------
-
-In order to use it in your project, add the following snippet to your pom.xml :
-
-.. code-block:: xml
-
-	<dependency>
-		<groupId>org.resthub</groupId>
-		<artifactId>resthub-test</artifactId>
-		<version>2.0-beta2</version>
-		<scope>test</scope>
-	</dependency>
 
 Spring MVC Router
 =================
