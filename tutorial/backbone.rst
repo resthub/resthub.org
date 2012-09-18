@@ -1,5 +1,5 @@
-RESThub-Backbone training
-=========================
+RESThub Backbone stack tutorial
+===============================
 
 Step 1 : Model and View
 -----------------------
@@ -300,9 +300,20 @@ Step 7: Persist & Sync
   collection.
   
 
+Step 8 : server backend
+-----------------------
+
+* Download `RESThub Spring training sample project <https://github.com/resthub/resthub-spring-training/zipball/step5-solution>`_ and extract it
+* Create jpa-webservice/src/main/webapp directory, and move your JS application into it
+* Run the jpa-webservice webapp thanks to Maven Jetty plugin
+* Remove backbone-localstorage.js file and usage in JS application
+* Make your application retreiving tasks from api/task?page=no URL
+* Validate that retreive, delete, create and update actions work as expected with this whole new jpa-webservice backend
+
+
 Solutions
 --------- 
   
-**Responses** : you can find full training support with responses at `<./backbone/solution.html>`_
+**Responses** : you can find full training support with responses `here <./backbone/solution.html>`_
 
-**Code** : you can find the code of the sample application at `<https://github.com/resthub/resthub-backbone-training>`_
+**Code** : you can find the code of the sample application at `<https://github.com/resthub/resthub-backbone-training>`_ (Have a look to rest branch for step 8 code).

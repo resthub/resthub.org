@@ -1144,3 +1144,28 @@ Step 7: Persist & Sync
   step, if validation does not work anymore after fetching the tasks through
   Backbone.sync, check that the model attribute is correctly set in the
   collection.
+
+Step 8
+------
+
+* Download `RESThub Spring training sample project <https://github.com/resthub/resthub-spring-training/zipball/step5-solution>`_ and extract it
+* Create jpa-webservice/src/main/webapp directory, and move your JS application into it
+* Run the jpa-webservice webapp thanks to Maven Jetty plugin
+* Remove backbone-localstorage.js file and usage in JS application
+* Make your application retreiving tasks from api/task?page=no URL
+
+.. code-block:: javascript
+
+    // collections/tasks.js
+    define(['backbone', 'models/task'], function(Backbone, Task) {
+      var Tasks = Backbone.Collection.extend({
+        url: 'api/task',
+        model: Task
+      });
+      return Tasks;
+    });
+
+    // main.js
+    tasks.fetch({ data: { page: 'no'} });
+
+* Validate that retreive, delete, create and update actions work as expected with this whole new jpa-webservice backend

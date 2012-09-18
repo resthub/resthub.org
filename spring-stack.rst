@@ -1,6 +1,6 @@
-============
-Spring Stack
-============
+==========================
+Spring Stack documentation
+==========================
 
 Here is the description of each RESThub modules, with related dependencies, code snippets and documentation.
 

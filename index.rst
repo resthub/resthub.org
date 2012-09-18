@@ -24,8 +24,8 @@ Table of contents
     :maxdepth: 2
 
     getting-started
+    tutorials
     spring-stack
     backbone-stack
-    training/spring
-    training/backbone
+    
 	

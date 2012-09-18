@@ -1,5 +1,5 @@
-Resthub Spring Tutorial
-=======================
+RESThub Spring stack Tutorial
+=============================
 
 This tutorial will help you to get an overview of resthub-spring-stack and its components and to take advantage of this framework and its tools.
 
