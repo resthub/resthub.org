@@ -27,4 +27,5 @@ Table of contents
     spring-stack
     backbone-stack
     training/spring
+    training/backbone
 	
