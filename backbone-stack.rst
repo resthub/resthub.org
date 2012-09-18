@@ -1,8 +1,8 @@
 :tocdepth: 2
 
-=================
-Backbone.js Stack
-=================
+===============================
+Backbone.js Stack documentation
+===============================
 
 .. contents::
    :depth: 3
