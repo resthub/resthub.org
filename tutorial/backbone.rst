@@ -314,6 +314,6 @@ Step 8 : server backend
 Solutions
 --------- 
   
-**Responses** : you can find full training support with responses `here <./backbone/solution.html>`_
+**Responses** : you can find full training support with responses `here <backbone/solution.html>`_
 
 **Code** : you can find the code of the sample application at `<https://github.com/resthub/resthub-backbone-training>`_ (Have a look to rest branch for step 8 code).
