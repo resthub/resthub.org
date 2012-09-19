@@ -81,16 +81,6 @@ Find :
 Do :
 ####
 
-Check in main contains the following code. Add it if not present: 
-
-.. code-block:: javascript
-
-    config: {
-      hbs: {
-        extension: 'hbs'
-      }
-    }
-
 1. **Create Task handlebars template to display task. Template should start with a div with class='task'**
 
 2. **Load (with requirejs text plugin), compile template in view and render it (pass all model to template)**
