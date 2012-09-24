@@ -121,6 +121,10 @@ Do:
 Answer:
 +++++++
 
+Using an HTTP client (e.g. `Poster <https://addons.mozilla.org/en-US/firefox/addon/poster/>`_ in Firefox or 
+`REST Console <https://chrome.google.com/webstore/detail/cokgbflfommojglbmbpenpphppikmonn>`_ in Chrome), 
+explore the new API and check: 
+
 1. **How is wrapped the list of all existing tasks ?**
 2. **How to get a single task ?**
 3. **How to update an existing task ? Update task 1 to add a description** ``new description``
@@ -143,6 +147,9 @@ Do:
 +++
 
 1. **Modify** ``TaskController.java`` **to add a new method called** ``findAllNonPaginated``  **with no parameter mapped to** ``/api/task?page=no``.
+
+   **Tip:** Consider using ``@ResponseBody`` annotation (see `<http://static.springsource.org/spring/docs/current/spring-framework-reference/html/mvc.html#mvc-ann-responsebody>`_)
+   and request params mapping (see `<http://static.springsource.org/spring/docs/current/spring-framework-reference/html/mvc.html#mvc-ann-requestmapping-params-and-headers>`_).
 
    Implement this using existing repository method (see `Spring Data JPA documentation <http://static.springsource.org/spring-data/data-jpa/docs/current/api/>`_).
    Check on your browser that `<http://localhost:8080/api/task?page=no>`_ works and display a simple list of tasks, without pagination.
@@ -175,15 +182,14 @@ Find:
 
 1. **Resthub2 testing tooling documentation**
 
-   see `<http://resthub.org/2/spring-stack.html#testing>`_
-
 Do:
 ### 
 
 1. **Add dependency to use Resthub2 testing tools** 
 2. In ``src/test/org/resthub/training``, add a ``controller`` directory and create a ``TaskControllerTest`` inside. 
    We first want to make an **integration test** of our controller. i.e. a test that need to run and embedded servlet container.
-   **Implement a new** ``findAllNonPaginated`` **test method that creates some tasks and call controller.** 
+   **Implement a new** ``findAllNonPaginated`` **test method that creates some tasks, call our new non paginated REST interface
+   and check that the JSON response does not contain pagination-related String 'content'.** 
 3. **Run test and check it passes**
     
 Step 4: Users own tasks
