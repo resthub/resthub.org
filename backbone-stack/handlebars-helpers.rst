@@ -211,3 +211,32 @@ will produce:
    <span>This is a test</span>
 
 This helper is very usefull for Internationalization_, and can take any number of parameters.
+
+modulo
+++++++++
+
+This helper provides a modulo function.
+
+If (n % m) equals 0 then the block is rendered, and if not, the else block is rendered if provided.
+
+e.g:
+
+.. code-block:: html
+
+   {{#modulo index 2}}
+      <span>{{index}} is even</span>
+   {{else}}
+      <span>{{index}} is odd</span>
+   {{/modulo}}
+
+with the following context:
+
+.. code-block:: javascript
+
+   {index:10}
+   
+will produce:
+
+.. code-block:: html
+
+   <span>10 is even</span>
