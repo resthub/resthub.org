@@ -19,16 +19,14 @@ The Backbone.js stack includes the following main librairies :
     * A **console shim** for browsers that don't support it
     * **Twitter Bootstrap 2.1** (`documentation <http://twitter.github.com/bootstrap/>`_) JS plugins
     
-And some other complementary librairies : cf. :ref:`complementary-libs`
+And some additional librairies : cf. :ref:`complementary-libs`
 
 How should I use it in my project
 =================================
 
 There are 3 ways to use it in your project :
-    * If you are starting a new Java project, the better way to use RESThub Backbone.js stack is to use one of the Backbone.js webappp 
-      Maven Archetypes described on the `Getting Started page <getting-started.html>`_
-    * You can simply go to `RESThub Backbone.js stack GitHub repository <https://github.com/resthub/resthub-backbone-stack>`_, download the 
-      repository content and copy it at the root of your webapp
+    * If you are starting a new Java project, the better way to use RESThub Backbone.js stack is to use one of the Backbone.js webappp Maven Archetypes described on the `Getting Started page <getting-started.html>`_
+    * You can simply go to the `RESThub Backbone.js stack GitHub repository <https://github.com/resthub/resthub-backbone-stack>`_, and download the repository content and copy it at the root of your webapp
     * Last option (but deprecated since you don't see the stack files in your project), you can add the following code snippet to your pom.xml :
 
 .. code-block:: xml
@@ -60,8 +58,7 @@ You should read carefully the awesome blog post `Organizing your application usi
 Bootstrapping
 =============
 
-Please find below the default files needed to bootstrap your webapp (An easier and error proof method is to use RESThub archetypes in 
-order to bootstrap your project).
+Please find below the default files needed to bootstrap your webapp (an easier and error-proof method is to use RESThub archetypes in order to bootstrap your project).
 
 index.html
 ----------
@@ -96,8 +93,7 @@ index.html
     </html>
 
 
-index.html is provided by Backbone stack, so you don't have to create it. Your application bootstrap file is the main.js located 
-at your webapp root (usually src/main/webapp). Please find below a sample :
+index.html is provided by Backbone stack, so you don't have to create it. Your application bootstrap file is the main.js located at your webapp root (usually src/main/webapp). Here's a sample main.js file :
 
 .. code-block:: javascript
 
@@ -174,13 +170,10 @@ at your webapp root (usually src/main/webapp). Please find below a sample :
        Router.initialize();
    });
    
-- **shim** config is part of `Require 2.0`_ and allows to `Configure the dependencies and exports for older, traditional "browser globals" 
-  scripts that do not use define() to declare the dependencies and set a module value`. See `<http://requirejs.org/docs/api.html#config-shim>`_ for details.
-- **path** config is also part of Require_ and allows to define paths for libs not found durectly under baseUrl. 
+- **shim** config is part of `Require 2.0`_ and allows to `Configure the dependencies and exports for older, traditional "browser globals" scripts that do not use define() to declare the dependencies and set a module value`. See `<http://requirejs.org/docs/api.html#config-shim>`_ for more details.
+- **path** config is also part of Require_ and allows to define paths for libs not found directly under baseUrl. 
   See `<http://requirejs.org/docs/api.html#config-paths>`_ for details.
-- resthub suggests to **preload some libs** that will be used surely as soon the app start (typically backbone itself and our template engine). This mechanism also
-  allows us to load other linked libs transparently without having to define it repeatedly (e.g. ``underscore.string`` loading - this libs is strongly correlated
-  to ``underscore`` - and merged with it and thus should not have to be defined anymore)
+- RESThub suggests to **preload some libs** that will be used for sure as soon the app starts (dependencies required by Backbone itself and our template engine). This mechanism also allows us to load other linked libs transparently without having to define it repeatedly (e.g. ``underscore.string`` loading - this libs is strongly correlated to ``underscore`` - and merged with it and thus should not have to be defined anymore)
 
 
 View instantiation
@@ -188,9 +181,9 @@ View instantiation
 
 RESThub Backbone stack provides a default rendering strategy with root element, template and context management.
 
-Backbone views contains an $el attribute that represent the element (a div by default) where the template will be rendered, but it does not provide an attribute that represent the DOM element where the view will be attached.
+Backbone views contain an $el attribute that represent the element (a div by default) where the template will be rendered, but it does not provide an attribute that represent the DOM element in which the view will be attached.
 
-In order to follow separation of concerns and encapsulation principles, RESThub Backbone stack manage a root element that respresent where the view will be attached. In order to avoid hardcoding view root element, you sould always pass it as constructor parameter. Like el, model or collection, it will be automatically added to the view.
+In order to follow separation of concerns and encapsulation principles, RESThub Backbone stack manages a root element in which the view will be attached. You should always pass it as constructor parameter, so as to avoid hardcoding view root element. Like el, model or collection, it will be automatically added to the view.
 
 .. code-block:: javascript
 
@@ -202,7 +195,7 @@ In this example, we create the MyView view and attach it to the .container DOM e
 
     new MyView({root: '#container', collection: myCollection});
 
-RESThub provides a default render implementation that will render your template with model or collection in the context if these properties are defined.
+RESThub provides a default render implementation that will render your template with model or collection in context if these properties are defined.
 
 .. code-block:: javascript
 
@@ -219,7 +212,7 @@ RESThub provides a default render implementation that will render your template 
         });
     });
 
-After instantiation, this.$root contains a cached jQuery element and this.root the DOM element. By default, when render() is called, Backbone stack empty root element, and add el to root as a child element. You can change this behaviour thanks to the strategy parameter (could be 'replace', 'append' or 'prepend') :
+After instantiation, ``this.$root`` contains a cached jQuery element and ``this.root`` the DOM element. By default, when render() is called, Backbone stack empties the root element, and adds el to root as a child element. You can change this behaviour thanks to the strategy parameter (could be 'replace', 'append' or 'prepend') :
 
 .. code-block:: javascript
 
@@ -251,7 +244,7 @@ Or by passing the context to the render function :
 
     this.render({messages: messages, collection: this.collection});
 
-If you need to customize render() function, you can replace or extend it. Here is an example about how to extend it. This sample call default render and add some child element:
+If you need to customize the render() function, you can replace or extend it. Here is an example about how to extend it. This sample calls the default render method and adds child elements:
 
 .. code-block:: javascript
 
@@ -278,7 +271,7 @@ Guidelines
 Collection View
 ---------------
 
-If you need to render a simple list of elements, just make a single view with a each loop in the template :
+If you need to render a simple list of elements, just make a single view with an each loop in the template :
 
 .. code-block:: html
 
@@ -289,7 +282,7 @@ If you need to render a simple list of elements, just make a single view with a 
       {{/each}}
     </ul>
 
-But if each element of your collection is a real view (usually when you listen some event on it or if it is a form), in order to comply with separation of concerns and encapsulation principles, you should create a view for the collection and view for the model. The model view should be able to render itself.
+But if each element of your collection requires a separate view (typically when you listen on some events on it or if it contains a form), in order to comply with separation of concerns and encapsulation principles, you should create separate views for the collection and the model. The model view should be able to render itself.
 
 You can see more details on the `Todo example <http://github.com/resthub/todo-example>`_ (have a look to TodosView and TodoView).
 
@@ -300,18 +293,18 @@ In order to allow automatic cleanup when the View is removed, you should always 
 
 .. code-block:: javascript
     
-    // BAD : no context specified won't clean the view on remove
+    // BAD : no context specified - event bindings won't be cleaned when the view is removed
     Todos.on('all', this.render);
 
-    // GOOD : context will allow automatic cleanup of the handler on remove
+    // GOOD : context will allow automatic cleanup when the view is removed
     Todos.on('all', this.render, this);
 
-You should also specify the model or collection attribute of your View in order to make it works.
+You should also specify the model or collection attribute of your View to make it work.
 
-Static versus instance varables
+Static versus instance variables
 -------------------------------
 
-If you want to be able to create different View instances, your have to manage properly the DOM element where the view will be attched as described previously. You also have to use instance variable.
+If you want to be able to create different View instances, your have to manage properly the DOM element where the view will be attached as described previously. You also have to use instance variables.
 
 Backbone way of declaring a static color variable :
 
@@ -348,7 +341,7 @@ Backbone way of declaring an instance color variable :
 Use this.$() selector
 ---------------------
 
-this.$() is a shortcut for this.$el.find(). You should use it for all your view DOM selector code in order to find elements only in your view content, not in the wall page. It allows your to follow encapsulation pattern, and will make it possible to have several instance of your view on the same page. Even with singleton view, it is a good idea to use this pattern.
+this.$() is a shortcut for this.$el.find(). You should use it for all your view DOM selector code in order to find elements within your view (i.e. not in the whole page). It follows the encapsulation pattern, and will make it possible to have several instance of your view on the same page. Even with a singleton view, it is a good idea to use this pattern.
 
 Events
 ------
@@ -360,7 +353,7 @@ Backbone default event list is available `here <http://backbonejs.org/#FAQ-event
 Templating
 ==========
 
-Client side templating capabilities are based by default on Handlebars_.
+Client-side templating capabilities are based by default on Handlebars_.
 
 Templates are HTML fragments, without the <html>, <header> or <body> tag :
 
@@ -377,7 +370,7 @@ Templates are HTML fragments, without the <html>, <header> or <body> tag :
         </div>
     </div>
 
-Templates are injected into Views thanks to RequireJS Handlebars plugin, based on RequireJS text plugin. This hbs plugin will automatically retreive and compile your template. So it should be defined in your main.js :
+Templates are injected into Views thanks to the RequireJS Handlebars plugin, based on RequireJS text plugin. This hbs plugin will automatically retrieve and compile your template. So it should be defined in your main.js :
 
 .. code-block:: javascript
 
@@ -410,19 +403,19 @@ Sample usage in a Backbone.js View :
 Helpers
 -------
 
-**Handlebars Helpers** provided by resthub are documented here: :ref:`handlebars-helpers`
+**Handlebars Helpers** provided by RESThub are documented here: :ref:`handlebars-helpers`
 
 Complementary libs
 ==================
 
-**Complementary libs** provided by resthub are documented here: :ref:`complementary-libs`
+**Additional libs** provided by RESThub are documented here: :ref:`complementary-libs`
 
 .. _resthub-extensions:
 
 Resthub extensions
 ==================
 
-For some of suggested embedded libs, resthub provides extensions.
+RESThub provides librairies extensions for some of the suggested embedded libs.
 
 These extensions can be found, as any other custom resthub lib, in ``js/resthub`` directory.
 
@@ -432,18 +425,15 @@ Resthub provides currently these extensions :
    - PubSub events declaration integration mechanism in ``Backbone.Views``: cf. :ref:`pubsub-in-views`.
    - Backbone ``dispose`` method extension and automatic el DOM removing binding: cf. :ref:`backbone-dispose`.
    - Backbone effective pushState extension: cf. :ref:`backbone-pushstate`.
-   - Basic view extension to automatically populate model from a form :ref:`backbone-form-helper`.
-- Handlebars_ helpers extension : Addition of some usefull Handlebars helpers. cf :ref:`handlebars-helpers` and 
+   - Basic view extension to automatically populate models from forms :ref:`backbone-form-helper`.
+- Handlebars_ helpers extension : Additional (and very useful!) Handlebars helpers. cf :ref:`handlebars-helpers` and 
  `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/handlebars-helpers.js>`_.
-- Handlebars_ RequireJS plugin in order to retreive and compile automatically Handlebars templates: cf. :ref:`templating`
-- `Backbone Validation`_ extensions : Validation callbacks (``valid`` and ``invalid``) extension to provide a native integration 
-  with `Twitter Bootstrap`_ form structure (``controls`` and ``control-group``). cf. 
-  `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/backbone-validation.ext.js>`_
+- Handlebars_ RequireJS plugin in order to retrieve and compile automatically Handlebars templates: cf. :ref:`templating`
+- `Backbone Validation`_ extensions : Validation callbacks (``valid`` and ``invalid``) extension to provide a native integration with `Twitter Bootstrap`_ form structure (``controls`` and ``control-group``). cf. `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/backbone-validation.ext.js>`_
 
-To beneficate of these extensions, we suggest you to replace standard lib inclusion in your require define by the explicit inclusion
-of these libs.
+If you want to rely on the extensions, we suggest you to explicitely require these libs in your require declaration (and not import the standard libs).
 
-Backbone extension is an exception because, to facilitate integration, we override standard ``backbone`` to map it to extented backbone file.
+Backbone extension is an exception because, to facilitate integration, we override the standard ``backbone`` to map it to extented backbone file.
 
 e.g.
 
@@ -455,9 +445,9 @@ e.g.
       ...
    });
    
-By default, resthub archetype generates view including these extensions instead of original libs. Each extension depends on the original lib.
+By default, the RESThub archetype generates views using these extensions instead of the original libs. Each extension depends on the original lib.
 
-If you don't want to use these extensions, you only have to use the original lib alone : 
+If you don't want to use these extensions, you only have to use the original lib : 
 
 .. code-block:: javascript
 
@@ -467,7 +457,7 @@ If you don't want to use these extensions, you only have to use the original lib
       ...
    });
    
-Please note that, as explained before, original backbone distribution is accessible with ``backbone-orig`` path.
+Please note that, as explained before, the original backbone distribution is accessible with a specific ``backbone-orig`` path.
    
 All extensions paths and shims are defined in ``main.js`` :
 
@@ -486,25 +476,24 @@ All extensions paths and shims are defined in ``main.js`` :
 
 .. _backbone-dispose:
     
-Backbone dispose extension and automatic remove binding
--------------------------------------------------------
+Backbone dispose extension and automatic binding removal
+--------------------------------------------------------
 
-``Backone.View`` includes now a ``dispose`` method that clean all view, model and collection bindings to properly clean up a view.
-This method is called by another View method ``remove`` that also perform a jquery ``view.el`` DOM remove.
+``Backone.View`` now includes a ``dispose`` method that cleans all view, model and collection bindings to properly clean up a view.
+This method is called by another View method ``remove`` that also performs a jquery ``view.el`` DOM remove.
 
-Resthub provides three extensions related to this workflow:
+RESThub provides three extensions related to this workflow:
 
-1. ``dispose`` extension to add ``Backbone.Validation`` unbind:
+1. ``dispose`` extension to automatically unbind ``Backbone.Validation``:
 
-   When removing a view and, if ``Backbone.Validation`` is defined, you have also to unbind validation events that call ``validate``,
-   ``preValidate`` and ``isValid`` methods.
+   When removing a view and, if ``Backbone.Validation`` is defined, you also have to unbind validation events that call ``validate``, ``preValidate`` and ``isValid`` methods.
    
-   **This is now automatically done for you by resthub** in ``dispose``.
+   **This is now automatically done for you by RESThub** in ``dispose``.
    
 2. Addition of an ``onDispose()`` method called on top of ``dispose``:
 
-   This method is empty by default but can be implemented to perform some complementary actions (unbind, etc.) immediately
-   before effective view disposing. You simply have to define such a method in your views:
+   This method is empty by default but can be implemented to perform some additional actions (unbind, etc.) immediately
+   before the effective view disposal. You simply have to define such a method in your views:
 
    .. code-block:: javascript
 
@@ -515,14 +504,11 @@ Resthub provides three extensions related to this workflow:
 
 3. Automatic bind ``dispose`` call on element remove event:
 
-   ``dispose`` method described beside is called by ``remove`` Backbone_ view method. But this method still have to be manually called
-   by users (for instance in your router).
+   The ``dispose`` method previously described is called by the ``remove`` Backbone_ view method. But this method still have to be manually called by users (for instance in your router).
    
-   Resthub offers an extension to this mechanism that listen any removing on the ``view.el`` DOM element and **automatically call dispose
-   on remove**. This means that you don't have to manage this workflow anymore and any replacement done in el parent will trigger a dispose call.
+   Resthub offers an extension to this mechanism that listens any removal on the ``view.el`` DOM element and **automatically call dispose on remove**. This means that you don't have to manage this workflow anymore and any replacement done in el parent will trigger a dispose call.
    
-   i.e. : each time jQuery ``.html(something)``, ``.remove()`` or ``.empty()`` is performed on view el parent or each time a ``remove()`` is done
-   on the el itself, **the view will be properly destroyed**.
+   i.e. : each time a jQuery ``.html(something)``, ``.remove()`` or ``.empty()`` is performed on view el parent or each time a ``remove()`` is done on the el itself, **the view will be properly destroyed**.
 
 .. _backbone-pushstate:
    
@@ -530,20 +516,19 @@ Backbone effective pushState extension
 --------------------------------------
 
 Backbone_ allows ``pushState`` activation that permits usage of real links instead of simple anchors `#`.
-PushState offers better navigation experience and better indexation and search engine ranking:
+PushState offers a better navigation experience and better indexation and search engine ranking:
 
 .. code-block:: javascript
 
    Backbone.history.start({pushState:true, root:"/"});
 
 
-`root` option allows to ask Backbone_ to define this path as application context;
+The `root` option defines the path context of our Backbone_ application;
 
 However, Backbone_ stops here. Direct access to views by url works fine but, each link leads to
-**a full reload**! Backbone_ does not intercept html links and it is necessary to implement it ourselves.
+**a full reload**! Backbone_ does not intercept html links events and it is necessary to implement it ourselves.
 
-Branyen Tim, the creator of `Backbone boilerplate <http://github.com/tbranyen/backbone-boilerplate>`_ proposes the following solution that
-resthub integrates in its extensions with a complementary a test to check pushState activation.
+Branyen Tim, the creator of `Backbone boilerplate <http://github.com/tbranyen/backbone-boilerplate>`_ shares the following solution that RESThub integrates in its extensions with an additional test to check pushState activation.
 
 If ``Backbone.history`` is started with the ``pushState`` option, **any click on a link will be intercepted and bound to a Backbone navigation instead**. I you want to
 provide **external links**, you only have to use the ``data-bypass`` attribute:
@@ -554,14 +539,12 @@ provide **external links**, you only have to use the ``data-bypass`` attribute:
 
 .. _backbone-form-helper:
 
-Automatically population of view model from a form
---------------------------------------------------
+Automatic population of view model from a form
+----------------------------------------------
 
-`Backbone Validation`_ provides some helpers to validate a model against constraints and Backbone_ defines some methods (such as ``save``) to valid
-a model and then save it on server. But neither `Backbone Validation`_ nor Backbone_ allow to fill a model stored in a view with form values. 
+`Backbone Validation`_ provides some helpers to validate a model against constraints and Backbone_ defines some methods (such as ``save``) to validate a model and then save it on server. But neither `Backbone Validation`_ nor Backbone_ allow to fill a model stored in a view with form values. 
 
-Resthub comes with a really simple (naive ?) ``Backbone.View`` extension that copy each input field of a given form in a model. This helper is
-a new View method called ``populateModel()``. This function has to be explicitely called (e.g. before a ``save()``):
+RESThub comes with a really simple (naive ?) ``Backbone.View`` extension that copies each input field of a given form in a model. This helper is a new View method called ``populateModel()``. This function has to be explicitely called (e.g. before a ``save()``):
 
 .. code-block:: javascript
 
@@ -572,7 +555,7 @@ a new View method called ``populateModel()``. This function has to be explicitel
       saveUser:function () {
          this.populateModel();
 
-          // save model if its valid, display alert otherwise
+          // save model if it's valid, display alert otherwise
           if (this.model.isValid()) {
               this.model.save(null, {
                   success:this.onSaveSuccess.bind(this),
@@ -582,13 +565,12 @@ a new View method called ``populateModel()``. This function has to be explicitel
        }
    });
    
-``populateModel`` search for the form element provided and copy each form input value into the provided model attribute that match the
-copied form input name. API is: 
+``populateModel`` searches for the form element provided and copies each form input value into the provided model attribute that matches the copied form input name. API is: 
 
 .. code-block:: javascript
 
    /** utility method providing a default and basic handler that
-    * populate model from a form input
+    * populates model from a form input
     *
     * @param form form element to 'parse'. form parameter could be a css selector or a
     * jQuery element. if undefined, the first form of this view el is used.
@@ -604,7 +586,7 @@ So you can use it in multiple ways from your view:
    // take the first el form element and copy values into 'this.model' instance
    this.populateModel();
    
-   // get the form element maching provided selector (form with id "myForm") and copy values into 'this.model' instance
+   // get the form element matching the provided selector (form with id "myForm") and copy values into 'this.model' instance
    this.populateModel("#myForm");
    
    // get the provided jquery form element and copy values into 'this.model' instance
@@ -613,7 +595,7 @@ So you can use it in multiple ways from your view:
    // take the first el form element and copy values into provided myModel instance
    this.populateModel(null, myModel);
    
-   // get the form element maching provided selector (form with id "myForm") and copy values into provided myModel instance
+   // get the form element matching the provided selector (form with id "myForm") and copy values into provided myModel instance
    this.populateModel("#myForm", myModel);
    
    // get the provided jquery form element and copy values into provided myModel instance
@@ -626,9 +608,7 @@ to extend this method, globally or locally with your own logic or to use a third
 Avoid caching issues
 ====================
 
-In order to avoid caching issues when, for instance, you update your JS or HTML files, you should use the 
-`urlArgs RequireJS attribute <http://requirejs.org/docs/api.html#config>`_. You can filter the ${buildNumber} with your build 
-tool at each build.
+In order to avoid caching issues when updating your JS or HTML files, you should use the `urlArgs RequireJS attribute <http://requirejs.org/docs/api.html#config>`_. You can filter the ${buildNumber} with your build tool at each build.
 
 
 main.js:
