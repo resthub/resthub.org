@@ -30,8 +30,8 @@ You will have to choose between the following RESThub archetypes :
 	* **resthub-mongodb-webservice-archetype** : simple webservice project with MongoDB persistence
 	* **resthub-jpa-backbonejs-archetype** : simple HTML5 web application with JPA persistence
 	* **resthub-mongodb-backbonejs-archetype** : simple HTML5 web application with MongoDB persistence
-	* **resthub-jpa-backbonejs-multimodules-archetype** : Multimodules HTML5 web application with JPA persistence (TODO)
-	* **resthub-mongodb-backbonejs-multimodules-archetype** : Multimodules HTML5 web application with MongoDB persistence (TODO)
+	* **resthub-jpa-backbonejs-multimodules-archetype** : Multi-modules HTML5 web application with JPA persistence (TODO)
+	* **resthub-mongodb-backbonejs-multimodules-archetype** : Multi-modules HTML5 web application with MongoDB persistence (TODO)
  
 After choosing the right archetype and answering a few questions, your project is generated and ready to use.
 You can run it thanks to built-in Jetty support :
@@ -47,6 +47,6 @@ Check the `Todo RESThub 2.0 example <https://github.com/resthub/todo-example>`_ 
  
 In order to test and run it :
  * Download the `zip file <https://github.com/resthub/todo-example/zipball/master>`_ and extract it
- * Run mvn jetty:run
+ * Run ``mvn jetty:run``
  * Open your browser and browse http://localhost:8080/index.html
 

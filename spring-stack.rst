@@ -2,7 +2,7 @@
 Spring Stack documentation
 ==========================
 
-Here is the description of each RESThub modules, with related dependencies, code snippets and documentation.
+Here is the description of each RESThub module, with related dependencies, code snippets and documentation.
 
 The whole RESThub 2.0 Spring stack `Javadoc <http://jenkins.pullrequest.org/job/resthub-spring-stack-master/javadoc/>`_ is available.
 
@@ -15,7 +15,7 @@ RESThub stack based projects follow the "Maven standard" project layout :
 	* /pom.xml : the Maven configuration file which defines dependencies, plugins, etc.
 	* /src/main/java : your java classes go there
 	* /src/main/resources : your xml and properties files go there
-	* /src/main/resources/applicationContext.xml : this is your Spring application configuration file. Since we mainly use annotation based configuration, this file will usually be short
+	* /src/main/resources/applicationContext.xml : this is your Spring application configuration file. Since we mainly use annotation based configuration, this file will usually be short and may include other RESThub context files
 	* /src/main/webapp : your HTML, CSS and javascript files go there
  
 In bigger projects, functionalities are divided in several JAR modules (customer management, product management ...). Those modules are included as dependencies in a WAR module.  
@@ -55,8 +55,8 @@ pom.xml
 		<name>My project</name>
 
 		<properties>
-			<resthub.spring.stack.version>2.0-beta2</resthub.spring.stack.version>
-			<resthub.backbone.stack.version>2.0-beta2</resthub.backbone.stack.version>
+			<resthub.spring.stack.version>2.0-rc1</resthub.spring.stack.version>
+			<resthub.backbone.stack.version>2.0-rc1</resthub.backbone.stack.version>
 		</properties>
 
 		<dependencies>
@@ -146,7 +146,7 @@ By default RESThub webservices and unit tests scan and automatically include all
 
 RESThub default context files should be included thanks to <import /> elements. The name of each module RESThub context are specified in the configuration section of each module documentation.
 
-Here is an example of a a RESThub based typical src/main/resources/applicationContext.xml (this one use MongoDB, adapt it if you use JPA) :
+Here is an example of a typical RESThub based ``src/main/resources/applicationContext.xml`` (this one uses MongoDB, you may adapt it if you use JPA) :
 
 .. code-block:: xml
 
@@ -191,19 +191,19 @@ And modify your WebApplicationInitializer
 	String[] locations = {"classpath*:resthubContext.xml", "classpath*:applicationContext.xml"};
 	appContext.setConfigLocations(locations);
 
-It is a good practice to always prefix the filename by "classpath*:"" in order to enable scanning in all the classathes of your applications.
+It is a good practice to always prefix the filename by "classpath*:"" in order to enable scanning in all the classpaths of your applications.
 
 logback.xml
 ~~~~~~~~~~~
 
-You usually also will have a src/main/resources/logback.xml file in order to configure logging :
+You'll usually have a src/main/resources/logback.xml file in order to configure logging :
 
 .. code-block:: xml
 
 	<configuration> 
 		<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"> 
 			<layout class="ch.qos.logback.classic.PatternLayout"> 
-				<Pattern>%d [%thread] %level %logger - %m%n</Pattern> 
+				<Pattern>%d{HH:mm:ss} [%thread] %-5level %logger{26} - %msg%n%rEx</Pattern>
 			</layout> 
 		</appender> 
 		<root level="info"> 
@@ -246,7 +246,7 @@ Or to inject a bean by name (more specific than injection by type):
 CRUD services
 -------------
 
-RESThub is designed to give you the choice between 2 layers (Controller -> Repository) or 3 layers (Controller -> Service -> Repository)  software design. If you choose the 3 layer software design, you can use the RESThub CRUD service when it is accurate :
+RESThub is designed to give you the choice between a 2 layers (Controller -> Repository) or a 3 layers (Controller -> Service -> Repository) software architecture. If you choose the 3 layers one, you can use the RESThub CRUD service when it is convenient :
 
 .. code-block:: java
 
@@ -267,7 +267,7 @@ There are various ways to configure your environment specific properties in your
 
 Maven filtering (search and replace variables) is not recommended because it is done at compile time (not runtime) and makes usually your JAR/WAR specific to an environment. This feature can be useful when defining your target path (${project.build.directory}) in your src/test/applicationContext.xml for testing purpose.
 
-Spring properties placeholders allow you to reference in your application context files some values defined in external properties. This is useful in order to keep your application context generic (located in src/main/resources or src/test/resources), and put all values that depend on the environment (local, dev, staging, production) in external properties. These dynamic properties values are resolved during application startup.
+Spring properties placeholders allow you to reference values defined in external properties, from your application context files. This is useful in order to keep your application context generic (located in src/main/resources or src/test/resources), and put all values that depend on the environment (local, dev, staging, production) in external properties. These dynamic properties values are resolved during application startup.
 
 In order to improve testabilty and extensibility of your modules, you should set default values in case no properties are found in the classpath - if properties are found, then default values are obviously overridden. It is achieved by declaring the following lines in your applicationContext.xml :
 
@@ -353,7 +353,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.0-beta2</version>
+        <version>2.0-rc1</version>
     </dependency>
 
 Entity scan
@@ -478,7 +478,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.0-beta2</version>
+        <version>2.0-rc1</version>
     </dependency>
 
 Configuration
@@ -539,7 +539,7 @@ You also need to add an applicationContext.xml file in order to scan your reposi
 Web Common
 ==========
 
-RESThub Web Common comes with built-in XML and JSON support for serialization based on `Jackson 2.0 <http://wiki.fasterxml.com/JacksonHome>`_. RESThub uses `Jackson 2.0 XML capabilities <https://github.com/FasterXML/jackson-dataformat-xml>`_ instead of JAXB since it is more flexible. For example, you don't need to add classes your need to a context. Please read `Jackson annotation guide <http://wiki.fasterxml.com/JacksonAnnotations>`_ for details about configuration capabilities.
+RESThub Web Common comes with built-in XML and JSON support for serialization based on `Jackson 2.0 <http://wiki.fasterxml.com/JacksonHome>`_. RESThub uses `Jackson 2.0 XML capabilities <https://github.com/FasterXML/jackson-dataformat-xml>`_ instead of JAXB since it is more flexible. For example, you don't need to add classes you need to a context. Please read `Jackson annotation guide <http://wiki.fasterxml.com/JacksonAnnotations>`_ for details about configuration capabilities.
 
 Maven dependency
 ----------------
@@ -551,7 +551,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-common</artifactId>
-        <version>2.0-beta2</version>
+        <version>2.0-rc1</version>
     </dependency>
 
 Usage
@@ -570,9 +570,9 @@ Usage
 Web server
 ==========
 
-RESThub Web Server module is designed to allow you to develop REST webservices. Both JSON (default) and XML serialization are supported out of the box.
+RESThub Web Server module is designed for REST webservices development. Both JSON (default) and XML serialization are supported out of the box.
 
-**Warning**: currently Jackson XML dataformat does not support non wrapped List serialization. As a consequence, the findAll (GET /) method is not supported for XML content type yet. `You can follow the related Jackson issue on GitHub <https://github.com/FasterXML/jackson-dataformat-xml/issues/6>`_.
+**Warning**: currently Jackson XML dataformat does not support non-wrapped List serialization. As a consequence, the findAll (GET /) method is not supported for XML content type yet. `You can follow the related Jackson issue on GitHub <https://github.com/FasterXML/jackson-dataformat-xml/issues/6>`_.
 
 It provides some abstract REST controller classes, and includes the following dependencies :
 	* Spring MVC 3.1 (`reference manual <http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html/mvc.html>`_)
@@ -588,19 +588,19 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.0-beta2</version>
+        <version>2.0-rc1</version>
     </dependency>
 
 Configuration
 -------------
 
-In order to import default configuration, your should add the following line in your applicationContext.xml :
+In order to import the default configuration, your should add the following line in your applicationContext.xml :
 
  .. code-block:: xml
 
     <import resource="classpath*:resthubWebServerContext.xml" />
 
-RESThub 2 based web applications do not contain web.xml files, but use Servlet 3.0 and Spring 3.1 new capabilities in order to initialize your webapp with a Java class and extend WebApplicationInitializer. This class just need to be in the classpath, here is the default one (the RESThub archetypes can create it for you if needed) :
+RESThub 2 based web applications do not contain web.xml files, but use Servlet 3.0 and Spring 3.1 new capabilities in order to initialize your webapp with a Java class that extends WebApplicationInitializer. This class just needs to be in the classpath; here is the default one (the RESThub archetypes can create it for you) :
 
 .. code-block:: java
 	
@@ -679,7 +679,7 @@ RESThub comes with a REST controller that allows you to create a CRUD webservice
 Web client
 ==========
 
-RESThub Web client module goal is to give you an easy way to request other REST webservices. It is based on AsyncHttpClient and provides a `client API wrapper <http://jenkins.pullrequest.org/job/resthub-spring-stack-resthub2/javadoc/index.html?org/resthub/web/Client.html>`_ and a OAuth2 support.
+RESThub Web client module aims to give you an easy way to request other REST webservices. It is based on AsyncHttpClient and provides a `client API wrapper <http://jenkins.pullrequest.org/job/resthub-spring-stack-resthub2/javadoc/index.html?org/resthub/web/Client.html>`_ and OAuth2 support.
 
 In order to limit conflicts it has no dependency on Spring, but only on :
  	* AsyncHttpClient `documentation <https://github.com/sonatype/async-http-client>`_ and `Javadoc <http://sonatype.github.com/async-http-client/apidocs/reference/packages.html>`_
@@ -695,7 +695,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.0-beta2</version>
+        <version>2.0-rc1</version>
     </dependency>
 
 Usage
@@ -711,8 +711,9 @@ You can use resthub web client in a synchronous or asynchronous way. The API is 
 		Response r = fr.get();
 		Sample s = r.resource(Sample.class);
 
-		// Same but in a one line
+		// One-liner version
 		Sample s = httpClient.url("http//...").jsonPost(new Sample("toto")).get().resource(Sample.class);
+
 
 OAuth2.0 integration
 --------------------
@@ -756,8 +757,8 @@ The following test stack is included in the RESThub test module :
 
 RESThub also provides generic classes in order to make testing easier.
    * AbstractTest : base class for your non transactional Spring aware unit tests
-   * AbstractTransactionalTest : base class for your transactional unit tests, preconfigure Spring test framework
-   * AbstractWebTest : base class for your unit test that need to run and embedded servlet container
+   * AbstractTransactionalTest : base class for your transactional unit tests, preconfigured with Spring test framework
+   * AbstractWebTest : base class for your unit tests that need to run and embedded servlet container
 
 Maven dependency
 ----------------
@@ -769,14 +770,14 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.0-beta2</version>
+        <version>2.0-rc1</version>
         <scope>test</scope>
     </dependency>
 
 Data provisioning and cleanup
 ------------------------------
 
-It is recommended to initialize and cleanup test data common to all your tests thanks to methods with TestNG annotations @BeforeMethod and @AfterMethod and using your repository or service classes.
+It is recommended to initialize and cleanup test data shared by your tests using methods annotated with TestNG's @BeforeMethod and @AfterMethod and using your repository or service classess.
 
 **Warning:** : with JPA the default deleteAll() method does not manage cascade delete, so for your data cleanup you should use the following code in order to get your entities removed with cascade delete support:
 
