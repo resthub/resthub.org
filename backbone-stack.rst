@@ -206,7 +206,7 @@ RESThub provides a default render implementation that will render your template 
 
 .. code-block:: javascript
 
-    define(['underscore', 'backbone', 'hbs!templates/my.html'], function(_, Backbone, myTmpl){
+    define(['underscore', 'backbone', 'hbs!templates/my'], function(_, Backbone, myTmpl){
         var MyView = Backbone.View.extend({
             
             template: myTemplate,
@@ -393,7 +393,7 @@ Sample usage in a Backbone.js View :
 
 .. code-block:: javascript
 
-    define(['jquery', 'backbone', 'handlebars', 'hbs!templates/todo.html'],function($, Backbone, Handlebars, todoTmpl) {
+    define(['jquery', 'backbone', 'hbs!templates/todo'],function($, Backbone, todoTmpl) {
         var TodoView = Backbone.View.extend({
 
         //... is a list tag.
