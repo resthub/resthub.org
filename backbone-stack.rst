@@ -199,7 +199,7 @@ RESThub provides a default render implementation that will render your template 
 
 .. code-block:: javascript
 
-    define(['underscore', 'backbone', 'hbs!templates/my'], function(_, Backbone, myTmpl){
+    define(['underscore', 'backbone', 'hbs!templates/my'], function(_, Backbone, myTemplate){
         var MyView = Backbone.View.extend({
             
             template: myTemplate,
