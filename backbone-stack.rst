@@ -658,9 +658,7 @@ In your main.js file you should define a shortcut path for i18n plugin and the d
 
 2. **Define labels**
 
-Create a labels.js file in the js/nls directory, it will contain labels in the default locale used by your application. You 
-can change labels.js to another name (messages.js or functionality related name like user.js or product.js) but js/nls is the 
-default location. Specify at the same level than the root node the available translations.
+Create a labels.js file in the js/nls directory, it will contain labels in the default locale used by your application. You can change labels.js to another name (messages.js or functionality related name like user.js or product.js), but js/nls is the default location.
 
 Sample js/nls/labels.js file:
 
@@ -694,8 +692,7 @@ Sample js/nls/fr-fr/labels.js file:
 
 3. **Use it**
 
-Add a dependency in the js, typically a View, where you'll need labels. You'll absolutely need to give a scoped variable to 
-the result (in this example ``labels``, but you can choose the one you want). 
+Add a dependency in the js, typically a View, where you'll need labels. You'll absolutely need to give a scoped variable to the result (in this example ``labels``, but you can choose the one you want). 
 
 Prepending 'i18n!' before the file path in the dependency indicates RequireJS to get the file related to the current locale :
 
@@ -705,14 +702,14 @@ Prepending 'i18n!' before the file path in the dependency indicates RequireJS to
         // ...
 
         render: function() {
-            $(this.el).html(this.template(labels));
+            this.$el.html(this.template(labels));
             return this;
         },
 
         // ...
     });
 
-In in your html template :
+In your html template :
 
 .. code-block:: html
 
@@ -753,10 +750,9 @@ Changing locale require a page reloading, so it is usually implemented with a Ba
 
 5. **sprintf to the rescue**
 
-Internalionalization can sometimes be tricky since words are not always at the same position depending on the language. In order to make it easier to use, 
-RESThub backbone stack include Underscore.String. It contains a sprintf function that you can use for your translations.
+Internalionalization can sometimes be tricky since words are not always in the same order depending on the language. To make your life easier, RESThub backbone stack includes Underscore.String. It contains a sprintf function that you can use for your translations.
 
-You can use the ``_.sprintf()`` function and the ``sprintf`` helper in order to have some replacement in your labels.
+You can use the ``_.sprintf()`` function and the ``sprintf`` helper to have substitutions in your labels.
 
 labels.js
 
@@ -767,7 +763,7 @@ labels.js
         'clearitems' : 'Clear %s completed items',
     }
 
-RESThub also provide a ``sprintf`` handlebars helper to use directly in your templates (cf. :ref:`sprintf-helper`), so you can use it easily in your templates:
+RESThub also provides a ``sprintf`` handlebars helper to use directly in your templates (cf. :ref:`sprintf-helper`):
 
 .. code-block:: html
 
@@ -776,8 +772,7 @@ RESThub also provide a ``sprintf`` handlebars helper to use directly in your tem
 Inheritance
 ===========
 
-As described by `k33g <https://twitter.com/#!/k33g_org>`_ on his `Gist Use Object Model of BackBone <https://gist.github.com/2287018>`_, 
-it is possible to reuse Backbone.js extend() function in order to get simple inheritance in Javascript.
+As described by `k33g <https://twitter.com/#!/k33g_org>`_ on his `Gist Use Object Model of BackBone <https://gist.github.com/2287018>`_, it is possible to reuse Backbone.js extend() function in order to get simple inheritance in Javascript.
 
 .. code-block:: javascript
 
@@ -828,8 +823,8 @@ it is possible to reuse Backbone.js extend() function in order to get simple inh
 Publish Subscribe
 =================
 
-Resthub provides publish / subscribe mechanisms over your application with a tiny native ``Backbone.Events`` extension.
-Publishing and subscribing are global scopped and allow to communicate between view all over your app.
+RESThub provides a publish / subscribe mechanism in your application with a tiny native ``Backbone.Events`` extension.
+Publishing and subscribing are globally scoped and allow to communicate between views within your app.
 
 API
 ---
@@ -866,7 +861,7 @@ PubSub component can be accessed globally but we strongly recommend to import it
         
       ...
         
-      // subscribe to one event (do not forget this)
+      // subscribe to one event (do not forget the context:this)
       Pubsub.on("!test-event", function () { ... }, this);
 
       // subscribe to multiple events
@@ -891,24 +886,21 @@ PubSub component can be accessed globally but we strongly recommend to import it
         
    }
 
-Because of ``Bacbone.View`` and PubSub integration mechanisms (see below) the prefix ``!`` on first index of any global PubSub event
-is **strongly recommended**. 
+Because of ``Bacbone.View`` and PubSub integration mechanisms (see below), the ``!`` prefix for any global PubSub event is **strongly recommended**. 
 
 .. warning::
 
-   Do not follow this convention does not have any impact on PubSub behaviour but prevents usage of integrated Backbone.View
-   PubSub events declaration (see below)
+   Not following this convention does not have any impact on PubSub behaviour but prevents usage of integrated Backbone.View PubSub events declaration (see below)
 
 .. _pubsub-in-views:
    
 PubSub and Backbone Views integration
 -------------------------------------
 
-In order to facilitate global PubSub events in Backbone Views, Resthub provides some syntaxic sugar with a ``Backbone.View`` extension.
-You will able to beneficiate of this extension as soon as you included Restbu Backbone extension instead of original Backbone lib (cf. :ref:`resthub-extensions`).
+In order to facilitate global PubSub events in Backbone Views, RESThub provides some syntactic sugar with a ``Backbone.View`` extension.
+You'll get to use this extension as soon as you include the RESThub Backbone extension instead of the original Backbone lib (cf. :ref:`resthub-extensions`).
 
-Backbone Views events hash parsing has been extended to be capable of declaring global PubSub events as it is already done for DOM events binding. To declare such
-global events in your Backbone View, you only have to add it in events hash:
+Backbone Views events hash parsing has been extended to be capable of declaring global PubSub events as it is already done for DOM events binding. To declare such global events in your Backbone View, you only have to add it in events hash:
 
 .. code-block:: javascript
 
@@ -922,15 +914,12 @@ global events in your Backbone View, you only have to add it in events hash:
        "!globalParams":"globalFiredParams"
    },
     
-Please not that it is mandatory to prefix your global events with ``!`` to differenciate them from DOM events. You will always have to use the ``!`` prefix
-to reference events later (see :ref:`pubsub-usage` for samples).
+Please note that it is mandatory to prefix your global events with ``!`` to differenciate them from DOM events. You will always have to use the ``!`` prefix to reference events later (see :ref:`pubsub-usage` for samples).
 
 With this mechanism, PubSub subscribings are automatically declared on View construction, as DOM Events : **You don't have to call PubSub.on on these declared events**.
-In the same way, PubSub subscribings for this View are automatically removed during a Backbone ``dispose()`` method call : **You don't have either to call PubSub.off 
-on these declared events**.
+In the same way, PubSub subscribings for this View are automatically removed during a Backbone ``dispose()`` method call : **You don't have either to call PubSub.off on these declared events**.
 
-Obviously, this is still possible for you to explicitely call ``on`` and ``off`` in your view on other global events that you don't want to or you can't declare on 
-events hash (e.g. for more dynamic needs). But don't forget to bind this when declaring subscription:
+Obviously, it is still possible for you to explicitely call ``on`` and ``off`` in your view on other global events that you don't want to or you can't declare on events hash (e.g. for more dynamic needs). But don't forget to bind ``this` when declaring subscription:
 
 .. code-block:: javascript
 
