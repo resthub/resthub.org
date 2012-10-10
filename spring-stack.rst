@@ -733,6 +733,8 @@ The ``Future.get()`` method can throw Exceptions, so the method call should be s
 		// One-liner version - synchronous call!
 		Sample s = httpClient.url("http//...").asyncJsonPost(new Sample("toto")).get().resource(Sample.class);
 
+Because the remote web server sometimes responds 4xx (client error) and 5xx (server error) HTTP status codes, RESThub HTTP Client wraps those error statuses and throws `specific runtime exceptions <https://github.com/resthub/resthub-spring-stack/tree/master/resthub-web/resthub-web-common/src/main/java/org/resthub/web/exception>`_. 
+
 OAuth2.0 integration
 --------------------
 
