@@ -701,19 +701,37 @@ In order to use it in your project, add the following snippet to your pom.xml :
 Usage
 -----
 
-You can use resthub web client in a synchronous or asynchronous way. The API is the same, every Http request returns a `Future <http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html>`_ <Response> object. Just call get() on this object in order to make the call synchronous.
+You can use RESThub web client in a synchronous or asynchronous way.
+
+THe synchronous API is easy to use, but blocks the current Thread until the remote server sends the full Response.
 
 .. code-block:: java
 	
-		// 3 line example
+		// 3 lines example
 		Client httpClient = new Client();
-		Future<Response> fr = httpClient.url("http//...").jsonPost(new Sample("toto"));
-		Response r = fr.get();
+		Response r = httpClient.url("http//...").jsonPost(new Sample("toto"));
 		Sample s = r.resource(Sample.class);
 
 		// One-liner version
-		Sample s = httpClient.url("http//...").jsonPost(new Sample("toto")).get().resource(Sample.class);
+		Sample s = httpClient.url("http//...").jsonPost(new Sample("toto")).resource(Sample.class);
 
+
+The API is quite the same, every Http request returns a `Future <http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html>`_ <Response> object. Just call get() on this object in order to make the call synchronous.
+The ``Future.get()`` method can throw Exceptions, so the method call should be surrounded by a try/catch or let the exceptions bubble up.
+
+.. code-block:: java
+	
+		// 4 lines example
+		Client httpClient = new Client();
+		Future<Response> fr = httpClient.url("http//...").asyncJsonPost(new Sample("toto"));
+		// do some computation while we're waiting for the response...
+
+		// calling .get() makes the code synchronous again!
+		Response r = fr.get();
+		Sample s = r.resource(Sample.class);
+
+		// One-liner version - synchronous call!
+		Sample s = httpClient.url("http//...").asyncJsonPost(new Sample("toto")).get().resource(Sample.class);
 
 OAuth2.0 integration
 --------------------
