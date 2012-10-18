@@ -319,12 +319,12 @@ Usually, your beans will annotation based (declared with @Named annotation) and 
 
 RESThub own application contexts are declared in resthubContext.xml files, and if you need some, you should use applicationContext.xml files for your application. As said before, it is bette to use Spring Java Config when possible.
 
-It is a good practice to always prefix the filename by "classpath*:"" in order to enable scanning in all the classathes of your applications.
+It is a good practice to always prefix the filename by "classpath*:"" in order to enable scanning in all the classpaths of your applications.
 
 logback.xml
 ~~~~~~~~~~~
 
-You usually also will have a src/main/resources/logback.xml file in order to configure logging :
+You'll usually have a src/main/resources/logback.xml file in order to configure logging :
 
 .. code-block:: xml
 
@@ -374,7 +374,7 @@ Or to inject a bean by name (Allow more than one bean implementing the same inte
 CRUD services
 -------------
 
-RESThub is designed to give you the choice between 2 layers (Controller -> Repository) or 3 layers (Controller -> Service -> Repository)  software design. If you choose the 3 layer software design, you can use the RESThub CRUD service when it is accurate :
+RESThub is designed to give you the choice between a 2 layers (Controller -> Repository) or a 3 layers (Controller -> Service -> Repository) software architecture. If you choose the 3 layers one, you can use the RESThub CRUD service when it is convenient :
 
 .. code-block:: java
 
@@ -592,7 +592,7 @@ Usage
 Web common
 ==========
 
-RESThub Web Common comes with built-in XML and JSON support for serialization based on `Jackson 2.1 <http://wiki.fasterxml.com/JacksonHome>`_. RESThub uses `Jackson 2.1 XML capabilities <https://github.com/FasterXML/jackson-dataformat-xml>`_ instead of JAXB since it is more flexible. For example, you don't need to add classes your need to a context. Please read `Jackson annotation guide <http://wiki.fasterxml.com/JacksonAnnotations>`_ for details about configuration capabilities.
+RESThub Web Common comes with built-in XML and JSON support for serialization based on `Jackson 2.1 <http://wiki.fasterxml.com/JacksonHome>`_. RESThub uses `Jackson 2.1 XML capabilities <https://github.com/FasterXML/jackson-dataformat-xml>`_ instead of JAXB since it is more flexible. For example, you don't need to add classes you need to a context. Please read `Jackson annotation guide <http://wiki.fasterxml.com/JacksonAnnotations>`_ for details about configuration capabilities.
 
 Maven dependency
 ----------------
@@ -623,7 +623,7 @@ Usage
 Web server
 ==========
 
-RESThub Web Server module is designed to allow you to develop REST webservices. Both JSON (default) and XML serialization are supported out of the box.
+RESThub Web Server module is designed for REST webservices development. Both JSON (default) and XML serialization are supported out of the box.
 
 **Warning**: currently Jackson XML dataformat does not support non wrapped List serialization. As a consequence, the findAll (GET /) method is not supported for XML content type yet. `You can follow the related Jackson issue on GitHub <https://github.com/FasterXML/jackson-dataformat-xml/issues/38>`_.
 
@@ -734,7 +734,7 @@ With sluggable behaviour we have URL lke GET /sample/niceref.
 Web client
 ==========
 
-RESThub Web client module goal is to give you an easy way to request other REST webservices. It is based on AsyncHttpClient and provides a `client API wrapper <http://jenkins.pullrequest.org/job/resthub-spring-stack-resthub2/javadoc/index.html?org/resthub/web/Client.html>`_ and a OAuth2 support.
+RESThub Web client module aims to give you an easy way to request other REST webservices. It is based on AsyncHttpClient and provides a `client API wrapper <http://jenkins.pullrequest.org/job/resthub-spring-stack-resthub2/javadoc/index.html?org/resthub/web/Client.html>`_ and OAuth2 support.
 
 In order to limit conflicts it has no dependency on Spring, but only on :
  	* AsyncHttpClient `documentation <https://github.com/sonatype/async-http-client>`_ and `Javadoc <http://sonatype.github.com/async-http-client/apidocs/reference/packages.html>`_
@@ -756,14 +756,28 @@ In order to use it in your project, add the following snippet to your pom.xml :
 Usage
 -----
 
-You can use resthub web client in a synchronous or asynchronous way. The API is nearly the same. Synchronous methods (jsonPost, jsonGet, jsonPut, jsonDelete + XML equivalents) returns a Response object. Asynchronous methods (asyncJsonPost, asyncJsonGet, asyncJsonPut, asyncJsonDelete + XML equivalent) returns  a `Future <http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html>`_ <Response> object.
+You can use resthub web client in a synchronous or asynchronous way. The synchronous API is easy to use, but blocks the current Thread until the remote server sends the full Response.
 
 .. code-block:: java
 	
-		// 1 line request example
-		Sample s = httpClient.url("http//...").jsonPost(new Sample("toto")).get().resource(Sample.class);
+		// One-liner version
+		Sample s = httpClient.url("http//...").jsonPost(new Sample("toto")).resource(Sample.class);
 
-In case of an error resulting of a 4xx or 5xx response from the server, RESThub http client will throw an exception from the org.resthub.web.exception package.
+
+Asynchronous API is quite the same, every Http request returns a `Future <http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html>`_ <Response> object. Just call get() on this object in order to make the call synchronous.
+The ``Future.get()`` method can throw Exceptions, so the method call should be surrounded by a try/catch or let the exceptions bubble up.
+
+.. code-block:: java
+	
+		// 4 lines example
+		Client httpClient = new Client();
+		Future<Response> fr = httpClient.url("http//...").asyncJsonPost(new Sample("toto"));
+		// do some computation while we're waiting for the response...
+
+		// calling .get() makes the code synchronous again!
+		Sample s = httpClient.url("http//...").asyncJsonPost(new Sample("toto")).get().resource(Sample.class);
+
+Because the remote web server sometimes responds 4xx (client error) and 5xx (server error) HTTP status codes, RESThub HTTP Client wraps those error statuses and throws `specific runtime exceptions <https://github.com/resthub/resthub-spring-stack/tree/master/resthub-web/resthub-web-common/src/main/java/org/resthub/web/exception>`_. 
 
 OAuth2.0 integration
 --------------------
@@ -806,8 +820,8 @@ The following test stack is included in the RESThub test module :
 
 RESThub also provides generic classes in order to make testing easier.
    * AbstractTest : base class for your non transactional Spring aware unit tests
-   * AbstractTransactionalTest : base class for your transactional unit tests, preconfigure Spring test framework
-   * AbstractWebTest : base class for your unit test that need to run and embedded servlet container
+   * AbstractTransactionalTest : base class for your transactional unit tests, preconfigured with Spring test framework
+   * AbstractWebTest : base class for your unit tests that need to run and embedded servlet container
 
 Maven dependency
 ----------------
@@ -826,7 +840,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
 Data provisioning and cleanup
 ------------------------------
 
-It is recommended to initialize and cleanup test data common to all your tests thanks to methods with TestNG annotations @BeforeMethod and @AfterMethod and using your repository or service classes.
+It is recommended to initialize and cleanup test data shared by your tests using methods annotated with TestNG's @BeforeMethod and @AfterMethod and using your repository or service classess.
 
 **Warning:** : with JPA the default deleteAll() method does not manage cascade delete, so for your data cleanup you should use the following code in order to get your entities removed with cascade delete support:
 
