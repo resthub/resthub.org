@@ -23,9 +23,8 @@ Table of contents
 .. toctree::
     :maxdepth: 2
 
-    getting-started
-    tutorials
     spring-stack
     backbone-stack
+    tutorials
     
 	

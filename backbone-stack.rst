@@ -4,6 +4,8 @@
 Backbone.js Stack documentation
 ===============================
 
+RESThub 2 backbone stack provides a client side full stack and guidelines for building enterprise grade HTML5 application. It cold be used with any server backend : Grail, Ruby, PHP, NodeJS, J2EE, Spring ...
+
 .. contents::
    :depth: 3
    
@@ -25,10 +27,8 @@ How should I use it in my project
 =================================
 
 There are 3 ways to use it in your project :
-    * If you are starting a new Java project, the better way to use RESThub Backbone.js stack is to use one of the Backbone.js webappp 
-      Maven Archetypes described on the `Getting Started page <getting-started.html>`_
-    * You can simply go to `RESThub Backbone.js stack GitHub repository <https://github.com/resthub/resthub-backbone-stack>`_, download the 
-      repository content and copy it at the root of your webapp
+    * If you are starting a new Java project, the better way to use RESThub Backbone.js stack is to use one of the Backbone.js webappp Maven Archetypes described on the `Spring Stack page <spring-stack.html>`_
+    * You can simply go to `RESThub Backbone.js stack GitHub repository <https://github.com/resthub/resthub-backbone-stack>`_, download the repository content and copy it at the root of your webapp
     * Last option (but deprecated since you don't see the stack files in your project), you can add the following code snippet to your pom.xml :
 
 .. code-block:: xml
@@ -38,7 +38,7 @@ There are 3 ways to use it in your project :
         <dependency>
             <groupId>org.resthub</groupId>
             <artifactId>resthub-backbone-stack</artifactId>
-            <version>2.0-SNAPSHOT</version>
+            <version>2.0-rc2</version>
             <type>war</type>
         </dependency>
 
@@ -104,93 +104,105 @@ at your webapp root (usually src/main/webapp). Please find below a sample :
    // Set the require.js configuration for your application.
    require.config({
 
-       shim:{
-           'underscore':{
-               exports:'_'
-           },
-           'underscore.string':{
-               deps:[
-                   'underscore'
-               ]
-           },
-           'handlebars':{
-               exports:'Handlebars'
-           },
-           'backbone':{
-               deps:[
-                   'underscore',
-                   'underscore.string',
-                   'jquery'
-               ],
-               exports:'Backbone'
-           },
-           'backbone-queryparams':{
-               deps:[
-                   'backbone',
-                   'underscore'
-               ]
-           },
-           'backbone-paginator':{
-               deps:[
-                   'backbone',
-                   'underscore',
-                   'jquery'
-               ],
-               exports:'Backbone.Paginator'
-           },
-           async:{
-               deps:[
-                   'underscore'
-               ]
-           }
-       },
+        shim: {
+            'underscore': {
+                exports: '_'
+            },
+            'underscore-string': {
+                deps: [
+                'underscore'
+                ]
+            },
+            'handlebars-orig': {
+                exports: 'Handlebars'
+            },
+            'backbone-orig': {
+                deps: [
+                'underscore',
+                'underscore-string',
+                'jquery'
+                ],
+                exports: 'Backbone'
+            },
+            'backbone-queryparams': {
+                deps: [
+                'backbone-orig',
+                'underscore'
+                ]
+            },
+            'backbone-paginator': {
+                deps: [
+                'backbone-orig',
+                'underscore',
+                'jquery'
+                ],
+                exports: 'Backbone.Paginator'
+            },
+            'bootstrap': {
+                deps: [
+                'jquery'
+                ]
+            },
+            'backbone-relational': {
+                deps: [
+                'backbone-orig',  
+                'underscore'  
+                ]
+            },
+            'keymaster': {
+                exports: 'key'
+            },
+            'async': {
+                exports: 'async'
+            }
+        },
 
-       // Libraries
-       paths:{
-           jquery:'libs/jquery',
-           underscore:'libs/underscore',
-           'underscore.string':'libs/underscore.string',
-           backbone:'libs/backbone',
-           localstorage:'libs/localstorage',
-           text:'libs/text',
-           i18n:'libs/i18n',
-           pubsub:'resthub/pubsub',
-           'bootstrap':'libs/bootstrap',
-           'backbone-validation':'libs/backbone-validation',
-           'resthub-backbone-validation':'resthub/backbone-validation.ext',
-           handlebars:'libs/handlebars',
-           'resthub-handlebars':'resthub/handlebars-helpers',
-           hbs: 'resthub/handlebars-require',
-           'backbone-queryparams':'libs/backbone.queryparams',
-           'backbone-paginator':'libs/backbone.paginator',
-           async:'libs/async.js',
-           keymaster:'libs/keymaster'
-       }
-   });
+        // Libraries
+        paths: {
+            jquery: 'libs/jquery',
+            underscore: 'libs/underscore',
+            'underscore-string': 'libs/underscore-string',
+            'backbone-orig': 'libs/backbone',
+            backbone: 'libs/resthub/backbone-resthub',
+            localstorage: 'libs/localstorage',
+            text: 'libs/text',
+            i18n: 'libs/i18n',
+            pubsub: 'libs/resthub/pubsub',
+            'bootstrap': 'libs/bootstrap',
+            'backbone-validation-orig': 'libs/backbone-validation',
+            'backbone-validation': 'libs/resthub/backbone-validation-ext',
+            'handlebars-orig': 'libs/handlebars',
+            'handlebars': 'libs/resthub/handlebars-helpers',
+            'backbone-queryparams': 'libs/backbone-queryparams',
+            'backbone-paginator': 'libs/backbone-paginator',
+            'backbone-relational': 'libs/backbone-relational',
+            async: 'libs/async',
+            keymaster: 'libs/keymaster',
+            hbs: 'libs/resthub/require-handlebars',
+            'moment': 'libs/moment'
+        }
+    });
 
-   // Preload main libs
-   require(['router'], function (Router) {
+    // Preload main libs
+    require(['router'], function (Router) {
 
        Router.initialize();
-   });
+    });
    
 - **shim** config is part of `Require 2.0`_ and allows to `Configure the dependencies and exports for older, traditional "browser globals" 
   scripts that do not use define() to declare the dependencies and set a module value`. See `<http://requirejs.org/docs/api.html#config-shim>`_ for details.
 - **path** config is also part of Require_ and allows to define paths for libs not found durectly under baseUrl. 
   See `<http://requirejs.org/docs/api.html#config-paths>`_ for details.
-- resthub suggests to **preload some libs** that will be used surely as soon the app start (typically backbone itself and our template engine). This mechanism also
-  allows us to load other linked libs transparently without having to define it repeatedly (e.g. ``underscore.string`` loading - this libs is strongly correlated
-  to ``underscore`` - and merged with it and thus should not have to be defined anymore)
-
+- resthub suggests to **preload some libs** that will be used surely as soon the app start (typically backbone itself and our template engine). This mechanism also allows us to load other linked libs transparently without having to define it repeatedly (e.g. ``underscore.string`` loading - this libs is strongly correlated to ``underscore`` - and merged with it and thus should not have to be defined anymore)
 
 View instantiation
 ==================
 
-RESThub Backbone stack provides a default rendering strategy with root element, template and context management.
+RESThub Backbone stack provides an enhanced Backbone.ResthubView with default rendering strategy, root element attachement, template and context management.
 
-Backbone views contains an $el attribute that represent the element (a div by default) where the template will be rendered, but it does not provide an attribute that represent the DOM element where the view will be attached.
+Backbone default views contains an $el attribute that represent the element (a div by default) where the template will be rendered, but it does not provide an attribute that represent the DOM element where the view will be attached.
 
-In order to follow separation of concerns and encapsulation principles, RESThub Backbone stack manage a root element that respresent where the view will be attached. In order to avoid hardcoding view root element, you sould always pass it as constructor parameter. Like el, model or collection, it will be automatically added to the view.
+In order to follow separation of concerns and encapsulation principles, Backbone.ResthubView manage a root element that respresent where the view will be attached. In order to avoid hardcoding view root element, you sould always pass it as constructor parameter. Like el, model or collection, it will be automatically added to the view.
 
 .. code-block:: javascript
 
@@ -202,18 +214,18 @@ In this example, we create the MyView view and attach it to the .container DOM e
 
     new MyView({root: '#container', collection: myCollection});
 
-RESThub provides a default render implementation that will render your template with model or collection in the context if these properties are defined.
+Backbone.ResthubView provides a default render implementation that will render your template with model or collection in the context if these properties are defined.
 
 .. code-block:: javascript
 
-    define(['underscore', 'backbone', 'hbs!templates/my'], function(_, Backbone, myTmpl){
-        var MyView = Backbone.View.extend({
+    define(['underscore', 'backbone', 'hbs!templates/my'], function(_, Backbone, myTemplate){
+        var MyView = Backbone.ResthubView.extend({
             
             template: myTemplate,
             
             initialize: function() {
                 _.bind(this.render, this);
-                this.collection.on('reset', this.render);
+                this.collection.on('reset', this.render, this);
             }
 
         });
@@ -223,7 +235,7 @@ After instantiation, this.$root contains a cached jQuery element and this.root t
 
 .. code-block:: javascript
 
-    var MyView = Backbone.View.extend({
+    var MyView = Backbone.ResthubView.extend({
             
         template: myTemplate,
         tagName:  'li',
@@ -235,7 +247,7 @@ You can customize the rendering context by defining a context property :
 
 .. code-block:: javascript
 
-    var MyView = Backbone.View.extend({
+    var MyView = Backbone.ResthubView.extend({
             
         template: myTemplate,
         context: {
@@ -255,7 +267,7 @@ If you need to customize render() function, you can replace or extend it. Here i
 
 .. code-block:: javascript
 
-    var MyView = Backbone.View.extend({
+    var MyView = Backbone.ResthubView.extend({
 
         render: function() {
             MyView.__super__.render.apply(this, arguments);
@@ -317,7 +329,7 @@ Backbone way of declaring a static color variable :
 
 .. code-block:: javascript
 
-    var MyView = Backbone.View.extend({
+    var MyView = Backbone.ResthubView.extend({
 
         color : '#FF0000',
 
@@ -333,7 +345,7 @@ Backbone way of declaring an instance color variable :
 
 .. code-block:: javascript
 
-    var MyView = Backbone.View.extend({
+    var MyView = Backbone.ResthubView.extend({
 
         initialize: function(options) {
             this.$root = options.root;
@@ -437,59 +449,17 @@ Resthub provides currently these extensions :
  `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/handlebars-helpers.js>`_.
 - Handlebars_ RequireJS plugin in order to retreive and compile automatically Handlebars templates: cf. :ref:`templating`
 - `Backbone Validation`_ extensions : Validation callbacks (``valid`` and ``invalid``) extension to provide a native integration 
-  with `Twitter Bootstrap`_ form structure (``controls`` and ``control-group``). cf. 
-  `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/backbone-validation.ext.js>`_
+  with `Twitter Bootstrap`_ form structure (``controls`` and ``control-group``). cf. `Github source <http://github.com/resthub/resthub-backbone-stack/blob/master/js/resthub/backbone-validation-ext.js>`_
+- `Backbone Relational <https://github.com/PaulUithol/Backbone-relational>`_ extension
 
-To beneficate of these extensions, we suggest you to replace standard lib inclusion in your require define by the explicit inclusion
-of these libs.
-
-Backbone extension is an exception because, to facilitate integration, we override standard ``backbone`` to map it to extented backbone file.
-
-e.g.
-
-.. code-block:: javascript
-
-   define([
-       'backbone', 'resthub-handlebars', 'resthub-backbone-validation'
-   ], function (Backbone, Handlebars, BackboneValidation) {
-      ...
-   });
+These extensions are automatically loaded.  
    
-By default, resthub archetype generates view including these extensions instead of original libs. Each extension depends on the original lib.
-
-If you don't want to use these extensions, you only have to use the original lib alone : 
-
-.. code-block:: javascript
-
-   define([
-       'backbone-orig' 'handlebars', 'backbone-validation'
-   ], function (Backbone, Handlebars, BackboneValidation) {
-      ...
-   });
-   
-Please note that, as explained before, original backbone distribution is accessible with ``backbone-orig`` path.
-   
-All extensions paths and shims are defined in ``main.js`` :
-
-.. code-block:: javascript
-
-   paths:{
-      ...
-      'backbone':'resthub/backbone',
-      'backbone-orig':'lib/backbone.ext',
-      'backbone-validation':'libs/backbone-validation',
-      'resthub-backbone-validation':'resthub/backbone-validation.ext',
-      handlebars:'libs/handlebars',
-      'resthub-handlebars':'resthub/handlebars-helpers',
-      ...
-    }
-
 .. _backbone-dispose:
     
 Backbone dispose extension and automatic remove binding
 -------------------------------------------------------
 
-``Backone.View`` includes now a ``dispose`` method that clean all view, model and collection bindings to properly clean up a view.
+``Backone.ResthubView`` includes a ``dispose`` method that clean all view, model and collection bindings to properly clean up a view.
 This method is called by another View method ``remove`` that also perform a jquery ``view.el`` DOM remove.
 
 Resthub provides three extensions related to this workflow:
@@ -518,8 +488,7 @@ Resthub provides three extensions related to this workflow:
    ``dispose`` method described beside is called by ``remove`` Backbone_ view method. But this method still have to be manually called
    by users (for instance in your router).
    
-   Resthub offers an extension to this mechanism that listen any removing on the ``view.el`` DOM element and **automatically call dispose
-   on remove**. This means that you don't have to manage this workflow anymore and any replacement done in el parent will trigger a dispose call.
+   Resthub offers an extension to this mechanism that listen any removing on the ``view.el`` DOM element and **automatically call dispose on remove**. This means that you don't have to manage this workflow anymore and any replacement done in el parent will trigger a dispose call.
    
    i.e. : each time jQuery ``.html(something)``, ``.remove()`` or ``.empty()`` is performed on view el parent or each time a ``remove()`` is done
    on the el itself, **the view will be properly destroyed**.
@@ -560,12 +529,11 @@ Automatically population of view model from a form
 `Backbone Validation`_ provides some helpers to validate a model against constraints and Backbone_ defines some methods (such as ``save``) to valid
 a model and then save it on server. But neither `Backbone Validation`_ nor Backbone_ allow to fill a model stored in a view with form values. 
 
-Resthub comes with a really simple (naive ?) ``Backbone.View`` extension that copy each input field of a given form in a model. This helper is
-a new View method called ``populateModel()``. This function has to be explicitely called (e.g. before a ``save()``):
+Resthub comes with a really simple ``Backbone.ResthubView`` functionality that copy each input field of a given form in a model. This helper is a new View method called ``populateModel()``. This function has to be explicitely called (e.g. before a ``save()``):
 
 .. code-block:: javascript
 
-   Backbone.View.extend({
+   Backbone.ResthubView.extend({
 
       ...
    
@@ -582,8 +550,7 @@ a new View method called ``populateModel()``. This function has to be explicitel
        }
    });
    
-``populateModel`` search for the form element provided and copy each form input value into the provided model attribute that match the
-copied form input name. API is: 
+``populateModel`` search for the form element provided and copy each form input value into the provided model attribute that match the copied form input name. API is: 
 
 .. code-block:: javascript
 
@@ -619,8 +586,7 @@ So you can use it in multiple ways from your view:
    // get the provided jquery form element and copy values into provided myModel instance
    this.populateModel($("#myForm", myModel);
 
-As said before, this approach could appear naive but will probably fit your needs in most of cases. If not, you are free to not use this helper,
-to extend this method, globally or locally with your own logic or to use a third party lib to bind model and form (see 
+As said before, this approach could appear naive but will probably fit your needs in most of cases. If not, you are free to not use this helper, to extend this method, globally or locally with your own logic or to use a third party lib to bind model and form (see 
 `Backbone.ModelBinder <http://github.com/theironcook/Backbone.ModelBinder>`_ or `Rivets.js <http://rivetsjs.com/>`_ for instance).
     
 Avoid caching issues
@@ -912,12 +878,11 @@ PubSub component can be accessed globally but we strongly recommend to import it
         
    }
 
-Because of ``Bacbone.View`` and PubSub integration mechanisms (see below) the prefix ``!`` on first index of any global PubSub event
-is **strongly recommended**. 
+Because of ``Bacbone.ResthubView`` and PubSub integration mechanisms (see below) the prefix ``!`` on first index of any global PubSub event is **strongly recommended**. 
 
 .. warning::
 
-   Do not follow this convention does not have any impact on PubSub behaviour but prevents usage of integrated Backbone.View
+   Do not follow this convention does not have any impact on PubSub behaviour but prevents usage of integrated Backbone.ResthubView
    PubSub events declaration (see below)
 
 .. _pubsub-in-views:
@@ -925,11 +890,9 @@ is **strongly recommended**.
 PubSub and Backbone Views integration
 -------------------------------------
 
-In order to facilitate global PubSub events in Backbone Views, Resthub provides some syntaxic sugar with a ``Backbone.View`` extension.
-You will able to beneficiate of this extension as soon as you included Restbu Backbone extension instead of original Backbone lib (cf. :ref:`resthub-extensions`).
+In order to facilitate global PubSub events in Backbone Views, Resthub provides some syntaxic sugar with a ``Backbone.ResthubView`` functionality.
 
-Backbone Views events hash parsing has been extended to be capable of declaring global PubSub events as it is already done for DOM events binding. To declare such
-global events in your Backbone View, you only have to add it in events hash:
+Backbone Views events hash parsing has been extended to be capable of declaring global PubSub events as it is already done for DOM events binding. To declare such global events in your Backbone View, you only have to add it in events hash:
 
 .. code-block:: javascript
 
