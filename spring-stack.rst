@@ -475,7 +475,7 @@ REShub JPA default properties are :
 	* dataSource.poolPreparedStatements = true
 	* dataSource.username = sa
 	* dataSource.password = 
-    * dataSource.validationQuery = SELECT 1
+	* dataSource.validationQuery = SELECT 1
 
 REShub Hibernate default properties are :
 	* hibernate.dialect = org.hibernate.dialect.H2Dialect
@@ -698,7 +698,7 @@ RESThub comes with a REST controller that allows you to create a CRUD webservice
 	}
 
 	// and the inject CRUD service
-	@Named("webSampleResourceService")
+	@Named("sampleService")
 	public class SampleServiceImpl extends CrudServiceImpl<Sample, Long, SampleRepository> implements SampleService {
 
 	    @Override @Inject
@@ -709,24 +709,26 @@ RESThub comes with a REST controller that allows you to create a CRUD webservice
 
 By default, generic controler use the database identifier (table primary key for JPA on MongoDB ID) in URL to identif a resource. You could change these behaviour by overiding controller implmentation to use the field you want. For example, this is common to use a human readable identifier called reference or slug to identify a resource. You can do that with generic repositories only by overriding findById() controller method :
 
-@Controller @RequestMapping("/sample")
-public class SluggableSampleController extends RepositoryBasedRestController<Sample, String, SampleRepository> {
+.. code-block:: java
 
-    @Override @Inject
-    public void setRepository(SampleRepository repository) {
-        this.repository = repository;
-    }
+	@Controller @RequestMapping("/sample")
+	public class SluggableSampleController extends RepositoryBasedRestController<Sample, String, SampleRepository> {
 
-    @Override
-    public Sample findById(@PathVariable String id) {
-        Sample sample = this.repository.findBySlug(id);
-        if (sample == null) {
-            throw new NotFoundException();
-        }
-        return sample;
-    }   
-    
-}
+	    @Override @Inject
+	    public void setRepository(SampleRepository repository) {
+	        this.repository = repository;
+	    }
+
+	    @Override
+	    public Sample findById(@PathVariable String id) {
+	        Sample sample = this.repository.findBySlug(id);
+	        if (sample == null) {
+	            throw new NotFoundException();
+	        }
+	        return sample;
+	    }   
+	    
+	}
 
 With default behaviour we have URL like GET /sample/32.
 With sluggable behaviour we have URL lke GET /sample/niceref.
@@ -750,7 +752,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.0-rc22</version>
+        <version>2.0-rc2</version>
     </dependency>
 
 Usage
@@ -762,6 +764,10 @@ You can use resthub web client in a synchronous or asynchronous way. The synchro
 	
 		// One-liner version
 		Sample s = httpClient.url("http//...").jsonPost(new Sample("toto")).resource(Sample.class);
+
+		// List<T> and Page<T> use TypeReference due to Java type erasure issue
+		List<Sample> p = httpClient.url("http//...").jsonGet().resource(new TypeReference<List<Sample>>() {});
+		Page<Sample> p = httpClient.url("http//...").jsonGet().resource(new TypeReference<Page<Sample>>() {});
 
 
 Asynchronous API is quite the same, every Http request returns a `Future <http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html>`_ <Response> object. Just call get() on this object in order to make the call synchronous.
