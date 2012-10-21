@@ -733,6 +733,10 @@ By default, generic controler use the database identifier (table primary key for
 With default behaviour we have URL like GET /sample/32.
 With sluggable behaviour we have URL lke GET /sample/niceref.
 
+.. warning::
+
+	Be aware that when you override a Spring MVC controller method, your new method automatically reuse method level annotations from parent classes, but not parameters level annotations. That's why you need to specify parameters annotations again in order to make it works, like in the previous code sample.
+
 Web client
 ==========
 
