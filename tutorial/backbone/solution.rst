@@ -1055,7 +1055,7 @@ Do:
         
 5. **Use Backbone.Validation for easy validation management**
 
-If necessary, add requirejs paths in main: ``'backbone-validation':'libs/backbone-validation',`` and ``'resthub-backbone-validation':'libs/resthub/backbone-validation.ext',``
+If necessary, add requirejs paths in main: ``'backbone-validation':'lib/backbone-validation',`` and ``'resthub-backbone-validation':'lib/resthub/backbone-validation.ext',``
 
     .. code-block:: javascript
     
