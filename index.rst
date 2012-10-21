@@ -25,6 +25,5 @@ Table of contents
 
     spring-stack
     backbone-stack
-    tutorials
     
 	

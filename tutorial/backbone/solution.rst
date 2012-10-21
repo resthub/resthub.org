@@ -621,14 +621,14 @@ Find:
 Do:
 +++
 
-1. **Use RESThub facilities for managing rendering in TaskView. Remove render method in TaskView and modify add method in TasksView to set root element**
+1. **Use Backbone.ResthubView for managing rendering in TaskView. Remove render method in TaskView and modify add method in TasksView to set root element**
 
     .. code-block:: javascript
     
         // views/task.js
         define(['backbone', 'hbs!templates/task'], function(Backbone, taskTemplate) {
 
-          var TaskView = Backbone.View.extend({
+          var TaskView = Backbone.ResthubView.extend({
             template: taskTemplate,
             tagName: 'li',
             className: 'task',
@@ -671,13 +671,13 @@ Do:
           return this;
         },
 
-3. **Use RESThub facilities for managing rendering in TasksView. Call the parent render function.**
+3. **Use Backbone.ResthubView for managing rendering in TasksView. Call the parent render function.**
 
     .. code-block:: javascript
     
         define(['backbone', 'views/task', 'hbs!templates/tasks'], function(Backbone, TaskView, tasksTemplate) {
 
-          var TasksView = Backbone.View.extend({
+          var TasksView = Backbone.ResthubView.extend({
             template: tasksTemplate,
             initialize: function() {
               this.collection.on('add', this.add, this);
@@ -734,7 +734,7 @@ Do:
         // views/task.js
         define(['backbone', 'views/taskform', 'hbs!templates/task'], function(Backbone, TaskFormView, taskTemplate) {
 
-          var TaskView = Backbone.View.extend({
+          var TaskView = Backbone.ResthubView.extend({
             ...
             
             events: {
@@ -759,7 +759,7 @@ Do:
         // views/taskform.js
         define(['backbone', 'hbs!templates/taskform'], function(Backbone, taskFormTemplate) {
 
-          var TaskFormView = Backbone.View.extend({
+          var TaskFormView = Backbone.ResthubView.extend({
             template: taskFormTemplate,
             tagName: 'form',
           });
@@ -827,7 +827,7 @@ Do:
         
     .. code-block:: javascript
 
-        var TasksView = Backbone.View.extend({
+        var TasksView = Backbone.ResthubView.extend({
           template: tasksTemplate,
        
           events: {
@@ -866,7 +866,7 @@ Do:
         
     .. code-block:: javascript
     
-        var TaskFormView = Backbone.View.extend({
+        var TaskFormView = Backbone.ResthubView.extend({
           ...
           events: {
             submit: 'save',
@@ -892,7 +892,7 @@ Do:
        .. code-block:: javascript
        
             // views/taskform.js
-            var TaskFormView = Backbone.View.extend({
+            var TaskFormView = Backbone.ResthubView.extend({
               ...
               events: {
                 submit: 'save',

@@ -112,6 +112,7 @@ Let's take a look at the generated project. Its structure is:
    |   |    |                       | --- repository
    |   |    |                       |     | --- SampleRepository.java
    |   |    |                       | --- SampleInitializer.java
+   |   |    |                       | --- WebAppConfigurer.java
    |   |    |                       | --- WebAppInitializer.java
    |   |    | --- resources
    |   |          | --- applicationContext.xml
@@ -135,13 +136,12 @@ This package contains the following sub packages and files:
 - **repository**: This package contains your repositories, i.e. classes that provide methods to manipulate, persist and retrieve your objects from your JPA
   manager (and so your database). In the generated sample, the archetype provided you a SampleRepository that simply extend Spring-Data ``JpaRepository``.
   for behaviour, see Spring-Data JPA documentation for details.
+- **configurers**: configurers are using Spring Java Config to allow you define you Spring beans and your Spring configuration. They contains the same information than your old applicationContext.xml files, but described with Java code in the ``WebAppConfigurer`` class.
 - **initializers**: Initializers are special classes executed at application startup to setup your webapp. ``WebappInitializer`` load your spring application contexts,
   setup filters, etc. (all actions that you previously configured in your web.xml). The archetype provided you a ``SampleInitializer`` to setup sepcific domain model
   initializations such as data creation.
-  
-``src/main/resources`` contains all non java source files and, in particular, your spring application context, your database configuration file and you logging configuration.
-
-``src/test/`` contains, obviously, all you test related files and has the same structure as src/main (i.e. *java* and *resources*).
+- ``src/main/resources`` contains all non java source files and, in particular, your spring application context, your database configuration file and you logging configuration.
+- ``src/test/`` contains, obviously, all you test related files and has the same structure as src/main (i.e. *java* and *resources*).
 
 
 Step 2: Customize Model
@@ -218,52 +218,35 @@ Step 3: Customize Controller
 
 We now have a basic REST interface uppon our Task model object providing default methods and behaviour implemented by resthub.
 
-Let's suppose that the current findall : `<http://localhost:8080/api/task?page=all>`_ does not match our needs: the current implementation
-returns a paginated list containing all elements in order to provide a consistent API between a *find all* and a *find paginated*.
-
-In our case, we want a ``findAll`` implementation that returns a simple non paginated list of tasks: 
+Let's try to implement a ``findByName`` implementation that returns a Task based on it name: 
 
 Do:
 +++
 
-1. **Modify** ``TaskController.java`` **to add a new method called** ``findAllNonPaginated``  **with no parameter mapped to** ``/api/task?page=no``.
+1. **Modify** ``TaskController.java`` **to add a new method called** ``findByName``  **with a name parameter mapped to** ``/api/task/name/{name}``.
 
    Implement this using existing repository method (see `Spring Data JPA documentation <http://static.springsource.org/spring-data/data-jpa/docs/current/api/>`_).
    Check on your browser that `<http://localhost:8080/api/task?page=no>`_ works and display a simple list of tasks, without pagination.
 
 .. code-block:: javascript
 
-   [{
-       "id": 1,
-       "name": "testTask1",
-       "description": null
-   }, {
-       "id": 2,
-       "name": "testTask2",
-       "description": null
-   }, {
-       "id": 3,
-       "name": "testTask3",
-       "description": null
-   }]
+  {
+    "id": 1,
+    "name": "testTask1",
+    "description": "bla bla"
+  }
 
-
-Implementation is done with using repository findAll method (see `<http://static.springsource.org/spring-data/data-jpa/docs/current/api/org/springframework/data/jpa/repository/JpaRepository.html#findAll()>`_).
+Implementation is done by addind a new repository findByName() method (see `<http://static.springsource.org/spring-data/data-jpa/docs/current/api/org/springframework/data/jpa/repository/JpaRepository.html#findAll()>`_).
     
-    .. code-block:: Java
+.. code-block:: Java
     
-        @RequestMapping(method = RequestMethod.GET, params = "page=no")
-        @ResponseBody
-        public List<Task> findAllNonPaginated() {
-            return this.repository.findAll();
-        }
+  @RequestMapping(value = "name/{name}", method = RequestMethod.GET) @ResponseBody
+  public List<Todo> searchByName(@PathVariable String name) {
+    return this.repository.findByName(name);
+  }
 
-
-    **Note**: We cannot simply override ``/api/task?page=all`` method because mappings are currently defined in interface ``RestController`` 
-    (see `documentation <http://jenkins.pullrequest.org/job/resthub-spring-stack-master/javadoc/org/resthub/web/controller/RestController.html>`_)
-    and *Spring MVC* does not accept that a path appears twice.
     
-    see `<https://github.com/resthub/resthub-spring-training/tree/step3-solution>`_ for complete solution.
+see `<https://github.com/resthub/resthub-spring-training/tree/step3-solution>`_ for complete solution.
 
 Test your controller
 ++++++++++++++++++++
@@ -281,9 +264,9 @@ Test your controller
    
 2. In ``src/test/org/resthub/training``, add a ``controller`` directory and create a ``TaskControllerTest`` inside. 
    We first want to make an **integration test** of our controller. i.e. a test that need to run and embedded servlet container.
-   **Implement a new** ``findAllNonPaginated`` **test method that creates some tasks and call controller.** 
+   **Implement a new** ``testFindByName`` **test method that creates some tasks and call controller.** 
    
-   Verify that the new controller returns a response that is not empty, does not contain pagination and contains the created tasks.
+   Verify that the new controller returns a response that is not null, with the right name.
 
     Our test ``TaskControllerTest`` should extend resthub ``AbstractWebTest`` 
     (see `documentation <http://jenkins.pullrequest.org/job/resthub-spring-stack-master/javadoc/org/resthub/test/common/AbstractWebTest.html>`_)
@@ -292,22 +275,18 @@ Test your controller
     
         public class TaskControllerTest extends AbstractWebTest {
             protected String rootUrl() {
-                return "http://localhost:9797/api/task";
+                // Activate resthub-web-server and resthub-jpa Spring profiles
+                super("resthub-web-server,resthub-jpa");
             }
 
 
             @Test
-            public void testCreateResource() throws IllegalArgumentException, InterruptedException, 
-                                                    ExecutionException, IOException {
-                Client httpClient = new Client();
-                httpClient.url(rootUrl()).xmlPost(new Task("task1")).get();
-                httpClient.url(rootUrl()).xmlPost(new Task("task2")).get();
-                String responseBody = httpClient.url(rootUrl()).setQueryParameter("page", "no")
-                        .getJson().get().getBody();
-                Assertions.assertThat(responseBody).isNotEmpty();
-                Assertions.assertThat(responseBody).doesNotContain("\"content\":2");
-                Assertions.assertThat(responseBody).contains("task1");
-                Assertions.assertThat(responseBody).contains("task2");
+            public void testFindByName() {
+                this.request("api/task").xmlPost(new Task("task1"));
+                this.request("api/task").xmlPost(new Task("task2"));
+                Task task1 = this.request("api/task/name/task1").getJson().resource(Task.class);
+                Assertions.assertThat(task1).isNotNull();
+                Assertions.assertThat(task1.getName()).isEqualsTo("task1");
             }
         }
        
@@ -464,10 +443,6 @@ Do:
                 this.repository = repository;
             }
 
-            @Override
-            public Long getIdFromResource(User resource) {
-                return resource.getId();
-            }
         }
         
     see complete solution for `controller <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/controller/UserController.java>`_
@@ -543,15 +518,9 @@ But if you have more than simple CRUD needs, resthub provides also a generic **S
                     this.service = service;
                 }
 
-                @Override
-                public Long getIdFromResource(Task resource) {
-                    return resource.getId();
-                }
-
-                @RequestMapping(method = RequestMethod.GET, params = "page=no")
-                @ResponseBody
-                public List<Task> findAllNonPaginated() {
-                    return this.service.findAll();
+                @RequestMapping(value = "name/{name}", method = RequestMethod.GET) @ResponseBody
+                public List<Todo> searchByName(@PathVariable String name) {
+                  return this.repository.findByName(name);
                 }
 
             }
@@ -668,7 +637,7 @@ Do:
 
 1. **Create a new** ``TaskServiceIntegrationTest`` **integration test in** ``src/test/org/resthub/training/service/integration``
    This test should be **aware of spring context but non transactional** because testing a service should be done in a non transactional way. This is indeed the
-   way in which the service will be called (e.g. by controller). The repository test should extend ``org.resthub.test.common.AbstractTransactionalTest`` to be run
+   way in which the service will be called (e.g. by controller). The repository test should extend ``org.resthub.test.AbstractTransactionalTest`` to be run
    in a transactional context, as done by service.
 
     This test should perform an unique operation:
@@ -678,6 +647,7 @@ Do:
     
     .. code-block:: java
     
+        @ActiveProfiles("resthub-jpa")
         public class TaskServiceIntegrationTest extends AbstractTest {
 
             @Inject
@@ -983,13 +953,10 @@ You can test in your browser (or, better, add a test in ``TaskControllerTest``) 
     .. code-block:: java
     
          @Test
-         public void testAffectTaskToUser() throws IllegalArgumentException, InterruptedException, ExecutionException, IOException {
-             Client httpClient = new Client();
-             Response resp = httpClient.url(rootUrl()).xmlPost(new Task("task1")).get();
-             Task task = XmlHelper.deserialize(resp.getBody(), Task.class);
-             resp = httpClient.url(userRootUrl()).xmlPost(new User("user1")).get();
-             User user = XmlHelper.deserialize(resp.getBody(), User.class);
-             String responseBody = httpClient.url(rootUrl() + "/" + task.getId() + "/user/" + user.getId()).put("").get().getBody();
+         public void testAffectTaskToUser() {
+             Task task = this.request("api/task").xmlPost(new Task("task1")).resource(Task.class);
+             User user = this.request("api/user")).xmlPost(new User("user1")).resource(User.class);
+             String responseBody = this.request("api/task/" + task.getId() + "/user/" + user.getId()).put("").getBody();
              Assertions.assertThat(responseBody).isNotEmpty();
              Assertions.assertThat(responseBody).contains("task1");
              Assertions.assertThat(responseBody).contains("user1");
@@ -1070,21 +1037,16 @@ Do:
     
         // TaskControllerTest
         public class TaskControllerTest extends AbstractWebTest {
-            protected String rootUrl() {
-                return "http://localhost:9797/api/task";
-            }
-
-            protected String userRootUrl() {
-                return "http://localhost:9797/api/user";
+            
+            public TaskControllerTest() {
+              super("resthub-web-server,resthub-jpa");
             }
 
             @Test
-            public void testCreateResource() throws IllegalArgumentException, InterruptedException, ExecutionException, IOException {
-                Client httpClient = new Client();
-                httpClient.url(rootUrl()).xmlPost(new Task("task1")).get();
-                httpClient.url(rootUrl()).xmlPost(new Task("task2")).get();
-                String responseBody = httpClient.url(rootUrl()).setQueryParameter("page", "no")
-                        .getJson().get().getBody();
+            public void testCreateResource() {
+                this.request("api/task").xmlPost(new Task("task1"));
+                this.request("api/task").xmlPost(new Task("task2"));
+                String responseBody = this.request("api/task").setQueryParameter("page", "no").getJson().getBody();
                 Assertions.assertThat(responseBody).isNotEmpty();
                 Assertions.assertThat(responseBody).doesNotContain("\"content\":2");
                 Assertions.assertThat(responseBody).contains("task1");
@@ -1092,13 +1054,10 @@ Do:
             }
 
             @Test
-            public void testAffectTaskToUser() throws IllegalArgumentException, InterruptedException, ExecutionException, IOException {
-                Client httpClient = new Client();
-                Response resp = httpClient.url(rootUrl()).xmlPost(new Task("task1")).get();
-                Task task = XmlHelper.deserialize(resp.getBody(), Task.class);
-                resp = httpClient.url(userRootUrl()).xmlPost(new User("user1", "user1@test.org")).get();
-                User user = XmlHelper.deserialize(resp.getBody(), User.class);
-                String responseBody = httpClient.url(rootUrl() + "/" + task.getId() + "/user/" + user.getId()).put("").get().getBody();
+            public void testAffectTaskToUser() {
+                Task task = this.request("api/task").xmlPost(new Task("task1")).resource(Task.class);
+                User user = this.request("api/user").xmlPost(new User("user1", "user1@test.org")).resource(User.class);
+                String responseBody = this.request("api/task/" + task.getId() + "/user/" + user.getId()).put("").getBody();
                 Assertions.assertThat(responseBody).isNotEmpty();
                 Assertions.assertThat(responseBody).contains("task1");
                 Assertions.assertThat(responseBody).contains("user1");

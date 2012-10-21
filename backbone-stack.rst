@@ -32,6 +32,11 @@ There are 3 ways to use it in your project :
 
 The `Todo RESThub 2.0 example <http://github.com/resthub/todo-example>`_ project is the reference example project using this stack.
 
+Tutorial
+========
+
+You should follow `RESThub Backbone Stack tutorial <tutorial/backbone.html>`_ (solution provided at the end) in order to learn step by step how to use it.
+
 Project layout
 ==============
 

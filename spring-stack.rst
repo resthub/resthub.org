@@ -50,6 +50,11 @@ You can run it thanks to built-in Jetty support :
 
 	mvn jetty:run
 
+Tutorial
+========
+
+You should follow `RESThub Spring Stack tutorial <tutorial/spring.html>`_ (solution provided at the end) in order to learn step by step how to use it.
+
 Project layout
 ==============
 
