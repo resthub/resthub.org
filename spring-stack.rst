@@ -19,7 +19,7 @@ It provides the following modules :
 	* **resthub-jpa** : support for JPA based persistence based on Spring Data, including embedded H2 database for testing
 	* **resthub-mongodb** : support for MongoDB based on Spring Data
 	* **resthub-test** : testing stack based on TestNG, Mockito and Fest Asert 2
-	* **resthub-web-server** : generic REST webservices support based on Spring MVC 3.1n including exception mapping to HTTP status codes
+	* **resthub-web-server** : generic REST webservices support based on Spring MVC 3.1 including exception mapping to HTTP status codes
 	* **resthub-web-client** : simple to use HTTP client based on AyncHttpClient
 
 The whole RESThub 2.0 Spring stack `Javadoc <http://jenkins.pullrequest.org/job/resthub-spring-stack-master/javadoc/>`_ is available.
@@ -196,7 +196,7 @@ RESThub dependencies availables are the following
 
 .. code-block:: xml
 
-	<dependency>
+    <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
         <version>2.0-rc2</version>
@@ -315,9 +315,9 @@ WebAppConfigurer.java example :
 
 	}
 
-Usually, your beans will annotation based (declared with @Named annotation) and automatically scanned, so service bean injection is just declared here to show your the syntax.
+Usually, your beans will be annotation based (declared with @Named annotation) and automatically scanned, so service bean injection is just declared here to show you the syntax.
 
-RESThub own application contexts are declared in resthubContext.xml files, and if you need some, you should use applicationContext.xml files for your application. As said before, it is bette to use Spring Java Config when possible.
+RESThub own application contexts are declared in resthubContext.xml files, and if you need some, you should use applicationContext.xml files for your application. As said before, it is better to use Spring Java Config when possible.
 
 It is a good practice to always prefix the filename by "classpath*:"" in order to enable scanning in all the classpaths of your applications.
 
@@ -329,7 +329,7 @@ You'll usually have a src/main/resources/logback.xml file in order to configure 
 .. code-block:: xml
 
 	<configuration> 
-		<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         	<encoder>
             	<pattern>%d{HH:mm:ss} [%thread] %-5level %logger{26} - %msg%n%rEx</pattern>
        		</encoder>
@@ -548,7 +548,7 @@ In order to import `default configuration <https://github.com/resthub/resthub-sp
     AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
 	appContext.getEnvironment().setActiveProfiles("resthub-mongodb", "resthub-web-server");
 
-You also need to add an @EnableJpaRepositories annotation to your WebAppConfigurer class:
+You also need to add an @EnableMongoRepositories annotation to your WebAppConfigurer class:
 
 .. code-block:: java
 
@@ -707,7 +707,7 @@ RESThub comes with a REST controller that allows you to create a CRUD webservice
 	    }
 	}
 
-By default, generic controler use the database identifier (table primary key for JPA on MongoDB ID) in URL to identif a resource. You could change these behaviour by overiding controller implmentation to use the field you want. For example, this is common to use a human readable identifier called reference or slug to identify a resource. You can do that with generic repositories only by overriding findById() controller method :
+By default, generic controler use the database identifier (table primary key for JPA on MongoDB ID) in URL to identify a resource. You could change these behaviour by overriding controller implementation to use the field you want. For example, this is common to use a human readable identifier called reference or slug to identify a resource. You can do that with generic repositories only by overriding findById() controller method :
 
 .. code-block:: java
 
