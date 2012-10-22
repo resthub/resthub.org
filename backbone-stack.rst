@@ -451,7 +451,7 @@ Sample usage in a Backbone.js View :
 
 .. code-block:: javascript
 
-    define(['jquery', 'backbone', 'hbs!templates/todo'],function($, Backbone, todoTmpl) {
+    define(['jquery', 'backbone', 'hbs!template/todo'],function($, Backbone, todoTmpl) {
         var TodoView = Backbone.View.extend({
 
         //... is a list tag.

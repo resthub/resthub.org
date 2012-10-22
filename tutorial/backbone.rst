@@ -229,7 +229,7 @@ Do :
 
     .. code-block:: javascript
     
-        define(['backbone', 'text!templates/task.hbs', 'handlebars'], function(Backbone, taskTemplate, Handlebars) {
+        define(['backbone', 'text!template/task', 'handlebars'], function(Backbone, taskTemplate, Handlebars) {
 
           var TaskView = Backbone.View.extend({
           
@@ -249,7 +249,7 @@ Do :
    
        .. code-block:: javascript
        
-            define(['backbone', 'hbs!templates/task'], function(Backbone, taskTemplate) {
+            define(['backbone', 'hbs!template/task'], function(Backbone, taskTemplate) {
 
               var TaskView = Backbone.View.extend({
                 render: function() {
@@ -315,7 +315,7 @@ Step 2: Collections
     .. code-block:: javascript
     
         // view
-        define(['backbone', 'hbs!templates/tasks'], function(Backbone, tasksTemplate) {
+        define(['backbone', 'hbs!template/tasks'], function(Backbone, tasksTemplate) {
 
           var TasksView = Backbone.View.extend({
             render: function() {
@@ -667,7 +667,7 @@ Do:
 
     .. code-block:: javascript
     
-        define(['backbone', 'views/task-view', 'hbs!template/tasks'], function(Backbone, TaskView, tasksTemplate) {
+        define(['backbone', 'view/task-view', 'hbs!template/tasks'], function(Backbone, TaskView, tasksTemplate) {
 
           var TasksView = Backbone.ResthubView.extend({
             template: tasksTemplate,
@@ -724,7 +724,7 @@ Do:
     .. code-block:: javascript
     
         // views/task.js
-        define(['backbone', 'views/taskform-view', 'hbs!templates/task'], function(Backbone, TaskFormView, taskTemplate) {
+        define(['backbone', 'view/taskform-view', 'hbs!template/task'], function(Backbone, TaskFormView, taskTemplate) {
 
           var TaskView = Backbone.ResthubView.extend({
             ...
@@ -749,7 +749,7 @@ Do:
         });
         
         // views/taskform.js
-        define(['backbone', 'hbs!templates/taskform'], function(Backbone, taskFormTemplate) {
+        define(['backbone', 'hbs!template/taskform'], function(Backbone, taskFormTemplate) {
 
           var TaskFormView = Backbone.ResthubView.extend({
             template: taskFormTemplate,
@@ -811,7 +811,7 @@ Do:
   
     .. code-block:: html
 
-        <!-- templates/tasks.hbs -->
+        <!-- template/tasks.hbs -->
         <ul class="task-list"></ul>
         <p>
           <button id="create" class="btn btn-primary" type="button">New Task</button>
@@ -1066,7 +1066,7 @@ Do:
         });
         
         // views/taskform.js
-        define(['backbone', 'hbs!templates/taskform'], function(Backbone, taskFormTemplate) {
+        define(['backbone', 'hbs!template/taskform'], function(Backbone, taskFormTemplate) {
           ...
           initialize: function() {
             this.model.on('error', this.error, this);
