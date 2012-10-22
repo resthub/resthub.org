@@ -40,8 +40,8 @@ You will have to choose between the following RESThub archetypes :
 	* **resthub-mongodb-webservice-archetype** : simple webservice project with MongoDB persistence
 	* **resthub-jpa-backbonejs-archetype** : simple HTML5 web application with JPA persistence
 	* **resthub-mongodb-backbonejs-archetype** : simple HTML5 web application with MongoDB persistence
-	* **resthub-jpa-backbonejs-multimodules-archetype** : Multimodules HTML5 web application with JPA persistence (TODO)
-	* **resthub-mongodb-backbonejs-multimodules-archetype** : Multimodules HTML5 web application with MongoDB persistence (TODO)
+	* **resthub-jpa-backbonejs-multi-archetype** : Multimodules HTML5 web application with JPA persistence
+	* **resthub-mongodb-backbonejs-multi-archetype** : Multimodules HTML5 web application with MongoDB persistence
  
 After choosing the right archetype and answering a few questions, your project is generated and ready to use.
 You can run it thanks to built-in Jetty support :

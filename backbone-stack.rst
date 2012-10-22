@@ -26,8 +26,8 @@ And some additional librairies documented here: :ref:`complementary-libs`
 Bootstrap your project
 ======================
 
-There are 3 ways to use it in your project :
-    * If you are starting a new Java project, the better way to use RESThub Backbone.js stack is to use one of the Backbone.js webappp Maven Archetypes described on the `Getting Started page <getting-started.html>`_
+There are 2 ways to use it in your project :
+    * If you are starting a new RESThub Spring + Backbone stack project, the better way to use it is to use one of the Backbone.js webappp Maven Archetypes described on the `here <spring-stack.html#bootstrap-your-project>`_
     * You can simply go to the `RESThub Backbone.js stack GitHub repository <https://github.com/resthub/resthub-backbone-stack>`_, and download the repository content and copy it at the root of your webapp
 
 The `Todo RESThub 2.0 example <http://github.com/resthub/todo-example>`_ project is the reference example project using this stack.
@@ -451,7 +451,7 @@ Sample usage in a Backbone.js View :
 
 .. code-block:: javascript
 
-    define(['jquery', 'backbone', 'hbs!templates/todo'],function($, Backbone, todoTmpl) {
+    define(['jquery', 'backbone', 'hbs!template/todo'],function($, Backbone, todoTmpl) {
         var TodoView = Backbone.View.extend({
 
         //... is a list tag.
