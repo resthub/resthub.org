@@ -11,46 +11,9 @@ based application. These libs are :
 - **Paginated lists:** `Backbone Paginator`_
 - **Asynchronous calls:** Async_
 - **Dispatching keyboard shortcuts:** Keymaster_
+- **Get and set relations (one-to-one, one-to-many, many-to-one) for Backbone models** `Backbone Relational`_
 
 Resthub only provide require config shims and paths for these libs in ``main.js`` and you are totaly free to use these libs or not:
-
-.. code-block:: javascript
-
-   require.config({
-
-      shim:{
-        ...
-        'backbone-queryparams':{
-            deps:[
-                'backbone',
-                'underscore'
-            ]
-        },
-        'backbone-paginator':{
-            deps:[
-                'backbone',
-                'underscore',
-                'jquery'
-            ],
-            exports:'Backbone.Paginator'
-        },
-        async:{
-            deps:[
-                'underscore'
-            ]
-        }
-      },
-
-      // Libraries
-      paths:{
-        'backbone-validation':'libs/backbone-validation',
-        'resthub-backbone-validation':'resthub/backbone-validation.ext',
-        'backbone-queryparams':'libs/backbone.queryparams',
-        'backbone-paginator':'libs/backbone.paginator',
-        async:'libs/async.js',
-        keymaster:'libs/keymaster'
-      }
-   });
 
 Form Validation : Backbone Validation
 -------------------------------------
@@ -530,6 +493,23 @@ The syntax is elegant, it is very simple while very complete:
 
 It is so simple that the doc is self sufficient - see `here <http://github.com/madrobby/keymaster>`_
 
+Get and set relations for Backbone models
+-----------------------------------------
+
+`Backbone Relational`_ provides one-to-one, one-to-many and many-to-one relations between models for Backbone. To use relations, extend Backbone.RelationalModel (instead of the regular Backbone.Model) and define a property relations, containing an array of option objects. Each relation must define (as a minimum) the type, key and relatedModel. Available relation types are Backbone.HasOne and Backbone.HasMany.
+
+Backbone-relational features:
+ * Bidirectional relations, which notify related models of changes through events.
+ * Control how relations are serialized using the includeInJSON option.
+ * Automatically convert nested objects in a model's attributes into Model instances using the createModels option.
+ * Lazily retrieve (a set of) related models through the fetchRelated(key<string>, [options<object>], update<bool>) method.
+ * Determine the type of HasMany collections with collectionType.
+ * Bind new events to a Backbone.RelationalModel for:
+ * addition to a HasMany relation (bind to add:<key>; arguments: (addedModel, relatedCollection)),
+ * removal from a HasMany relation (bind to remove:<key>; arguments: (removedModel, relatedCollection)),
+ * reset of a HasMany relation (bind to reset:<key>; arguments: (relatedCollection)),
+ * changes to the key itself on HasMany and HasOne relations (bind to update:<key>; arguments=(model, relatedModel/relatedCollection)). 
+
 .. _Require 2.0: http://requirejs.org
 .. _Require: http://requirejs.org
 .. _Handlebars: http://handlebarsjs.com
@@ -540,3 +520,4 @@ It is so simple that the doc is self sufficient - see `here <http://github.com/m
 .. _Async: http://github.com/caolan/async/
 .. _Keymaster: http://github.com/madrobby/keymaster
 .. _Backbone: http://backbonejs.org/
+.. _Backbone Relational: https://github.com/PaulUithol/Backbone-relational

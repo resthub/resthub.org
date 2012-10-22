@@ -50,6 +50,11 @@ You can run it thanks to built-in Jetty support :
 
 	mvn jetty:run
 
+Tutorial
+========
+
+You should follow `RESThub Spring Stack tutorial <tutorial/spring.html>`_ (solution provided at the end) in order to learn step by step how to use it.
+
 Project layout
 ==============
 
@@ -732,6 +737,10 @@ By default, generic controller use the database identifier (table primary key fo
 
 With default behaviour we have URL like GET /sample/32.
 With sluggable behaviour we have URL lke GET /sample/niceref.
+
+.. warning::
+
+	Be aware that when you override a Spring MVC controller method, your new method automatically reuse method level annotations from parent classes, but not parameters level annotations. That's why you need to specify parameters annotations again in order to make it works, like in the previous code sample.
 
 Web client
 ==========
