@@ -1,7 +1,7 @@
 Release RESThub
 ===============
 
-Instructions provided with 2.0-beta1. Adapt with your version (search and replace)
+Instructions provided with 2.0-rc2. Adapt with your version (search and replace)
 
 Prepare
 -------
@@ -24,44 +24,50 @@ Prepare
 
 Release resthub-backbone-stack :
 	* cd resthub-backbone-stack
-	* mvn versions:set -DnewVersion=2.0-beta1 -DgenerateBackupPoms=false
+	* git status
+	* git pull resthub master
+	* mvn versions:set -DnewVersion=2.0-rc2 -DgenerateBackupPoms=false
 	* mvn clean install deploy
-	* git commit -a -m "Change version to 2.0-beta1"
-	* git tag resthub-backbone-stack-2.0-beta1
+	* git commit -a -m "Change version to 2.0-rc2"
+	* git tag resthub-2.0-rc2
 	* mvn versions:set -DnewVersion=2.0-SNAPSHOT -DgenerateBackupPoms=false
 	* git commit -a -m "Change version to 2.0-SNAPSHOT"
-	* git push
-	* git push --tags
+	* git push resthub master
+	* git push resthub master --tags
 
 Release resthub-spring-stack :	
 	* cd ../resthub-spring-stack
-	* mvn versions:set -DnewVersion=2.0-beta1 -DgenerateBackupPoms=false
+	* git status
+	* git pull resthub master
+	* mvn versions:set -DnewVersion=2.0-rc2 -DgenerateBackupPoms=false
 	* mvn clean install deploy
-	* git commit -a -m "Change version to 2.0-beta1"
-	* git tag resthub-spring-stack-2.0-beta1
+	* git commit -a -m "Change version to 2.0-rc2"
+	* git tag resthub-2.0-rc2
 	* mvn versions:set -DnewVersion=2.0-SNAPSHOT -DgenerateBackupPoms=false
 	* git commit -a -m "Change version to 2.0-SNAPSHOT"
-	* git push
-	* git push --tags
+	* git push resthub master
+	* git push resthub master --tags
 
 Release resthub-archetypes :	
 	* cd ../resthub-archetypes
-	* mvn versions:set -DnewVersion=2.0-beta1 -DgenerateBackupPoms=false
+	* git status
+	* git pull resthub master
+	* mvn versions:set -DnewVersion=2.0-rc2 -DgenerateBackupPoms=false
 	* mvn clean install
 	* mvn deploy
-	* git commit -a -m "Change version to 2.0-beta1"
-	* git tag resthub-archetypes-2.0-beta1
+	* git commit -a -m "Change version to 2.0-rc2"
+	* git tag resthub-2.0-rc2
 	* mvn versions:set -DnewVersion=2.0-SNAPSHOT -DgenerateBackupPoms=false
 	* git commit -a -m "Change version to 2.0-SNAPSHOT"
-	* git push
-	* git push --tags
+	* git push resthub master
+	* git push resthub master --tags
 
 Release todo-example :	
 	* cd ../todo-example
-	* mvn versions:set -DnewVersion=2.0-beta1 -DgenerateBackupPoms=false
+	* mvn versions:set -DnewVersion=2.0-rc2 -DgenerateBackupPoms=false
 	* mvn clean install deploy
-	* git commit -a -m "Change version to 2.0-beta1"
-	* git tag todo-example-2.0-beta1
+	* git commit -a -m "Change version to 2.0-rc2"
+	* git tag resthub-2.0-rc2
 	* mvn versions:set -DnewVersion=2.0-SNAPSHOT -DgenerateBackupPoms=false
 	* git commit -a -m "Change version to 2.0-SNAPSHOT"
 	* git push
@@ -69,10 +75,12 @@ Release todo-example :
 
 Release documentation :
 	* cd ../resthub.org
+	* git status
+	* git pull resthub master
 	* Manually update version and release properties in conf.py
 	* Search and replace old version by new version in spring-stack.rst
-	* git commit -a -m "Change version to 2.0-beta1"
-	* git tag 2.0-beta1
+	* git commit -a -m "Change version to 2.0-rc2"
+	* git tag resthub-2.0-rc2
 	* git push
 	* git push --tags
 

@@ -1,8 +1,8 @@
 :tocdepth: 2
 
-===============================
-Backbone.js Stack documentation
-===============================
+=================
+Backbone.js Stack
+=================
 
 RESThub 2 backbone stack provides a client side full stack and guidelines for building enterprise grade HTML5 application. It cold be used with any server backend : Ruby, PHP, NodeJS, J2EE, Spring, Grail ...
 

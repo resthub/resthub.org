@@ -1,6 +1,6 @@
-==========================
-Spring Stack documentation
-==========================
+============
+Spring Stack
+============
 
 RESThub 2 Spring stack provides a server side full stack and guidelines for building Java/Spring application (usually web application, but not only).
 
