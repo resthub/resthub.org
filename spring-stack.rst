@@ -707,7 +707,7 @@ RESThub comes with a REST controller that allows you to create a CRUD webservice
 	    }
 	}
 
-By default, generic controler use the database identifier (table primary key for JPA on MongoDB ID) in URL to identify a resource. You could change these behaviour by overriding controller implementation to use the field you want. For example, this is common to use a human readable identifier called reference or slug to identify a resource. You can do that with generic repositories only by overriding findById() controller method :
+By default, generic controller use the database identifier (table primary key for JPA on MongoDB ID) in URL to identify a resource. You could change these behaviour by overriding controller implementation to use the field you want. For example, this is common to use a human readable identifier called reference or slug to identify a resource. You can do that with generic repositories only by overriding findById() controller method :
 
 .. code-block:: java
 
