@@ -61,13 +61,12 @@ Project layout
 Let's take a look at a typical RESThub based application...
 
 RESThub stack based projects follow the "Maven standard" project layout :
-	* /pom.xml : the Maven configuration file which defines dependencies, plugins, etc.
-	* /src/main/java : your java classes go there
-	* /src/main/java/\*\*/WebAppConfigurer.java : your Spring Java Config based configuration class, with your bean declaration (replaces your old applicationContext.xml file)
-	* /src/main/java/\*\*/WebAppInitializer.java : Java based WebApp configuration (replaces your old web.xml file)
+	* /pom.xml: the Maven configuration file which defines dependencies, plugins, etc.
+	* /src/main/java: your java classes go there
+	* /src/main/java/\*\*/WebAppInitializer.java: Java based WebApp configuration (replaces your old web.xml file)
 	* /src/main/resources : your xml and properties files go there
-	* /src/main/resources/applicationContext.xml : used only for configuration not possible with Spring Java Config, for example Spring Security configuration
-	* /src/main/webapp : your HTML, CSS and javascript files go there
+	* /src/main/resources/applicationContext.xml: this is your Spring application configuration file. Since we mainly use annotation based configuration, 
+	* /src/main/webapp: your HTML, CSS and javascript files go there
  
 RESThub based applications usually use one of these 2 layouts :
 	* A single WAR project, usually for demo or small projects
@@ -113,8 +112,8 @@ pom.xml example :
 		<name>My project</name>
 
 		<properties>
-			<resthub.spring.stack.version>2.0-rc2</resthub.spring.stack.version>
-			<resthub.backbone.stack.version>2.0-rc2</resthub.backbone.stack.version>
+			<resthub.spring.stack.version>2.x</resthub.spring.stack.version>
+			<resthub.backbone.stack.version>2.x</resthub.backbone.stack.version>
 		</properties>
 
 		<dependencies>
@@ -204,31 +203,31 @@ The available RESThub dependencies are the following
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.x</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.x</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.x</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.x</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.x</version>
         <scope>test</scope>
     </dependency>
 
@@ -245,11 +244,10 @@ WebAppInitializer.java example :
 
 	    @Override
 	    public void onStartup(ServletContext servletContext) throws ServletException {
-	        AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
-	        appContext.getEnvironment().setActiveProfiles("resthub-mongodb", "resthub-web-server");
-
-	        // Scan the todo package
-	        appContext.scan("todo");
+	       	XmlWebApplicationContext appContext = new XmlWebApplicationContext();
+	        appContext.getEnvironment().setActiveProfiles("resthub-jpa", "resthub-web-server");
+	        String[] locations = { "classpath*:resthubContext.xml", "classpath*:applicationContext.xml" };
+	        appContext.setConfigLocations(locations);
 
 	        ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(appContext));
 	        dispatcher.setLoadOnStartup(1);
@@ -270,7 +268,7 @@ Profile activation on your webapp is done very early in the application lifecycl
 
 .. code-block:: java
 
-	AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
+	XmlWebApplicationContext appContext = new XmlWebApplicationContext();
 	appContext.getEnvironment().setActiveProfiles("resthub-mongodb", "resthub-web-server");
 
 In your tests, you should use the @ActiveProfiles annotation to activate the profiles you need:
@@ -302,29 +300,27 @@ RESThub built-in Spring profiles have the same name than their matching module :
 Spring based configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Since Spring 3.1, we can use Java based Spring configuration instead of applicationContext.xml in order to configure our Spring application beans. It is still possible to use applicationContext.xml, but you should prefer Java Config since it is safer (compilation check) and easier to use (autocomplete).
+By default RESThub webservices and unit tests scan and automatically include all resthubContext.xml (RESThub context files) and applicationContext.xml files (your application context files) available in your application classpath, including its dependencies.
 
-WebAppConfigurer.java example :
+Here is an example of a typical RESThub based src/main/resources/applicationContext.xml (this one uses JPA, you may adapt it if you use MongoDB) :
 
-.. code-block:: java
+.. code-block:: xml
 
-	@Configuration
-	@EnableMongoRepositories("todo")
-	@ImportResource({"classpath*:resthubContext.xml", "classpath*:applicationContext.xml"})
-	public class WebAppConfigurer {
+	<beans xmlns="http://www.springframework.org/schema/beans"
+	       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	       xmlns:context="http://www.springframework.org/schema/context"
+	       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                           http://www.springframework.org/schema/beans/spring-beans.xsd
+	                           http://www.springframework.org/schema/context 
+	                           http://www.springframework.org/schema/context/spring-context.xsd
+	                           http://www.springframework.org/schema/data/jpa 
+	                           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-		@Bean
-		public Service service() {
-			return new ServiceImpl(repository());
-		}
-
-	}
-
-Usually, your beans will be annotation based (declared with @Named annotation) and automatically scanned, so service bean injection is just declared here to show you the syntax.
-
-RESThub's own application contexts are declared in resthubContext.xml files, and if you need one yourself, you should use applicationContext.xml files for your application. As said before, it is better to use Spring Java Config when possible.
-
-It is a good practice to always prefix the filename by "classpath*:" in order to enable scanning in all the classpaths of your applications.
+	    <context:component-scan base-package="org.mycompany.myproject" />
+	    <jpa:repositories base-package="org.mycompany.myproject.repository" />
+	    
+	</beans>
 
 logback.xml
 ~~~~~~~~~~~
@@ -439,14 +435,14 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.x</version>
     </dependency>
 
 In order to import its `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-jpa/src/main/resources/resthubContext.xml>`_, your should activate the resthub-jpa Spring profile in your WebAppInitializer class:
 
 .. code-block:: java
 
-    AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
+    XmlWebApplicationContext appContext = new XmlWebApplicationContext();
 	appContext.getEnvironment().setActiveProfiles("resthub-jpa", "resthub-web-server");
 
 Spring 3.1 allows to scan entities in different modules using the same PersitenceUnit, which is not possible with default JPA behaviour. You have to specify the packages where Spring should scan your entities by creating a database.properties file in your resources folder, with the following content :
@@ -459,22 +455,26 @@ Spring 3.1 allows to scan entities in different modules using the same Persitenc
 Now, entities within the com.myproject.model packages will be scanned, no need for persistence.xml JPA file.
 
 
-You also need to add an @EnableJpaRepositories annotation to your WebAppConfigurer class:
+You also need to add an applicationContext.xml file in order to scan your repository package.
 
-.. code-block:: java
+.. code-block:: xml
 
-	@Configuration
-	@EnableJpaRepositories("com.myproject.repository")
-	@ImportResource({"classpath*:resthubContext.xml", "classpath*:applicationContext.xml"})
-	public class WebAppConfigurer {
+	<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/data/jpa
+                           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-	}
+	    <jpa:repositories base-package="com.myproject.repository" />
+
+	</beans>
 
 You can customize the default configuration by adding a database.properties resource with one or more of the following keys customized with your values. You should include only the customized ones.
 
 REShub JPA default properties are :
 	* dataSource.driverClassName = org.h2.Driver
-	* dataSource.url = jdbc:h2:mem:resthub;DB_CLOSE_DELAY=-1
+	* dataSource.url = jdbc:h2:mem:resthub;DB_CLOSE_DELAY=-1;MVCC=TRUE
 	* dataSource.maxActive = 50
 	* dataSource.maxWait = 1000
 	* dataSource.poolPreparedStatements = true
@@ -492,14 +492,13 @@ REShub Hibernate default properties are :
 	* hibernate.id.new_generator_mappings = true
 	* persistenceUnit.packagesToScan = 
 
- If you need to do more advanced configuration, just override dataSource and entityManagerFactory beans in your Spring Java Config or applicationContext.xml.
+ If you need to do more advanced configuration, just override dataSource and entityManagerFactory beans in your applicationContext.xml.
 
 Usage
 -----
 
 .. code-block:: java
 
-	@Repository
 	public interface TodoRepository extends JpaRepository<Todo, String> {
 	    
 	    List<Todo> findByContentLike(String content);
@@ -543,26 +542,31 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.x</version>
     </dependency>
 
 In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-mongodb/src/main/resources/resthubContext.xml>`_, your should activate the resthub-mongodb Spring profile in your WebAppInitializer class:
 
 .. code-block:: java
 
-    AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
+    XmlWebApplicationContext appContext = new XmlWebApplicationContext();
 	appContext.getEnvironment().setActiveProfiles("resthub-mongodb", "resthub-web-server");
 
-You also need to add an @EnableMongoRepositories annotation to your WebAppConfigurer class:
+You also need to add an applicationContext.xml file in order to scan your repository package.
 
-.. code-block:: java
+.. code-block:: xml
 
-	@Configuration
-	@EnableMongoRepositories("com.myproject.repository")
-	@ImportResource({"classpath*:resthubContext.xml", "classpath*:applicationContext.xml"})
-	public class WebAppConfigurer {
+	<beans xmlns="http://www.springframework.org/schema/beans"
+	       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                           http://www.springframework.org/schema/beans/spring-beans.xsd
+	                           http://www.springframework.org/schema/data/mongo
+	                           http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
 
-	}
+	        <mongo:repositories base-package="com.myproject.repository" />
+
+	</beans>
 
 You can customize them by adding a database.properties resource with one or more following keys customized with your values. You should include only the customized ones.
 
@@ -587,7 +591,6 @@ Usage
 
 .. code-block:: java
 
-	@Repository
 	public interface TodoRepository extends MongoRepository<Todo, String> {
 	    
 	    List<Todo> findByContentLike(String content);
@@ -609,7 +612,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-common</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.x</version>
     </dependency>
 
 Usage
@@ -634,7 +637,7 @@ RESThub Web Server module is designed for REST webservices development. Both JSO
 
 It provides some abstract REST controller classes, and includes the following dependencies :
 	* Spring MVC 3.1 (`reference manual <http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html/mvc.html>`_)
-	* Jackson 2.2 (`documentation <http://wiki.fasterxml.com/JacksonDocumentation>`_)
+	* Jackson 2.1 (`documentation <http://wiki.fasterxml.com/JacksonDocumentation>`_)
 
 RESThub exception resolver allow to map common exceptions (Spring, JPA) to the right HTTP status codes :
 	 * IllegalArgumentException -> 400
@@ -654,14 +657,14 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.x</version>
     </dependency>
 
 In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-web/resthub-web-server/src/main/resources/resthubContext.xml>`_, your should activate the resthub-web-server Spring profile in your WebAppInitializer class:
 
 .. code-block:: java
 
-    AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
+    XmlWebApplicationContext appContext = new XmlWebApplicationContext();
 	appContext.getEnvironment().setActiveProfiles("resthub-web-server", "resthub-mongodb");
 
 Usage
@@ -679,11 +682,6 @@ RESThub comes with a REST controller that allows you to create a CRUD webservice
 	    @Override @Inject
 	    public void setRepository(WebSampleResourceRepository repository) {
 	        this.repository = repository;
-	    }
-
-	    @Override
-	    public Long getIdFromResource(Sample resource) {
-	        return resource.getId();
 	    }
 
 	}
@@ -761,7 +759,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.x</version>
     </dependency>
 
 Usage
@@ -848,7 +846,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.x</version>
         <scope>test</scope>
     </dependency>
 

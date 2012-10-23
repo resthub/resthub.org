@@ -1,6 +1,7 @@
 Changelog
 =========
 
+ * 2012-10-24 : RESThub 2.0-rc3 has been released
  * 2012-10-22 : RESThub 2.0-rc2 ( `Spring stack <https://github.com/resthub/resthub-spring-stack/issues?milestone=12&state=closed>`_ and `Backbone.js stack <https://github.com/resthub/resthub-backbone-stack/issues?milestone=4&state=closed>`_ ) has been released
  * 2012-10-01 : RESThub 2.0-rc1 ( `Spring stack <https://github.com/resthub/resthub-spring-stack/issues?milestone=13&state=closed>`_ and `Backbone.js stack <https://github.com/resthub/resthub-backbone-stack/issues?milestone=3&state=closed>`_ ) has been released
  * 2012-08-29 : RESThub 2.0-beta2 ( `Spring stack <https://github.com/resthub/resthub-spring-stack/issues?milestone=11&state=closed>`_ and `Backbone.js stack <https://github.com/resthub/resthub-backbone-stack/issues?milestone=1&state=closed>`_ ) has been released
