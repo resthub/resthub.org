@@ -1,7 +1,7 @@
 Release RESThub
 ===============
 
-Instructions provided with 2.0-rc2. Adapt with your version (search and replace)
+Instructions provided with 2.0-rc3. Adapt with your version (search and replace)
 
 Prepare
 -------
@@ -26,10 +26,11 @@ Release resthub-backbone-stack :
 	* cd resthub-backbone-stack
 	* git status
 	* git pull resthub master
-	* mvn versions:set -DnewVersion=2.0-rc2 -DgenerateBackupPoms=false
-	* mvn clean install deploy
-	* git commit -a -m "Change version to 2.0-rc2"
-	* git tag resthub-2.0-rc2
+	* mvn versions:set -DnewVersion=2.0-rc3 -DgenerateBackupPoms=false
+	* mvn clean install
+	* mvn deploy -DaltDeploymentRepository pullrequest-releases::default::http://nexus.pullrequest.org/content/repositories/releases
+	* git commit -a -m "Change version to 2.0-rc3"
+	* git tag resthub-2.0-rc3
 	* mvn versions:set -DnewVersion=2.0-SNAPSHOT -DgenerateBackupPoms=false
 	* git commit -a -m "Change version to 2.0-SNAPSHOT"
 	* git push resthub master
@@ -39,10 +40,11 @@ Release resthub-spring-stack :
 	* cd ../resthub-spring-stack
 	* git status
 	* git pull resthub master
-	* mvn versions:set -DnewVersion=2.0-rc2 -DgenerateBackupPoms=false
-	* mvn clean install deploy
-	* git commit -a -m "Change version to 2.0-rc2"
-	* git tag resthub-2.0-rc2
+	* mvn versions:set -DnewVersion=2.0-rc3 -DgenerateBackupPoms=false
+	* mvn clean install
+	* mvn deploy -DaltDeploymentRepository pullrequest-releases::default::http://nexus.pullrequest.org/content/repositories/releases
+	* git commit -a -m "Change version to 2.0-rc3"
+	* git tag resthub-2.0-rc3
 	* mvn versions:set -DnewVersion=2.0-SNAPSHOT -DgenerateBackupPoms=false
 	* git commit -a -m "Change version to 2.0-SNAPSHOT"
 	* git push resthub master
@@ -52,11 +54,11 @@ Release resthub-archetypes :
 	* cd ../resthub-archetypes
 	* git status
 	* git pull resthub master
-	* mvn versions:set -DnewVersion=2.0-rc2 -DgenerateBackupPoms=false
+	* mvn versions:set -DnewVersion=2.0-rc3 -DgenerateBackupPoms=false
 	* mvn clean install
-	* mvn deploy
-	* git commit -a -m "Change version to 2.0-rc2"
-	* git tag resthub-2.0-rc2
+	* mvn deploy -DaltDeploymentRepository pullrequest-releases::default::http://nexus.pullrequest.org/content/repositories/releases
+	* git commit -a -m "Change version to 2.0-rc3"
+	* git tag resthub-2.0-rc3
 	* mvn versions:set -DnewVersion=2.0-SNAPSHOT -DgenerateBackupPoms=false
 	* git commit -a -m "Change version to 2.0-SNAPSHOT"
 	* git push resthub master
@@ -64,10 +66,11 @@ Release resthub-archetypes :
 
 Release todo-example :	
 	* cd ../todo-example
-	* mvn versions:set -DnewVersion=2.0-rc2 -DgenerateBackupPoms=false
-	* mvn clean install deploy
-	* git commit -a -m "Change version to 2.0-rc2"
-	* git tag resthub-2.0-rc2
+	* mvn versions:set -DnewVersion=2.0-rc3 -DgenerateBackupPoms=false
+	* mvn clean install
+	* mvn deploy -DaltDeploymentRepository pullrequest-releases::default::http://nexus.pullrequest.org/content/repositories/releases
+	* git commit -a -m "Change version to 2.0-rc3"
+	* git tag resthub-2.0-rc3
 	* mvn versions:set -DnewVersion=2.0-SNAPSHOT -DgenerateBackupPoms=false
 	* git commit -a -m "Change version to 2.0-SNAPSHOT"
 	* git push
@@ -79,10 +82,9 @@ Release documentation :
 	* git pull resthub master
 	* Manually update version and release properties in conf.py
 	* Search and replace old version by new version in spring-stack.rst
-	* git commit -a -m "Change version to 2.0-rc2"
-	* git tag resthub-2.0-rc2
-	* git push
-	* git push --tags
-
+	* git commit -a -m "Change version to 2.0-rc3"
+	* git tag resthub-2.0-rc3
+	* git push resthub master
+	* git push resthub master --tags
 	
 
