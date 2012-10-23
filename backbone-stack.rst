@@ -4,7 +4,7 @@
 Backbone.js Stack
 =================
 
-RESThub 2 backbone stack provides a client side full stack and guidelines for building enterprise grade HTML5 application. It cold be used with any server backend : Ruby, PHP, NodeJS, J2EE, Spring, Grail ...
+RESThub 2 backbone stack provides a client-side full stack and guidelines for building enterprise grade HTML5 applications. It could be used with any server backend : Ruby, PHP, NodeJS, J2EE, Spring, Grail ...
 
 .. contents::
    :depth: 3
@@ -21,13 +21,13 @@ The Backbone.js stack includes the following main librairies :
     * A **console shim** for browsers that don't support it
     * **Twitter Bootstrap 2.1** (`documentation <http://twitter.github.com/bootstrap/>`_) JS plugins
     
-And some additional librairies documented here: :ref:`complementary-libs`
+And some additional libraries documented here: :ref:`complementary-libs`
 
 Bootstrap your project
 ======================
 
 There are 2 ways to use it in your project :
-    * If you are starting a new RESThub Spring + Backbone stack project, the better way to use it is to use one of the Backbone.js webappp Maven Archetypes described on the `here <spring-stack.html#bootstrap-your-project>`_
+    * If you are starting a new RESThub Spring + Backbone stack project, the better way to use it is to use one of the Backbone.js webappp Maven Archetypes described `here <spring-stack.html#bootstrap-your-project>`_
     * You can simply go to the `RESThub Backbone.js stack GitHub repository <https://github.com/resthub/resthub-backbone-stack>`_, and download the repository content and copy it at the root of your webapp
 
 The `Todo RESThub 2.0 example <http://github.com/resthub/todo-example>`_ project is the reference example project using this stack.
@@ -218,7 +218,7 @@ main.js
 Backbone.ResthubView
 ====================
 
-RESThub Backbone stack provides an enhanced Backbone View named Backbone.ResthubView with the following functionnalities :
+RESThub Backbone stack provides an enhanced Backbone View named Backbone.ResthubView with the following functionalities :
  * Default rendering implementation
  * $root attribute used to specify the container root element where the view should be attached (since $el is the view itself)
  * Default template attribute with context management
@@ -226,9 +226,9 @@ RESThub Backbone stack provides an enhanced Backbone View named Backbone.Resthub
 $root attribute
 ---------------
 
-Backbone views contain an $el attribute that represent the element (a div by default) where the template will be rendered, but it does not provide an attribute that represent the DOM element in which the view will be attached.
+Backbone views contain an $el attribute that represents the element (a div by default) where the template will be rendered, but it does not provide an attribute that represents the DOM element in which the view will be attached.
 
-In order to follow separation of concerns and encapsulation principles, RESThub Backbone stack manages a $root element in which the view will be attached. You should always pass it as constructor parameter, so as to avoid hardcoding view root element. Like el, model or collection, it will be automatically added to the view.
+In order to follow separation of concerns and encapsulation principles, RESThub Backbone stack manages a $root element in which the view will be attached. You should always pass it as constructor parameter, so as to avoid hardcoding view root elements. Like el, model or collection, it will be automatically added to the view.
 
 .. code-block:: javascript
 
@@ -292,7 +292,7 @@ Or by passing the context to the render function :
 
     this.render({messages: messages, collection: this.collection});
 
-If you need to customize the render() function, you can replace or extend it. Here is an example about how to extend it. This sample calls the default render method and adds child elements:
+If you need to customize the render() function, you can replace or extend it. Here is an example about how to extend it. This sample calls the default render method and adds children elements:
 
 .. code-block:: javascript
 
