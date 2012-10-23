@@ -28,7 +28,7 @@ Release resthub-backbone-stack :
 	* git pull resthub master
 	* mvn versions:set -DnewVersion=2.0-rc3 -DgenerateBackupPoms=false
 	* mvn clean install
-	* mvn deploy -DaltDeploymentRepository pullrequest-releases::default::http://nexus.pullrequest.org/content/repositories/releases
+	* mvn deploy -DaltDeploymentRepository=pullrequest-releases::default::http://nexus.pullrequest.org/content/repositories/releases
 	* git commit -a -m "Change version to 2.0-rc3"
 	* git tag resthub-2.0-rc3
 	* mvn versions:set -DnewVersion=2.0-SNAPSHOT -DgenerateBackupPoms=false
@@ -42,7 +42,7 @@ Release resthub-spring-stack :
 	* git pull resthub master
 	* mvn versions:set -DnewVersion=2.0-rc3 -DgenerateBackupPoms=false
 	* mvn clean install
-	* mvn deploy -DaltDeploymentRepository pullrequest-releases::default::http://nexus.pullrequest.org/content/repositories/releases
+	* mvn deploy -DaltDeploymentRepository=pullrequest-releases::default::http://nexus.pullrequest.org/content/repositories/releases
 	* git commit -a -m "Change version to 2.0-rc3"
 	* git tag resthub-2.0-rc3
 	* mvn versions:set -DnewVersion=2.0-SNAPSHOT -DgenerateBackupPoms=false
@@ -56,7 +56,7 @@ Release resthub-archetypes :
 	* git pull resthub master
 	* mvn versions:set -DnewVersion=2.0-rc3 -DgenerateBackupPoms=false
 	* mvn clean install
-	* mvn deploy -DaltDeploymentRepository pullrequest-releases::default::http://nexus.pullrequest.org/content/repositories/releases
+	* mvn -DskipTests=true deploy -DaltDeploymentRepository=pullrequest-releases::default::http://nexus.pullrequest.org/content/repositories/releases
 	* git commit -a -m "Change version to 2.0-rc3"
 	* git tag resthub-2.0-rc3
 	* mvn versions:set -DnewVersion=2.0-SNAPSHOT -DgenerateBackupPoms=false
@@ -68,7 +68,7 @@ Release todo-example :
 	* cd ../todo-example
 	* mvn versions:set -DnewVersion=2.0-rc3 -DgenerateBackupPoms=false
 	* mvn clean install
-	* mvn deploy -DaltDeploymentRepository pullrequest-releases::default::http://nexus.pullrequest.org/content/repositories/releases
+	* mvn deploy -DaltDeploymentRepository=pullrequest-releases::default::http://nexus.pullrequest.org/content/repositories/releases
 	* git commit -a -m "Change version to 2.0-rc3"
 	* git tag resthub-2.0-rc3
 	* mvn versions:set -DnewVersion=2.0-SNAPSHOT -DgenerateBackupPoms=false
