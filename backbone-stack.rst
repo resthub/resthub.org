@@ -133,7 +133,7 @@ main.js
             },
             'underscore-string': {
                 deps: [
-                    'underscore'
+                'underscore'
                 ]
             },
             'handlebars-orig': {
@@ -141,36 +141,42 @@ main.js
             },
             'backbone-orig': {
                 deps: [
-                    'underscore',
-                    'underscore-string',
-                    'jquery'
+                'underscore',
+                'underscore-string',
+                'jquery'
                 ],
                 exports: 'Backbone'
             },
             'backbone-queryparams': {
                 deps: [
-                    'backbone-orig',
-                    'underscore'
+                'backbone-orig',
+                'underscore'
                 ]
             },
             'backbone-paginator': {
                 deps: [
-                    'backbone-orig',
-                    'underscore',
-                    'jquery'
+                'backbone-orig',
+                'underscore',
+                'jquery'
                 ],
                 exports: 'Backbone.Paginator'
             },
             'bootstrap': {
                 deps: [
-                    'jquery'
+                'jquery'
                 ]
             },
             'backbone-relational': {
-              deps: [
-                   'backbone-orig',  
-                   'underscore'  
-              ]
+                deps: [
+                'backbone-orig',  
+                'underscore'  
+                ]
+            },
+            'keymaster': {
+                exports: 'key'
+            },
+            'async': {
+                exports: 'async'
             }
         },
 
@@ -196,19 +202,14 @@ main.js
             async: 'lib/async',
             keymaster: 'lib/keymaster',
             hbs: 'lib/resthub/require-handlebars',
+            'moment': 'lib/moment',
             template: '../template'
-        },
-
-        locale: localStorage.getItem('locale') || 'en-us'
+        }
     });
-        
 
-    // Load our app module and pass it to our definition function
-    require(['router/app-router', 'view/app-view']
-            , function(AppRouter, AppView){
-        new AppView({root: $('#todoapp')});
-        new AppRouter();
-    });
+  require(['router/app-router'], function(AppRouter) {
+      new AppRouter();
+  });
    
 - **shim** config is part of `Require 2.0`_ and allows to `Configure the dependencies and exports for older, traditional "browser globals" scripts that do not use define() to declare the dependencies and set a module value`. See `<http://requirejs.org/docs/api.html#config-shim>`_ for more details.
 - **path** config is also part of Require_ and allows to define paths for libs not found directly under baseUrl. 

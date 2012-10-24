@@ -11,7 +11,8 @@ based application. These libs are :
 - **Paginated lists:** `Backbone Paginator`_
 - **Asynchronous calls:** Async_
 - **Dispatching keyboard shortcuts:** Keymaster_
-- **Get and set relations (one-to-one, one-to-many, many-to-one) for Backbone models** `Backbone Relational`_
+- **Get and set relations (one-to-one, one-to-many, many-to-one) for Backbone models:** `Backbone Relational`_
+- **Parsing, validating, manipulating, and formatting dates:** `Moment`_
 
 Resthub only provide require config shims and paths for these libs in ``main.js`` and you are totaly free to use these libs or not:
 
@@ -510,6 +511,17 @@ Backbone-relational features:
  * reset of a HasMany relation (bind to reset:<key>; arguments: (relatedCollection)),
  * changes to the key itself on HasMany and HasOne relations (bind to update:<key>; arguments=(model, relatedModel/relatedCollection)). 
 
+Parsing, validating, manipulating, and formatting dates
+-------------------------------------------------------
+
+`Moment`_ is a date library for parsing, validating, manipulating, and formatting dates.
+
+Moment.js features:
+ * Parse and format date with custom pattern and internationalization
+ * Date manipulation (add, substract)
+ * Durations (eg: 2 hours)
+
+
 .. _Require 2.0: http://requirejs.org
 .. _Require: http://requirejs.org
 .. _Handlebars: http://handlebarsjs.com
@@ -521,3 +533,4 @@ Backbone-relational features:
 .. _Keymaster: http://github.com/madrobby/keymaster
 .. _Backbone: http://backbonejs.org/
 .. _Backbone Relational: https://github.com/PaulUithol/Backbone-relational
+.. _Moment: http://momentjs.com/
