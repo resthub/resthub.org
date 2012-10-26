@@ -8,7 +8,8 @@ RESThub 2 Spring stack provides a server side full stack and guidelines for buil
    :depth: 3
 
 It provides a coherent stack based on :
-	* `Java 7 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ for both compile and runtime scopes
+	* `Java <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ (at least JDK6, JDK7 recommanded)
+	* `Tomcat 7 <http://tomcat.apache.org/download-70.cgi>`_ (RESThub can also be used for non web applications)
 	* Spring 3.1 (`reference manual <http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html>`_ and `Javadoc <http://static.springsource.org/spring/docs/3.1.x/javadoc-api/>`_)
  	* SQL and NoSQL Persistence with `Spring Data <http://www.springsource.org/spring-data>`_
  	* Logging with SLF4J (`manual <http://www.slf4j.org/manual.html>`_) and Logback (`manual <http://logback.qos.ch/manual/index.html>`_)
@@ -27,7 +28,7 @@ The whole RESThub 2.0 Spring stack `Javadoc <http://jenkins.pullrequest.org/job/
 Bootstrap your project
 ======================
 
-Java 7 and Maven 3 should be installed on your computer. RESThub based application are usually developed thanks to a Java IDE like Eclipse, Netbeans or IntelliJ IDEA. If you don't know which IDE to chose, `Netbeans <http://netbeans.org/>`_ is recommended since it is free and has great Maven support and Java/Javascript capabilities.
+Java and Maven 3 should be installed on your computer. RESThub based application are usually developed thanks to a Java IDE like Eclipse, Netbeans or IntelliJ IDEA. If you don't know which IDE to chose, `Netbeans <http://netbeans.org/>`_ is recommended since it is free and has great Maven support and Java/Javascript capabilities.
 
 The easiest way to start is to use RESThub archetypes to create your first web application. Just open a command line terminal, and type :
 
