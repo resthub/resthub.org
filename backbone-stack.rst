@@ -589,19 +589,16 @@ Sample js/nls/fr-fr/labels.js file:
 
 3. **Use it**
 
-Add a dependency in the js, typically a View, where you'll need labels. You'll absolutely need to give a scoped variable to the result (in this example ``labels``, but you can choose the one you want). 
+Add a dependency in the js, typically a View, where you'll need labels. You'll absolutely need to give a scoped variable to the result (in this example ``myLabels``, but you can choose the one you want). 
 
 Prepending 'i18n!' before the file path in the dependency indicates RequireJS to get the file related to the current locale :
 
 .. code-block:: javascript
 
-    define(['i18n!nls/labels'], function(labels) {
+    define(['i18n!nls/labels'], function(myLabels) {
         // ...
 
-        render: function() {
-            this.$el.html(this.template(labels));
-            return this;
-        },
+        labels: myLabels,
 
         // ...
     });
