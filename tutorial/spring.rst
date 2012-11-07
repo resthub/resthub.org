@@ -225,27 +225,33 @@ Let's try to implement a ``findByName`` implementation that returns a Task based
 Do:
 +++
 
-1. **Modify** ``TaskController.java`` **to add a new method called** ``findByName``  **with a name parameter mapped to** ``/api/task/name/{name}``.
+1. **Modify** ``TaskController.java`` **to add a new method called** ``findByName``  **with a name parameter mapped to** ``/api/task/name/{name}`` returning a single task element if exists.
 
-   Implement this using existing repository method (see `Spring Data JPA documentation <http://static.springsource.org/spring-data/data-jpa/docs/current/api/>`_).
-   Check on your browser that `<http://localhost:8080/api/task?page=no>`_ works and display a simple list of tasks, without pagination.
-
-.. code-block:: javascript
-
-  {
-    "id": 1,
-    "name": "testTask1",
-    "description": "bla bla"
-  }
-
-Implementation is done by addind a new repository findByName() method (see `<http://static.springsource.org/spring-data/data-jpa/docs/current/api/org/springframework/data/jpa/repository/JpaRepository.html#findAll()>`_).
+  Implementation is done by adding a new repository findByName() method (see `<http://static.springsource.org/spring-data/data-jpa/docs/current/api/org/springframework/data/jpa/repository/JpaRepository.html#findAll()>`_) in interface.
+  
+  .. code-block:: Java
     
-.. code-block:: Java
+    Task findByName(String name);
+  
+
+  And in controller: 
+  
+  .. code-block:: Java
     
-  @RequestMapping(value = "name/{name}", method = RequestMethod.GET) @ResponseBody
-  public List<Todo> searchByName(@PathVariable String name) {
-    return this.repository.findByName(name);
-  }
+    @RequestMapping(value = "name/{name}", method = RequestMethod.GET) @ResponseBody
+    public Task searchByName(@PathVariable String name) {
+      return this.repository.findByName(name);
+    }
+
+  Check on your browser that `<http://localhost:8080/api/task/name/testTask1>`_ works and display a simple list of tasks, without pagination.
+
+  .. code-block:: javascript
+
+    {
+      "id": 1,
+      "name": "testTask1",
+      "description": "bla bla"
+    }
 
     
 see `<https://github.com/resthub/resthub-spring-training/tree/step3-solution>`_ for complete solution.
@@ -730,7 +736,7 @@ Do:
 .. code-block:: java
 
    @Configuration
-   @ImportResource("classpath*:applicationContext.xml")
+   @ImportResource("classpath*:resthubContext.xml", "classpath*:applicationContext.xml")
    @Profile("test")
    public class MocksConfiguration {
        @Bean(name = "notificationService")
@@ -747,7 +753,7 @@ This class allows to define a mocked alias bean to notificationService bean for 
 .. code-block:: java
 
    @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = MocksConfiguration.class)
-   @ActiveProfiles("test")
+   @ActiveProfiles({"test", "resthub-jpa"})
    public class TaskServiceIntegrationTest extends AbstractTest {
       ...
    }
