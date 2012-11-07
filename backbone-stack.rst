@@ -229,7 +229,7 @@ $root attribute
 
 Backbone views contain an $el attribute that represents the element (a div by default) where the template will be rendered, but it does not provide an attribute that represents the DOM element in which the view will be attached.
 
-In order to follow separation of concerns and encapsulation principles, RESThub Backbone stack manages a $root element in which the view will be attached. You should always pass it as constructor parameter, so as to avoid hardcoding view root elements. Like el, model or collection, it will be automatically added to the view.
+In order to follow separation of concerns and encapsulation principles, RESThub Backbone stack manages a $root element in which the view will be attached. You should always pass it as constructor parameter, so as to avoid hardcoding view root elements. Like el, model or collection, it will be automatically as view attributes.
 
 .. code-block:: javascript
 
@@ -241,7 +241,7 @@ In this example, we create the MyView view and attach it to the .container DOM e
 
     new MyView({root: '#container', collection: myCollection});
 
-RESThub provides a default render implementation that will render your template with model or collection in context if these properties are defined.
+RESThub provides a default implementation that will render your template with model, collection and labels in context if these properties are defined.
 
 .. code-block:: javascript
 
@@ -258,6 +258,22 @@ RESThub provides a default render implementation that will render your template 
         });
     });
 
+A sample template with automatic collection provisionning :
+
+.. code-block:: html
+
+    <ul>
+      {{#each collection}}
+      <li>{{this.firstname}} {{this.name}}</li>
+      {{/each}}
+    </ul>
+
+Or with automatic model and labels provisionning :
+
+.. code-block:: html
+
+    <p>{{labels.user.identity}} : {{model.firstname}} {{model.name}}</li>    
+
 After instantiation, ``this.$root`` contains a cached jQuery element and ``this.root`` the DOM element. By default, when render() is called, Backbone stack empties the root element, and adds el to the root as a child element. You can change this behaviour with the strategy parameter that could have following values :
  * replace : replace the content of $root with $el view content
  * append : append the content of $el at the end of $root
@@ -273,13 +289,14 @@ After instantiation, ``this.$root`` contains a cached jQuery element and ``this.
         
     });
 
-You can also customize the rendering context by defining a context property :
+You can customize the rendering context by defining a context property :
 
 .. code-block:: javascript
 
     var MyView = Backbone.ResthubView.extend({
             
         template: myTemplate,
+
         context: {
             messages: messages,
             collection: this.collection
@@ -287,7 +304,26 @@ You can also customize the rendering context by defining a context property :
        
     });
 
-Or by passing the context to the render function :
+Or by passing a function if you need dynamic context :
+
+.. code-block:: javascript
+
+    var MyView = Backbone.ResthubView.extend({
+            
+        template: myTemplate,
+        
+        context: function() {
+            var done = this.collection.done().length;
+            var remaining = this.collection.remaining().length;
+            return {
+                total:      this.collection.length,
+                done:       done,
+                remaining:  remaining,
+                labels:   labels
+            };
+    });
+
+Or by passing the context as a render parameter when you call it explicitely :
 
 .. code-block:: javascript
 
@@ -300,7 +336,9 @@ If you need to customize the render() function, you can replace or extend it. He
     var MyView = Backbone.ResthubView.extend({
 
         render: function() {
+            // Call super render function with the same arguments
             MyView.__super__.render.apply(this, arguments);
+            // Add child views
             this.collection.each(function(child) {
                 this.add(child);
             }, this);
@@ -453,17 +491,14 @@ Sample usage in a Backbone.js View :
 .. code-block:: javascript
 
     define(['jquery', 'backbone', 'hbs!template/todo'],function($, Backbone, todoTmpl) {
-        var TodoView = Backbone.View.extend({
+        var TodoView = Resthub.View.extend({
 
         //... is a list tag.
         tagName:  'li',
+        
+        // Resthub.View will automtically Handlebars template with model or collection set in the context
+        template: todoTmpl;
 
-        render: function() {
-            // todoTmpl a function that take context (labels, model) and return the dynamized output.
-            var result = todoTmpl(this.model.toJSON());
-            $(this.el).html(result);
-            return this;
-        }
     });
         
 Helpers
