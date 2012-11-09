@@ -82,11 +82,14 @@ Directories and filename conventions
     │   │       └── user-edit-view.js
     │   ├── router
     │   │   └── app-router.js
-    │   └── main.js
+    │   ├── app.js
+        └── main.js
     └── index.html
 
 index.html
 ----------
+
+index.html is provided by RESThub Backbone stack, so you don't have to create it.
 
 .. code-block:: html
 
@@ -117,11 +120,12 @@ index.html
       </body>
     </html>
 
-
-index.html is provided by RESThub Backbone stack, so you don't have to create it. Your application bootstrap file is the main.js located at your webapp root (usually src/main/webapp). Here's the default main.js file :
-
 main.js
 -------
+
+This application bootstrap file is main.js located at your webapp root (usually src/main/webapp). The goal of this file is mainly to intialize require.js configuration. Your application code should not be here but in app.js (automatically loaded by main.js) in order to allow easy Backbone stack updates.
+
+Here's the default main.js file :
 
 .. code-block:: javascript
 
@@ -207,14 +211,27 @@ main.js
         }
     });
 
-  require(['router/app-router'], function(AppRouter) {
-      new AppRouter();
-  });
-   
+    // Load our app module and pass it to our definition function
+    require(['app']);
+
 - **shim** config is part of `Require 2.0`_ and allows to `Configure the dependencies and exports for older, traditional "browser globals" scripts that do not use define() to declare the dependencies and set a module value`. See `<http://requirejs.org/docs/api.html#config-shim>`_ for more details.
 - **path** config is also part of Require_ and allows to define paths for libs not found directly under baseUrl. 
   See `<http://requirejs.org/docs/api.html#config-paths>`_ for details.
 - RESThub suggests to **preload some libs** that will be used for sure as soon the app starts (dependencies required by Backbone itself and our template engine). This mechanism also allows us to load other linked libs transparently without having to define it repeatedly (e.g. ``underscore.string`` loading - this libs is strongly correlated to ``underscore`` - and merged with it and thus should not have to be defined anymore)
+
+app.js
+-------
+
+app.js is where your application begins. You should customize it in order to initialize your routers and/or views.
+
+Here's the default app.js file :
+
+.. code-block:: javascript
+
+    define(['router/app-router'], function(AppRouter) {
+        new AppRouter();
+        // ...
+    });
 
 Backbone.ResthubView
 ====================
