@@ -764,6 +764,46 @@ As described by `k33g <https://twitter.com/#!/k33g_org>`_ on his `Gist Use Objec
         getCounter : function() { return this.counter; }
     });
 
+Logging
+=======
+
+RESThub Backbone stack include a console.js implementation responsible for 
+ * Creating console.* functions if they do not exists (old IE versions)
+ * Optionnaly sending logs to the server, in order to make JS error tracking and debugging easier
+
+ In order to send logs to the server, import console.js in your main.js (already done by default) :
+
+.. code-block:: javascript
+
+    // Load our app module and pass it to our definition function
+    require(['console', 'app']);
+
+In your app.js, you can define different console.level values, which define what log level will be sent to the server :
+
+.. code-block:: javascript
+
+    console.level = 'off'; // Default, no log are sent to the server
+    console.level = 'debug'; // debug, info, warn and error logs are sent to the server
+    console.level = 'info'; // info, warn and error logs are sent to the server
+    console.level = 'warn'; // warn and error logs are sent to the server
+    console.level = 'error'; // error logs are sent to the server
+
+Javascript syntax error are also sent to the server with an error log level.
+
+You can customize the log server url :
+
+.. code-block:: javascript
+    
+    console.serverUrl = 'api/log'; // Default value
+
+Log are sent thanks a POST request with the following JSON body :
+
+.. code-block:: javascript
+    
+    {"level":"warn","message":"log message","time":"2012-11-13T08:18:52.972Z"}
+
+RESThub web server provide a builtin implementation of the serverside logging webservice, see the `related documentation <spring-stack.html#client-logging>`_ for more details.
+
 .. _pubsub:
     
 Publish Subscribe
