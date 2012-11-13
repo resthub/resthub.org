@@ -113,8 +113,8 @@ pom.xml example :
 		<name>My project</name>
 
 		<properties>
-			<resthub.spring.stack.version>2.x</resthub.spring.stack.version>
-			<resthub.backbone.stack.version>2.x</resthub.backbone.stack.version>
+			<resthub.spring.stack.version>2.0-rc4</resthub.spring.stack.version>
+			<resthub.backbone.stack.version>2.0-rc4</resthub.backbone.stack.version>
 		</properties>
 
 		<dependencies>
@@ -204,31 +204,31 @@ The available RESThub dependencies are the following
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.x</version>
+        <version>2.0-rc4</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.x</version>
+        <version>2.0-rc4</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.x</version>
+        <version>2.0-rc4</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.x</version>
+        <version>2.0-rc4</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.x</version>
+        <version>2.0-rc4</version>
         <scope>test</scope>
     </dependency>
 
@@ -294,9 +294,10 @@ RESThub web tests comes with a helper to activate profiles too:
 	}
 
 RESThub built-in Spring profiles have the same name than their matching module :
-	* resthub-jpa
-	* resthub-mongodb
-	* resthub-web-server
+	* resthub-jpa : enable JPA database support (resthub-jpa dependency needed)
+	* resthub-mongodb : enable MongoDB support (resthub-mongodb dependency needed)
+	* resthub-web-server : enable default web server configuration (resthub-web-server dependency needed)
+    * resthub-client-logging : enable a webservice use to send logs from client to server (resthub-web-server dependency needed)
 
 Spring based configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -436,7 +437,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.x</version>
+        <version>2.0-rc4</version>
     </dependency>
 
 In order to import its `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-jpa/src/main/resources/resthubContext.xml>`_, your should activate the resthub-jpa Spring profile in your WebAppInitializer class:
@@ -543,7 +544,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.x</version>
+        <version>2.0-rc4</version>
     </dependency>
 
 In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-mongodb/src/main/resources/resthubContext.xml>`_, your should activate the resthub-mongodb Spring profile in your WebAppInitializer class:
@@ -613,7 +614,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-common</artifactId>
-        <version>2.x</version>
+        <version>2.0-rc4</version>
     </dependency>
 
 Usage
@@ -658,7 +659,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.x</version>
+        <version>2.0-rc4</version>
     </dependency>
 
 In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-web/resthub-web-server/src/main/resources/resthubContext.xml>`_, your should activate the resthub-web-server Spring profile in your WebAppInitializer class:
@@ -671,7 +672,9 @@ In order to import the `default configuration <https://github.com/resthub/resthu
 Usage
 -----
 
-RESThub comes with a REST controller that allows you to create a CRUD webservice in a few lines. You have the choice to use a 2 layers (Controller -> Repository) or 3 layers (Controller -> Service -> Repository) software design :
+RESThub comes with a REST controller that allows you to create a CRUD webservice in a few lines. You have the choice to use a 2 layers (Controller -> Repository) or 3 layers (Controller -> Service -> Repository) software design.
+
+You can  find more details about these generic webservices, including their REST API description, on RESThub `Javadoc <http://jenkins.pullrequest.org/job/resthub-spring-stack-master/javadoc/>`_.
 
 **2 layers software design**
 
@@ -741,6 +744,24 @@ With sluggable behaviour we have URL lke GET /sample/niceref.
 
 	Be aware that when you override a Spring MVC controller method, your new method automatically reuse method level annotations from parent classes, but not parameter level annotations. That's why you need to specify parameters annotations again in order to make it work, like in the previous code sample.
 
+Client logging
+--------------
+
+In order to make JS client application debugging easier, RESThub provides a webservice used to send client logs to the server. In order to activate it, you should enable the **resthub-webserver-logging** Spring profile.
+
+POST api/log webservice expect this kind of body :
+
+.. code-block:: javascript
+
+    {"level":"warn","message":"log message","time":"2012-11-13T08:18:52.972Z"}
+
+POST api/logs webservice expect this kind of body :
+
+.. code-block:: javascript
+
+    [{"level":"warn","message":"log message 1","time":"2012-11-13T08:18:53.342Z"},
+    {"level":"info","message":"log message 1","time":"2012-11-13T08:18:52.972Z"}]
+
 Web client
 ==========
 
@@ -760,7 +781,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.x</version>
+        <version>2.0-rc4</version>
     </dependency>
 
 Usage
@@ -829,7 +850,7 @@ Testing
 	
 The following test stack is included in the RESThub test module :
 	* Test framework with `TestNG <http://testng.org/doc/documentation-main.html>`_. If you use Eclipse, don't forget to install the `TestNG plugin <http://testng.org/doc/eclipse.html>`_.
-	* Assertion with `Fest Assert 2 <https://github.com/alexruiz/fest-assert-2.x/wiki>`_
+	* Assertion with `Fest Assert 2 <https://github.com/alexruiz/fest-assert-2.0-rc4/wiki>`_
 	* Mock with `Mockito <http://code.google.com/p/mockito/>`_
 
 RESThub also provides generic classes in order to make testing easier.
@@ -847,7 +868,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.x</version>
+        <version>2.0-rc4</version>
         <scope>test</scope>
     </dependency>
 
