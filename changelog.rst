@@ -7,6 +7,7 @@ Changelog
     * A client to server logging support has been added
     * AbstractWebTest now supports JavaConfig based configuration
     * Documentation improvements
+    * Spring stack requirements is now Java 6 instead of Java 7 (archetypes still configured with Java 7 by default)
  * 2012-10-24 : RESThub 2.0-rc3 has been released
  * 2012-10-22 : RESThub 2.0-rc2 ( `Spring stack <https://github.com/resthub/resthub-spring-stack/issues?milestone=12&state=closed>`_ and `Backbone.js stack <https://github.com/resthub/resthub-backbone-stack/issues?milestone=4&state=closed>`_ ) has been released
  * 2012-10-01 : RESThub 2.0-rc1 ( `Spring stack <https://github.com/resthub/resthub-spring-stack/issues?milestone=13&state=closed>`_ and `Backbone.js stack <https://github.com/resthub/resthub-backbone-stack/issues?milestone=3&state=closed>`_ ) has been released
