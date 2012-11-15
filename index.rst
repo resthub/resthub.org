@@ -20,7 +20,6 @@ Table of contents
 .. toctree::
     :maxdepth: 2
 
-    changelog
     spring-stack
     backbone-stack
     

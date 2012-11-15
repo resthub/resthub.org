@@ -25,6 +25,18 @@ It provides the following modules :
 
 The whole RESThub 2.0 Spring stack `Javadoc <http://jenkins.pullrequest.org/job/resthub-spring-stack-master/javadoc/>`_ is available.
 
+Changelog
+=========
+
+ * 2012-11-13 : RESThub Spring stack 2.0-rc4 has been released
+ * 2012-10-24 : RESThub Spring stack 2.0-rc3 has been released
+ * 2012-10-22 : `RESThub Spring stack 2.0-rc2 <https://github.com/resthub/resthub-spring-stack/issues?milestone=12&state=closed>`_ has been released
+ * 2012-10-01 : `RESThub Spring stack 2.0-rc1 <https://github.com/resthub/resthub-spring-stack/issues?milestone=13&state=closed>`_ has been released
+ * 2012-08-29 : `RESThub Spring stack 2.0-beta2 <https://github.com/resthub/resthub-spring-stack/issues?milestone=11&state=closed>`_  has been released
+ * 2012-05-06 : `RESThub Spring stack 2.0-beta1 <https://github.com/resthub/resthub-spring-stack/issues?milestone=8&state=closed>`_ has been released
+ * 2011-06-19 : RESThub 1.1 and RESThub JS 1.1 have been released
+ * 2010-11-17 : RESThub 1.0 has been released
+
 Bootstrap your project
 ======================
 
