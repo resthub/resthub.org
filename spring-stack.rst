@@ -1,6 +1,6 @@
-==========================
-Spring Stack documentation
-==========================
+============
+Spring Stack
+============
 
 RESThub 2 Spring stack provides a server side full stack and guidelines for building Java/Spring application (usually web application, but not only).
 
@@ -8,7 +8,8 @@ RESThub 2 Spring stack provides a server side full stack and guidelines for buil
    :depth: 3
 
 It provides a coherent stack based on :
-	* `Java 7 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ for both compile and runtime scopes
+	* `Java <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ (at least JDK6, JDK7 recommended)
+	* `Tomcat 7 <http://tomcat.apache.org/download-70.cgi>`_ (RESThub can also be used for non web applications)
 	* Spring 3.1 (`reference manual <http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html>`_ and `Javadoc <http://static.springsource.org/spring/docs/3.1.x/javadoc-api/>`_)
  	* SQL and NoSQL Persistence with `Spring Data <http://www.springsource.org/spring-data>`_
  	* Logging with SLF4J (`manual <http://www.slf4j.org/manual.html>`_) and Logback (`manual <http://logback.qos.ch/manual/index.html>`_)
@@ -18,7 +19,7 @@ It provides the following modules :
 	* **resthub-archetypes** : project templates (WAR or multi-module layout) to start quickly a new project
 	* **resthub-jpa** : support for JPA based persistence based on Spring Data, including embedded H2 database for testing
 	* **resthub-mongodb** : support for MongoDB based on Spring Data
-	* **resthub-test** : testing stack based on TestNG, Mockito and Fest Asert 2
+	* **resthub-test** : testing stack based on TestNG, Mockito and Fest Assert 2
 	* **resthub-web-server** : generic REST webservices support based on Spring MVC 3.1 including exception mapping to HTTP status codes
 	* **resthub-web-client** : simple to use HTTP client based on AyncHttpClient
 
@@ -27,7 +28,7 @@ The whole RESThub 2.0 Spring stack `Javadoc <http://jenkins.pullrequest.org/job/
 Bootstrap your project
 ======================
 
-Java 7 and Maven 3 should be installed on your computer. RESThub based application are usually developed thanks to a Java IDE like Eclipse, Netbeans or IntelliJ IDEA. If you don't know which IDE to chose, `Netbeans <http://netbeans.org/>`_ is recommended since it is free and has great Maven support and Java/Javascript capabilities.
+Java and Maven 3 should be installed on your computer. RESThub based applications are usually developed thanks to a Java IDE like Eclipse, Netbeans or IntelliJ IDEA. If you don't know which IDE to choose, `Netbeans <http://netbeans.org/>`_ is recommended since it is free and has great Maven support and Java/Javascript capabilities.
 
 The easiest way to start is to use RESThub archetypes to create your first web application. Just open a command line terminal, and type :
 
@@ -40,8 +41,8 @@ You will have to choose between the following RESThub archetypes :
 	* **resthub-mongodb-webservice-archetype** : simple webservice project with MongoDB persistence
 	* **resthub-jpa-backbonejs-archetype** : simple HTML5 web application with JPA persistence
 	* **resthub-mongodb-backbonejs-archetype** : simple HTML5 web application with MongoDB persistence
-	* **resthub-jpa-backbonejs-multimodules-archetype** : Multimodules HTML5 web application with JPA persistence (TODO)
-	* **resthub-mongodb-backbonejs-multimodules-archetype** : Multimodules HTML5 web application with MongoDB persistence (TODO)
+	* **resthub-jpa-backbonejs-multi-archetype** : Multimodules HTML5 web application with JPA persistence
+	* **resthub-mongodb-backbonejs-multi-archetype** : Multimodules HTML5 web application with MongoDB persistence
  
 After choosing the right archetype and answering a few questions, your project is generated and ready to use.
 You can run it thanks to built-in Jetty support :
@@ -50,33 +51,37 @@ You can run it thanks to built-in Jetty support :
 
 	mvn jetty:run
 
+Tutorial
+========
+
+You should follow `RESThub Spring Stack tutorial <tutorial/spring.html>`_ (solution provided at the end) in order to learn step by step how to use it.
+
 Project layout
 ==============
 
 Let's take a look at a typical RESThub based application...
 
 RESThub stack based projects follow the "Maven standard" project layout :
-	* /pom.xml : the Maven configuration file which defines dependencies, plugins, etc.
-	* /src/main/java : your java classes go there
-	* /src/main/java/**/WebAppConfigurer.java : your Spring Java Config based configuration class, with your bean declaration (replace your old applicationContext.xml file)
-	* /src/main/java/**/WebAppInitializer.java : Java based WebApp configuration (replace your old web.xml file)
+	* /pom.xml: the Maven configuration file which defines dependencies, plugins, etc.
+	* /src/main/java: your java classes go there
+	* /src/main/java/\*\*/WebAppInitializer.java: Java based WebApp configuration (replaces your old web.xml file)
 	* /src/main/resources : your xml and properties files go there
-	* /src/main/resources/applicationContext.xml : used only for configuration not possible with Spring Java Config, for example Spring Security configuration
-	* /src/main/webapp : your HTML, CSS and javascript files go there
+	* /src/main/resources/applicationContext.xml: this is your Spring application configuration file. Since we mainly use annotation based configuration, 
+	* /src/main/webapp: your HTML, CSS and javascript files go there
  
 RESThub based applications usually use one of these 2 layouts :
 	* A single WAR project, usually for demo or small projects
  	* A multi-module project with the following sub-modules :
- 		* myproject-webapp (WAR) : it is your web application, it contains static resources, environement specific configuration and it declares dependencies to other modules in the pom.xml
+ 		* myproject-webapp (WAR) : it is your web application, it contains static resources, environment specific configuration and it declares dependencies to other modules in the pom.xml
  		* myproject-contract (JAR) : contains your POJOs (Entities, DTO ...) and service interface. This module should be used by web client or RPC mechanism to know the public classes and interfaces of your application without retreiving all the implementation dependencies. As a consequence, if you need to add some implementation dependencies (usually needed for annotations), add them as optional Maven dependencies.
  		* myproject-core (JAR) : your project implementation (controllers, service implementations, repositories)
  		* myproject-client (JAR) : optional REST client that should implement controller interface with an implementation based on resthub-web-client and myproject-contract.
 
-Check the `RESThub 2 Todo example application <https://github.com/resthub/todo-example>`_ source code  in order to learn how to design your RESThub based web application.
+Check the `RESThub 2 Todo example application <https://github.com/resthub/todo-example>`_ source code to learn how to design your RESThub based web application.
  
-In order to test and run it :
+How to run the todo application :
  * Download the `zip file <https://github.com/resthub/todo-example/zipball/master>`_ and extract it
- * Install `MongoDB <http://www.mongodb.org/downloads>`_, create teh data folder (C:\data\db by default) and run mondgod
+ * Install `MongoDB <http://www.mongodb.org/downloads>`_, create the data folder (C:\data\db by default) and run mondgod
  * Run mvn jetty:run in the todo-example directory
  * Open your browser and browse http://localhost:8080/index.html
 
@@ -88,8 +93,8 @@ You will find below the typical configuration file for your application.
 Maven
 ~~~~~
 
-Your project pom.xml defines your project names, version, dependencies and plugins used.
-Please notice that it is easier to let RESThub archetypes create the pom.xml automatically for your ...
+Your project pom.xml defines your project name, version, dependencies and plugins used.
+Please notice that it is easier to let RESThub archetypes create the pom.xml automatically for you.
 
 pom.xml example :
 
@@ -108,8 +113,8 @@ pom.xml example :
 		<name>My project</name>
 
 		<properties>
-			<resthub.spring.stack.version>2.0-rc2</resthub.spring.stack.version>
-			<resthub.backbone.stack.version>2.0-rc2</resthub.backbone.stack.version>
+			<resthub.spring.stack.version>2.0-rc4</resthub.spring.stack.version>
+			<resthub.backbone.stack.version>2.0-rc4</resthub.backbone.stack.version>
 		</properties>
 
 		<dependencies>
@@ -192,45 +197,45 @@ pom.xml example :
 
 	</project>
 
-RESThub dependencies availables are the following
+The available RESThub dependencies are the following
 
 .. code-block:: xml
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.0-rc4</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.0-rc4</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.0-rc4</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.0-rc4</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.0-rc4</version>
         <scope>test</scope>
     </dependency>
 
 Web application initializer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Web application initializer replace the old web.xml file used with Servlet 2.5 or older webapps. It has the same goal, but since it is Java based, it is safer (compiltion check, autocomplete).
+Web application initializer replaces the old web.xml file used with Servlet 2.5 or older webapps. It has the same goal, but since it is Java based, it is safer (compilation check, autocomplete).
 
 WebAppInitializer.java example :
 
@@ -240,11 +245,10 @@ WebAppInitializer.java example :
 
 	    @Override
 	    public void onStartup(ServletContext servletContext) throws ServletException {
-	        AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
-	        appContext.getEnvironment().setActiveProfiles("resthub-mongodb", "resthub-web-server");
-
-	        // Scan the todo package
-	        appContext.scan("todo");
+	       	XmlWebApplicationContext appContext = new XmlWebApplicationContext();
+	        appContext.getEnvironment().setActiveProfiles("resthub-jpa", "resthub-web-server");
+	        String[] locations = { "classpath*:resthubContext.xml", "classpath*:applicationContext.xml" };
+	        appContext.setConfigLocations(locations);
 
 	        ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(appContext));
 	        dispatcher.setLoadOnStartup(1);
@@ -257,27 +261,27 @@ WebAppInitializer.java example :
 Spring profiles
 ~~~~~~~~~~~~~~~
 
-RESThub 2 uses `Spring 3.1 profiles <http://blog.springsource.com/2011/02/14/spring-3-1-m1-introducing-profile/>`_ to let you activate or not each module. It allows you to add Maven dependencies for example on resthub-jpa and resthub-web-server and let you control when you activate these modules. It is especialy usefull when running unit tests, if you test your service layer, you may not need to activate resthub-web-server module.
+RESThub 2 uses `Spring 3.1 profiles <http://blog.springsource.com/2011/02/14/spring-3-1-m1-introducing-profile/>`_ to let you activate or not each module. It allows you to add Maven dependencies for example on resthub-jpa and resthub-web-server and let you control when you activate these modules. It is especially useful when running unit tests: when testing your service layer, you may not need to activate the resthub-web-server module.
 
 You can also use Spring profile for your own application Spring configuration.
 
-Profile activation on your webapp is done very early in the application lifecycle, and is done in your Web application initializer (Java equivalent of the web.xml) described just before. Just provide the list of profile to activate in the onStartup() method:
+Profile activation on your webapp is done very early in the application lifecycle, and is done in your Web application initializer (Java equivalent of the web.xml) described just before. Just provide the list of profiles to activate in the onStartup() method:
 
 .. code-block:: java
 
-	AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
+	XmlWebApplicationContext appContext = new XmlWebApplicationContext();
 	appContext.getEnvironment().setActiveProfiles("resthub-mongodb", "resthub-web-server");
 
-In your tests, you should use @ActiveProfiles annotation to activate the profiles you need :
+In your tests, you should use the @ActiveProfiles annotation to activate the profiles you need:
 
 .. code-block:: java
 
-	@ActiveProfiles("resthub-jpa"}) // or @ActiveProfiles({"resthub-jpa","resthub-web-server"})
+	@ActiveProfiles("resthub-jpa") // or @ActiveProfiles({"resthub-jpa","resthub-web-server"})
 	public class SampleTest extends AbstractTransactionalTest {
 
 	}
 
-RESThub web tests provides you a helper to activate profiles too:
+RESThub web tests comes with a helper to activate profiles too:
 
 .. code-block:: java
 
@@ -289,37 +293,36 @@ RESThub web tests provides you a helper to activate profiles too:
 	    }
 	}
 
-RESThub builtin Spring profiles have the same name than their matching module :
-	* resthub-jpa
-	* resthub-mongodb
-	* resthub-web-server
+RESThub built-in Spring profiles have the same name than their matching module :
+	* resthub-jpa : enable JPA database support (resthub-jpa dependency needed)
+	* resthub-mongodb : enable MongoDB support (resthub-mongodb dependency needed)
+	* resthub-web-server : enable default web server configuration (resthub-web-server dependency needed)
+    * resthub-client-logging : enable a webservice use to send logs from client to server (resthub-web-server dependency needed)
 
 Spring based configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Since Spring 3.1, we can use Java based Spring configuration instead of applicationContext.xml in order to configure your Spring application beans. It is still possible to use applicationContext.xml, but your should prefer Java Config since it is safer (compilation check) and easier to use (autocomplete).
+By default RESThub webservices and unit tests scan and automatically include all resthubContext.xml (RESThub context files) and applicationContext.xml files (your application context files) available in your application classpath, including its dependencies.
 
-WebAppConfigurer.java example :
+Here is an example of a typical RESThub based src/main/resources/applicationContext.xml (this one uses JPA, you may adapt it if you use MongoDB) :
 
-.. code-block:: java
+.. code-block:: xml
 
-	@Configuration
-	@EnableMongoRepositories("todo")
-	@ImportResource({"classpath*:resthubContext.xml", "classpath*:applicationContext.xml"})
-	public class WebAppConfigurer {
+	<beans xmlns="http://www.springframework.org/schema/beans"
+	       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	       xmlns:context="http://www.springframework.org/schema/context"
+	       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                           http://www.springframework.org/schema/beans/spring-beans.xsd
+	                           http://www.springframework.org/schema/context 
+	                           http://www.springframework.org/schema/context/spring-context.xsd
+	                           http://www.springframework.org/schema/data/jpa 
+	                           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-		@Bean
-		public Service service() {
-			return new ServiceImpl(repository());
-		}
-
-	}
-
-Usually, your beans will be annotation based (declared with @Named annotation) and automatically scanned, so service bean injection is just declared here to show you the syntax.
-
-RESThub own application contexts are declared in resthubContext.xml files, and if you need some, you should use applicationContext.xml files for your application. As said before, it is better to use Spring Java Config when possible.
-
-It is a good practice to always prefix the filename by "classpath*:"" in order to enable scanning in all the classpaths of your applications.
+	    <context:component-scan base-package="org.mycompany.myproject" />
+	    <jpa:repositories base-package="org.mycompany.myproject.repository" />
+	    
+	</beans>
 
 logback.xml
 ~~~~~~~~~~~
@@ -434,14 +437,14 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.0-rc4</version>
     </dependency>
 
-In order to import `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-jpa/src/main/resources/resthubContext.xml>`_, your should activate the resthub-jpa Spring profile in your WebAppInitializer class:
+In order to import its `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-jpa/src/main/resources/resthubContext.xml>`_, your should activate the resthub-jpa Spring profile in your WebAppInitializer class:
 
 .. code-block:: java
 
-    AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
+    XmlWebApplicationContext appContext = new XmlWebApplicationContext();
 	appContext.getEnvironment().setActiveProfiles("resthub-jpa", "resthub-web-server");
 
 Spring 3.1 allows to scan entities in different modules using the same PersitenceUnit, which is not possible with default JPA behaviour. You have to specify the packages where Spring should scan your entities by creating a database.properties file in your resources folder, with the following content :
@@ -454,22 +457,26 @@ Spring 3.1 allows to scan entities in different modules using the same Persitenc
 Now, entities within the com.myproject.model packages will be scanned, no need for persistence.xml JPA file.
 
 
-You also need to add an @EnableJpaRepositories annotation to your WebAppConfigurer class:
+You also need to add an applicationContext.xml file in order to scan your repository package.
 
-.. code-block:: java
+.. code-block:: xml
 
-	@Configuration
-	@EnableJpaRepositories("com.myproject.repository")
-	@ImportResource({"classpath*:resthubContext.xml", "classpath*:applicationContext.xml"})
-	public class WebAppConfigurer {
+	<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/data/jpa
+                           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-	}
+	    <jpa:repositories base-package="com.myproject.repository" />
 
-You can customize default configuration by adding a database.properties resource with one or more of the following keys customized with your values. You should include only the customized ones.
+	</beans>
+
+You can customize the default configuration by adding a database.properties resource with one or more of the following keys customized with your values. You should include only the customized ones.
 
 REShub JPA default properties are :
 	* dataSource.driverClassName = org.h2.Driver
-	* dataSource.url = jdbc:h2:mem:resthub;DB_CLOSE_DELAY=-1
+	* dataSource.url = jdbc:h2:mem:resthub;DB_CLOSE_DELAY=-1;MVCC=TRUE
 	* dataSource.maxActive = 50
 	* dataSource.maxWait = 1000
 	* dataSource.poolPreparedStatements = true
@@ -487,14 +494,13 @@ REShub Hibernate default properties are :
 	* hibernate.id.new_generator_mappings = true
 	* persistenceUnit.packagesToScan = 
 
- If you need to do more advanced configuration, just override dataSource and entityManagerFactory beans in your Spring Java Config or applicationContext.xml.
+ If you need to do more advanced configuration, just override dataSource and entityManagerFactory beans in your applicationContext.xml.
 
 Usage
 -----
 
 .. code-block:: java
 
-	@Repository
 	public interface TodoRepository extends JpaRepository<Todo, String> {
 	    
 	    List<Todo> findByContentLike(String content);
@@ -504,7 +510,7 @@ Usage
 Console
 -------
 
-H2 console allows you to provide a SQL requester for your embeded default H2 database. It is included by default in JPA archetypes.
+H2 console allows you to provide a SQL requester for your embedded default H2 database. It is included by default in JPA archetypes.
 
 In order to add it to your JPA based application, add these lines to your WebAppInitializer class : 
 
@@ -538,26 +544,31 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.0-rc4</version>
     </dependency>
 
-In order to import `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-mongodb/src/main/resources/resthubContext.xml>`_, your should activate the resthub-mongodb Spring profile in your WebAppInitializer class:
+In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-mongodb/src/main/resources/resthubContext.xml>`_, your should activate the resthub-mongodb Spring profile in your WebAppInitializer class:
 
 .. code-block:: java
 
-    AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
+    XmlWebApplicationContext appContext = new XmlWebApplicationContext();
 	appContext.getEnvironment().setActiveProfiles("resthub-mongodb", "resthub-web-server");
 
-You also need to add an @EnableMongoRepositories annotation to your WebAppConfigurer class:
+You also need to add an applicationContext.xml file in order to scan your repository package.
 
-.. code-block:: java
+.. code-block:: xml
 
-	@Configuration
-	@EnableMongoRepositories("com.myproject.repository")
-	@ImportResource({"classpath*:resthubContext.xml", "classpath*:applicationContext.xml"})
-	public class WebAppConfigurer {
+	<beans xmlns="http://www.springframework.org/schema/beans"
+	       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                           http://www.springframework.org/schema/beans/spring-beans.xsd
+	                           http://www.springframework.org/schema/data/mongo
+	                           http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
 
-	}
+	        <mongo:repositories base-package="com.myproject.repository" />
+
+	</beans>
 
 You can customize them by adding a database.properties resource with one or more following keys customized with your values. You should include only the customized ones.
 
@@ -584,7 +595,6 @@ Usage
 
 .. code-block:: java
 
-	@Repository
 	public interface TodoRepository extends MongoRepository<Todo, String> {
 	    
 	    List<Todo> findByContentLike(String content);
@@ -594,7 +604,7 @@ Usage
 Web common
 ==========
 
-RESThub Web Common comes with built-in XML and JSON support for serialization based on `Jackson 2.1 <http://wiki.fasterxml.com/JacksonHome>`_. RESThub uses `Jackson 2.1 XML capabilities <https://github.com/FasterXML/jackson-dataformat-xml>`_ instead of JAXB since it is more flexible. For example, you don't need to add classes you need to a context. Please read `Jackson annotation guide <http://wiki.fasterxml.com/JacksonAnnotations>`_ for details about configuration capabilities.
+RESThub Web Common comes with built-in XML and JSON support for serialization based on `Jackson 2.1 <http://wiki.fasterxml.com/JacksonHome>`_. RESThub uses `Jackson 2.1 XML capabilities <https://github.com/FasterXML/jackson-dataformat-xml>`_ instead of JAXB since it is more flexible. For example, you don't need to add classes to a context. Please read `Jackson annotation guide <http://wiki.fasterxml.com/JacksonAnnotations>`_ for details about configuration capabilities.
 
 Maven dependency
 ----------------
@@ -606,7 +616,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-common</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.0-rc4</version>
     </dependency>
 
 Usage
@@ -627,11 +637,11 @@ Web server
 
 RESThub Web Server module is designed for REST webservices development. Both JSON (default) and XML serialization are supported out of the box.
 
-**Warning**: currently Jackson XML dataformat does not support non wrapped List serialization. As a consequence, the findAll (GET /) method is not supported for XML content type yet. `You can follow the related Jackson issue on GitHub <https://github.com/FasterXML/jackson-dataformat-xml/issues/38>`_.
+**Warning**: currently Jackson XML dataformat does not support non wrapped List serialization. As a consequence, the findAll (GET /) method is not supported for XML content-type yet. `You can follow the related Jackson issue on GitHub <https://github.com/FasterXML/jackson-dataformat-xml/issues/38>`_.
 
 It provides some abstract REST controller classes, and includes the following dependencies :
 	* Spring MVC 3.1 (`reference manual <http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html/mvc.html>`_)
-	* Jackson 2.2 (`documentation <http://wiki.fasterxml.com/JacksonDocumentation>`_)
+	* Jackson 2.1 (`documentation <http://wiki.fasterxml.com/JacksonDocumentation>`_)
 
 RESThub exception resolver allow to map common exceptions (Spring, JPA) to the right HTTP status codes :
 	 * IllegalArgumentException -> 400
@@ -651,20 +661,22 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.0-rc4</version>
     </dependency>
 
-In order to import `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-web/resthub-web-server/src/main/resources/resthubContext.xml>`_, your should activate the resthub-web-server Spring profile in your WebAppInitializer class:
+In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-web/resthub-web-server/src/main/resources/resthubContext.xml>`_, your should activate the resthub-web-server Spring profile in your WebAppInitializer class:
 
 .. code-block:: java
 
-    AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
+    XmlWebApplicationContext appContext = new XmlWebApplicationContext();
 	appContext.getEnvironment().setActiveProfiles("resthub-web-server", "resthub-mongodb");
 
 Usage
 -----
 
-RESThub comes with a REST controller that allows you to create a CRUD webservice in a few lines. You have the choice to use 2 layers (Controller -> Repository) or 3 layers (Controller -> Service -> Repository) software design :
+RESThub comes with a REST controller that allows you to create a CRUD webservice in a few lines. You have the choice to use a 2 layers (Controller -> Repository) or 3 layers (Controller -> Service -> Repository) software design.
+
+You can  find more details about these generic webservices, including their REST API description, on RESThub `Javadoc <http://jenkins.pullrequest.org/job/resthub-spring-stack-master/javadoc/>`_.
 
 **2 layers software design**
 
@@ -676,11 +688,6 @@ RESThub comes with a REST controller that allows you to create a CRUD webservice
 	    @Override @Inject
 	    public void setRepository(WebSampleResourceRepository repository) {
 	        this.repository = repository;
-	    }
-
-	    @Override
-	    public Long getIdFromResource(Sample resource) {
-	        return resource.getId();
 	    }
 
 	}
@@ -709,7 +716,7 @@ RESThub comes with a REST controller that allows you to create a CRUD webservice
 	    }
 	}
 
-By default, generic controler use the database identifier (table primary key for JPA on MongoDB ID) in URL to identify a resource. You could change these behaviour by overriding controller implementation to use the field you want. For example, this is common to use a human readable identifier called reference or slug to identify a resource. You can do that with generic repositories only by overriding findById() controller method :
+By default, generic controller use the database identifier (table primary key for JPA on MongoDB ID) in URLs to identify a resource. You can change this behaviour by overriding controller implementations to use the field you want. For example, this is common to use a human readable identifier called reference or slug to identify a resource. You can do that with generic repositories only by overriding findById() controller method :
 
 .. code-block:: java
 
@@ -735,6 +742,28 @@ By default, generic controler use the database identifier (table primary key for
 With default behaviour we have URL like GET /sample/32.
 With sluggable behaviour we have URL lke GET /sample/niceref.
 
+.. warning::
+
+	Be aware that when you override a Spring MVC controller method, your new method automatically reuse method level annotations from parent classes, but not parameter level annotations. That's why you need to specify parameters annotations again in order to make it work, like in the previous code sample.
+
+Client logging
+--------------
+
+In order to make JS client application debugging easier, RESThub provides a webservice used to send client logs to the server. In order to activate it, you should enable the **resthub-webserver-logging** Spring profile.
+
+POST api/log webservice expect this kind of body :
+
+.. code-block:: javascript
+
+    {"level":"warn","message":"log message","time":"2012-11-13T08:18:52.972Z"}
+
+POST api/logs webservice expect this kind of body :
+
+.. code-block:: javascript
+
+    [{"level":"warn","message":"log message 1","time":"2012-11-13T08:18:53.342Z"},
+    {"level":"info","message":"log message 1","time":"2012-11-13T08:18:52.972Z"}]
+
 Web client
 ==========
 
@@ -754,7 +783,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.0-rc4</version>
     </dependency>
 
 Usage
@@ -772,7 +801,7 @@ You can use resthub web client in a synchronous or asynchronous way. The synchro
 		Page<Sample> p = httpClient.url("http//...").jsonGet().resource(new TypeReference<Page<Sample>>() {});
 
 
-Asynchronous API is quite the same, every Http request returns a `Future <http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html>`_ <Response> object. Just call get() on this object in order to make the call synchronous.
+Asynchronous API is quite the same, every HTTP request returns a `Future <http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html>`_ <Response> object. Just call get() on this object in order to make the call synchronous.
 The ``Future.get()`` method can throw Exceptions, so the method call should be surrounded by a try/catch or let the exceptions bubble up.
 
 .. code-block:: java
@@ -803,7 +832,7 @@ Here is an example of a simple OAuth2 support
     Client httpClient = new Client().setOAuth2(username, password, accessTokenUrl, clientId, clientSecret);
     String result = httpClient.url("http://.../api/sample").get().getBody();
 
-You can also configure a specific OAuth2 configuration. For example, you can override the HTTP Header
+You can also use a specific OAuth2 configuration. For example, you can override the HTTP Header
 used to send the OAuth token.
 
 .. code-block:: java
@@ -823,7 +852,7 @@ Testing
 	
 The following test stack is included in the RESThub test module :
 	* Test framework with `TestNG <http://testng.org/doc/documentation-main.html>`_. If you use Eclipse, don't forget to install the `TestNG plugin <http://testng.org/doc/eclipse.html>`_.
-	* Assertion with `Fest Assert 2 <https://github.com/alexruiz/fest-assert-2.x/wiki>`_
+	* Assertion with `Fest Assert 2 <https://github.com/alexruiz/fest-assert-2.0-rc4/wiki>`_
 	* Mock with `Mockito <http://code.google.com/p/mockito/>`_
 
 RESThub also provides generic classes in order to make testing easier.
@@ -841,14 +870,14 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.0-rc2</version>
+        <version>2.0-rc4</version>
         <scope>test</scope>
     </dependency>
 
 Data provisioning and cleanup
 ------------------------------
 
-It is recommended to initialize and cleanup test data shared by your tests using methods annotated with TestNG's @BeforeMethod and @AfterMethod and using your repository or service classess.
+It is recommended to initialize and cleanup test data shared by your tests using methods annotated with TestNG's @BeforeMethod and @AfterMethod and using your repository or service classes.
 
 **Warning:** : with JPA the default deleteAll() method does not manage cascade delete, so for your data cleanup you should use the following code in order to get your entities removed with cascade delete support:
 
@@ -925,5 +954,5 @@ A sample assertion
 Spring MVC Router
 =================
 
-Spring MVC Router adds route mapping capacity to any "Spring MVC based" webapp à la PlayFramework or Ruby on Rails. For more details, check its `detailed documentation <https://github.com/resthub/springmvc-router>`_.
+Spring MVC Router adds route mapping capacity to any "Spring MVC based" webapp à la PlayFramework or Ruby on Rails. For more details, check its `detailed documentation <http://resthub.github.com/springmvc-router/>`_.
 

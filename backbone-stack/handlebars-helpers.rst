@@ -240,3 +240,55 @@ will produce:
 .. code-block:: html
 
    <span>10 is even</span>
+
+formatDate
+++++++++++
+
+This helper provides a date formatting tool.
+The date will be parsed with the inputPattern and then formatted with the outputPattern.
+
+Parameters are :
+
+ - date : the date to parse and format
+ - outputPattern : the pattern used to display the date (optional)
+ - inputPattern : the pattern used to parse the date (optional)
+
+inputPattern and outputPattern are optionals : the default pattern is 'YYYY-MM-DD HH:mm:ss'
+
+Full documentation about date format can be found `here <http://momentjs.com/docs/#/displaying/format/>`_.
+
+e.g:
+
+.. code-block:: html
+
+   <span>{{formatDate myDate pattern}}</span>
+
+with the following context:
+
+.. code-block:: javascript
+
+   { myDate: new Date(), pattern: '[today] MM/DD/YYYY' }
+   
+will produce:
+
+.. code-block:: html
+
+   <span>today 10/24/2012</span>
+
+and:
+
+.. code-block:: html
+
+   <span>{{formatDate myDate outputPattern inputPattern}}</span>
+
+with the following context:
+
+.. code-block:: javascript
+
+   { myDate: '2012/17/02 11h32', inputPattern: 'YYYY/DD/MM HH\\hmm', outputPattern: 'HH:mm, MM-DD-YYYY' }
+   
+will produce:
+
+.. code-block:: html
+
+   <span>11:32, 02-17-2012</span>
