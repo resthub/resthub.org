@@ -576,6 +576,8 @@ REShub MongoDB default properties are :
 	* database.dbname = resthub
 	* database.host = localhost
 	* database.port = 27017
+	* database.username =
+	* database.password =
 	* database.connectionsPerHost = 10
 	* database.threadsAllowedToBlockForConnectionMultiplier = 5
 	* database.connectTimeout = 0
