@@ -761,7 +761,7 @@ With sluggable behaviour we have URL lke GET /sample/niceref.
 Client logging
 --------------
 
-In order to make JS client application debugging easier, RESThub provides a webservice used to send client logs to the server. In order to activate it, you should enable the **resthub-webserver-logging** Spring profile.
+In order to make JS client application debugging easier, RESThub provides a webservice used to send client logs to the server. In order to activate it, you should enable the **resthub-client-logging** Spring profile.
 
 POST api/log webservice expect this kind of body :
 
