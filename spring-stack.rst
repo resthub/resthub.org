@@ -309,7 +309,7 @@ RESThub built-in Spring profiles have the same name than their matching module :
 	* resthub-jpa : enable JPA database support (resthub-jpa dependency needed)
 	* resthub-mongodb : enable MongoDB support (resthub-mongodb dependency needed)
 	* resthub-web-server : enable default web server configuration (resthub-web-server dependency needed)
-    * resthub-client-logging : enable a webservice use to send logs from client to server (resthub-web-server dependency needed)
+	* resthub-client-logging : enable a webservice use to send logs from client to server (resthub-web-server dependency needed)
 
 Spring based configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
