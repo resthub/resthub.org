@@ -61,6 +61,8 @@ Project layout
 Directories and filename conventions
 ------------------------------------
 
+Here is the typical RESThub Backbone.js stack based application directories and filename layout :
+
 .. code-block:: text
 
     /
@@ -71,11 +73,11 @@ Directories and filename conventions
     │   ├── bootstrap-responsive.css
     ├── template
     │   ├── project
-    │   │   ├── projects.html
-    │   │   └── project-edit.html
+    │   │   ├── projects.hbs
+    │   │   └── project-edit.hbs
     │   └── user
-    │       ├── users.html
-    │       └── user-edit.html
+    │       ├── users.hbs
+    │       └── user-edit.hbs
     ├── js
     │   ├── lib
     │   │   ├── async.js
@@ -86,22 +88,22 @@ Directories and filename conventions
     │   │       ├── backbone-validation-ext.js
     │   │       └── ...
     │   ├── model
-    │   │   ├── user.js
-    │   │   └── project.js
+    │   │   ├── user.js 				var User = Backbone.Model.extend(...); return User;
+    │   │   └── project.js 				var Project = Backbone.Model.extend(...); return Project;
     │   ├── collection
-    │   │   ├── users.js
-    │   │   └── projects.js
+    │   │   ├── users.js 				var Users = Backbone.Collection.extend(...); return Users;
+    │   │   └── projects.js 				var Projects = Backbone.Collection.extend(...); return Projects;
     │   ├── view
     │   │   ├── project
-    │   │   │   ├── projects-view.js
-    │   │   │   └── project-edit-view.js
+    │   │   │   ├── projects-view.js 			var ProjectsView = Resthub.View.extend(...); return ProjectsView;
+    │   │   │   └── project-edit-view.js 		var ProjectEditView = Resthub.View.extend(...); return ProjectEditView;
     │   │   └── user
-    │   │       ├── users-view.js
-    │   │       └── user-edit-view.js
+    │   │       ├── users-view.js 			var UsersView = Resthub.View.extend(...); return UsersView;
+    │   │       └── user-edit-view.js 			var UserEditView = Resthub.View.extend(...); return UserEditView;
     │   ├── router
-    │   │   └── app-router.js
+    │   │   └── app-router.js 				var AppRouter = Backbone.Router.extend(...); return AppRouter;               
     │   ├── app.js
-        └── main.js
+    │   └── main.js
     └── index.html
 
 index.html
@@ -232,10 +234,12 @@ Here's the default main.js file :
     // Load our app module and pass it to our definition function
     require(['app']);
 
-- **shim** config is part of `Require 2.0`_ and allows to `Configure the dependencies and exports for older, traditional "browser globals" scripts that do not use define() to declare the dependencies and set a module value`. See `<http://requirejs.org/docs/api.html#config-shim>`_ for more details.
-- **path** config is also part of Require_ and allows to define paths for libs not found directly under baseUrl. 
+**shim** config is part of `Require 2.0`_ and allows to `Configure the dependencies and exports for older, traditional "browser globals" scripts that do not use define() to declare the dependencies and set a module value`. See `<http://requirejs.org/docs/api.html#config-shim>`_ for more details.
+
+**path** config is also part of Require_ and allows to define paths for libs not found directly under baseUrl. 
   See `<http://requirejs.org/docs/api.html#config-paths>`_ for details.
-- RESThub suggests to **preload some libs** that will be used for sure as soon the app starts (dependencies required by Backbone itself and our template engine). This mechanism also allows us to load other linked libs transparently without having to define it repeatedly (e.g. ``underscore.string`` loading - this libs is strongly correlated to ``underscore`` - and merged with it and thus should not have to be defined anymore)
+
+RESThub suggests to **preload some libs** that will be used for sure as soon the app starts (dependencies required by Backbone itself and our template engine). This mechanism also allows us to load other linked libs transparently without having to define it repeatedly (e.g. ``underscore.string`` loading - this libs is strongly correlated to ``underscore`` - and merged with it and thus should not have to be defined anymore)
 
 app.js
 -------
@@ -251,16 +255,16 @@ Here's the default app.js file :
         // ...
     });
 
-Backbone.ResthubView
-====================
+Resthub.View
+============
 
-RESThub Backbone stack provides an enhanced Backbone View named Backbone.ResthubView with the following functionalities :
- * Default rendering implementation
- * $root attribute used to specify the container root element where the view should be attached (since $el is the view itself)
- * Default template attribute with context management
+RESThub Backbone stack provides an enhanced Backbone View named Resthub.View with the following functionalities :
+ * Default render() with root and context attributes
+ * Automatic view dispose + callbacks unbind when a view is removed from DOM
+ * View model population from a form
 
-$root attribute
----------------
+Default render() with root and context attributes
+-------------------------------------------------
 
 Backbone views contain an $el attribute that represents the element (a div by default) where the template will be rendered, but it does not provide an attribute that represents the DOM element in which the view will be attached.
 
@@ -276,12 +280,12 @@ In this example, we create the MyView view and attach it to the .container DOM e
 
     new MyView({root: '#container', collection: myCollection});
 
-RESThub provides a default implementation that will render your template with model, collection and labels in context if these properties are defined.
+RESThub provides a default implementation that will render your template with **model**, **collection** and **labels** as template attributes context if these properties are defined.
 
 .. code-block:: javascript
 
     define(['underscore', 'backbone', 'hbs!template/my'], function(_, Backbone, myTemplate){
-        var MyView = Backbone.ResthubView.extend({
+        var MyView = Resthub.View.extend({
             
             template: myTemplate,
             
@@ -316,7 +320,7 @@ After instantiation, ``this.$root`` contains a cached jQuery element and ``this.
 
 .. code-block:: javascript
 
-    var MyView = Backbone.ResthubView.extend({
+    var MyView = Resthub.View.extend({
             
         template: myTemplate,
         tagName:  'li',
@@ -328,12 +332,12 @@ You can customize the rendering context by defining a context property :
 
 .. code-block:: javascript
 
-    var MyView = Backbone.ResthubView.extend({
+    var MyView = Resthub.View.extend({
             
         template: myTemplate,
 
         context: {
-            messages: messages,
+            numberOfElemnts: 42,
             collection: this.collection
         }
        
@@ -343,9 +347,10 @@ Or by passing a function if you need dynamic context :
 
 .. code-block:: javascript
 
-    var MyView = Backbone.ResthubView.extend({
+    var MyView = Resthub.View.extend({
             
         template: myTemplate,
+        labels: myLabels,
         
         context: function() {
             var done = this.collection.done().length;
@@ -354,7 +359,7 @@ Or by passing a function if you need dynamic context :
                 total:      this.collection.length,
                 done:       done,
                 remaining:  remaining,
-                labels:   labels
+                labels:   this.labels
             };
     });
 
@@ -368,7 +373,7 @@ If you need to customize the render() function, you can replace or extend it. He
 
 .. code-block:: javascript
 
-    var MyView = Backbone.ResthubView.extend({
+    var MyView = Resthub.View.extend({
 
         render: function() {
             // Call super render function with the same arguments
@@ -389,50 +394,39 @@ If you need to customize the render() function, you can replace or extend it. He
 
 .. _backbone-dispose:
     
-Backbone dispose extension and automatic binding removal
---------------------------------------------------------
+Automatic view dispose + callbacks unbind
+-----------------------------------------
 
-``Backone.ResthubView`` now includes a ``dispose`` method that cleans all view, model and collection bindings to properly clean up a view.
-This method is called by another View method ``remove`` that also performs a jquery ``view.el`` DOM remove.
+``Resthub.View`` now includes a ``dispose`` function (antipated from Backbone.js master) that cleans all view, model and collection bindings to properly clean up a view. This method is called by another View method ``remove`` that also performs a jquery ``view.el`` DOM remove.
 
-RESThub provides three extensions related to this workflow:
+RESThub provides three extensions related to this functionnality:
 
-1. ``dispose`` extension to automatically unbind ``Backbone.Validation``:
-
-   When removing a view and, if ``Backbone.Validation`` is defined, you also have to unbind validation events that call ``validate``, ``preValidate`` and ``isValid`` methods.
+1- ``dispose`` extension to automatically unbind ``Backbone.Validation``: when removing a view and, if ``Backbone.Validation`` is defined, you also had to unbind validation events that call ``validate``, ``preValidate`` and ``isValid`` methods. **This is now automatically done for you by RESThub** in ``dispose``.
    
-   **This is now automatically done for you by RESThub** in ``dispose``.
-   
-2. Addition of an ``onDispose()`` method called on top of ``dispose``:
-
-   This method is empty by default but can be implemented to perform some additional actions (unbind, etc.) immediately
-   before the effective view disposal. You simply have to define such a method in your views:
-
-   .. code-block:: javascript
-
-      onDispose: function() {
-         // do something
-      }
-
-
-3. Automatic bind ``dispose`` call on element remove event:
-
-   The ``dispose`` method previously described is called by the ``remove`` Backbone_ view method. But this method still has to be manually called by users (for instance in your router).
-   
-   RESThub offers an extension to this mechanism that listens on any removal in the ``view.el`` DOM element and **automatically calls dispose on remove**. This means that you don't have to manage this workflow anymore and any replacement done in el parent will trigger a dispose call.
-   
-   i.e. : each time a jQuery ``.html(something)``, ``.remove()`` or ``.empty()`` is performed on view el parent or each time a ``remove()`` is done on the el itself, **the view will be properly destroyed**.
-
-Automatic population of view model from a form
-----------------------------------------------
-
-`Backbone Validation`_ provides some helpers to validate a model against constraints. Backbone_ defines some methods (such as ``save``) to validate a model and then save it on the server. But neither `Backbone Validation`_ nor Backbone_ allow to fill a model stored in a view with form values. 
-
-RESThub comes with a really simple (naive ?) ``Backbone.View`` extension that copies each input field of a given form in a model. This helper is a new View method called ``populateModel()``. This function has to be explicitely called (e.g. before a ``save()``):
+2- Addition of an ``onDispose()`` method called on top of ``dispose``: this method is empty by default but can be implemented to perform some additional actions (unbind, etc.) immediately before the effective view disposal. You simply have to define such a method in your views:
 
 .. code-block:: javascript
 
-   Backbone.ResthubView.extend({
+	onDispose: function() {
+		// do something
+	}
+
+3- Automatic bind ``dispose`` call on element remove event: the ``dispose`` method previously described is called by the ``remove`` Backbone_ view method. But this method still has to be manually called by users (for instance in your router).
+   
+RESThub offers an extension to this mechanism that listens on any removal in the ``view.el`` DOM element and **automatically calls dispose on remove**. This means that you don't have to manage this workflow anymore and any replacement done in el parent will trigger a dispose call.
+   
+i.e. : each time a jQuery ``.html(something)``, ``.remove()`` or ``.empty()`` is performed on view el parent or each time a ``remove()`` is done on the el itself, **the view will be properly destroyed**.
+
+View model population from a form
+---------------------------------
+
+`Backbone Validation`_ provides some helpers to validate a model against constraints. Backbone_ defines some methods (such as ``save``) to validate a model and then save it on the server. But neither `Backbone Validation`_ nor Backbone_ allow to fill a model stored in a view with form values. 
+
+RESThub comes with a really simple ``Backbone.View`` extension that copies each input field of a given form in a model. This helper is a new View method called ``populateModel()``. This function has to be explicitely called (e.g. before a ``save()``):
+
+.. code-block:: javascript
+
+   Resthub.View.extend({
 
       ...
    
@@ -863,37 +857,7 @@ If ``Backbone.history`` is started with the ``pushState`` option, **any click on
    <a data-bypass href="http://github.com/bmeurant/tournament-front" target="_blank">
 
 .. _backbone-form-helper:
-
-
     
-Cache buster
-============
-
-In order to avoid caching issues when updating your JS or HTML files, you should use the `urlArgs RequireJS attribute <http://requirejs.org/docs/api.html#config>`_. You can filter the ${buildNumber} with your build tool at each build.
-
-
-main.js:
-
-.. code-block:: javascript
-
-    require.config({
-        paths: {
-            // ...
-        },
-        urlArgs: 'appversion=${buildNumber}''
-    });
-
-main.js after filtering:
-
-.. code-block:: javascript
-
-    require.config({
-        paths: {
-            // ...
-        },
-        urlArgs: 'appversion=738792920293847'
-    });
-
 Internationalization
 ====================
 
@@ -1027,55 +991,6 @@ RESThub also provides a ``sprintf`` handlebars helper to use directly in your te
 
     {{#ifequals done 1}} {{messages.clearitem}} {{else}} {{sprintf messages.clearitems done}} {{/ifequals}}
 
-Inheritance
-===========
-
-As described by `k33g <https://twitter.com/#!/k33g_org>`_ on his `Gist Use Object Model of BackBone <https://gist.github.com/2287018>`_, it is possible to reuse Backbone.js extend() function in order to get simple inheritance in Javascript.
-
-.. code-block:: javascript
-
-    // Define an example Kind class
-    var Kind = function() {
-        this.initialize && this.initialize.apply(this, arguments);
-    };
-    Kind.extend = Backbone.Model.extend;
-
-    // Create a Human class by extending Kind
-    var Human = Kind.extend({
-        toString : function() { console.log("hello : ", this); },
-        initialize : function (name) {
-            console.log("human constructor");
-            this.name = name
-        }
-    });
-
-    // Call parent constructor
-    var SomeOne = Human.extend({
-        initialize : function(name){
-            SomeOne.__super__.initialize.call(this, name);
-        }
-    });
-
-    // Create an instance of Human class
-    var Bob = new Human("Bob");
-    Bob.toString();
-
-    // Create an instance of SomeOne class
-    var Sam = new SomeOne("Sam");
-    Sam.toString();
-
-    // Static members
-    var Human = Kind.extend({
-        toString : function() { console.log("hello : ", this); },
-        initialize : function (name) {
-            console.log("human constructor");
-            this.name = name
-        }
-    },{ //Static
-        counter : 0,
-        getCounter : function() { return this.counter; }
-    });
-
 Logging
 =======
 
@@ -1188,14 +1103,14 @@ Because of ``Bacbone.ResthubView`` and PubSub integration mechanisms (see below)
 
 .. warning::
 
-   Not following this convention does not have any impact on PubSub behaviour but prevents usage of integrated Backbone.ResthubView PubSub events declaration (see below)
+   Not following this convention does not have any impact on PubSub behaviour but prevents usage of integrated Resthub.View PubSub events declaration (see below)
 
 .. _pubsub-in-views:
    
 PubSub and Backbone Views integration
 -------------------------------------
 
-In order to facilitate global PubSub events in Backbone Views, RESThub provides some syntactic sugar in ``Backbone.ResthubView``.
+In order to facilitate global PubSub events in Backbone Views, RESThub provides some syntactic sugar in ``Resthub.View``.
 
 Backbone Views events hash parsing has been extended to be capable of declaring global PubSub events as it is already done for DOM events binding. To declare such global events in your Backbone View, you only have to add it in events hash:
 
@@ -1773,7 +1688,7 @@ Backbone way of declaring a static color variable :
 
 .. code-block:: javascript
 
-    var MyView = Backbone.ResthubView.extend({
+    var MyView = Resthub.View.extend({
 
         color : '#FF0000',
 
@@ -1789,7 +1704,7 @@ Backbone way of declaring an instance color variable :
 
 .. code-block:: javascript
 
-    var MyView = Backbone.ResthubView.extend({
+    var MyView = Resthub.View.extend({
 
         initialize: function(options) {
             this.$root = options.root;
@@ -1810,6 +1725,85 @@ Events
 ------
 
 Backbone default event list is available `here <http://backbonejs.org/#FAQ-events>`_.
+
+Inheritance
+-----------
+
+As described by `k33g <https://twitter.com/#!/k33g_org>`_ on his `Gist Use Object Model of BackBone <https://gist.github.com/2287018>`_, it is possible to reuse Backbone.js extend() function in order to get simple inheritance in Javascript.
+
+.. code-block:: javascript
+
+    // Define an example Kind class
+    var Kind = function() {
+        this.initialize && this.initialize.apply(this, arguments);
+    };
+    Kind.extend = Backbone.Model.extend;
+
+    // Create a Human class by extending Kind
+    var Human = Kind.extend({
+        toString : function() { console.log("hello : ", this); },
+        initialize : function (name) {
+            console.log("human constructor");
+            this.name = name
+        }
+    });
+
+    // Call parent constructor
+    var SomeOne = Human.extend({
+        initialize : function(name){
+            SomeOne.__super__.initialize.call(this, name);
+        }
+    });
+
+    // Create an instance of Human class
+    var Bob = new Human("Bob");
+    Bob.toString();
+
+    // Create an instance of SomeOne class
+    var Sam = new SomeOne("Sam");
+    Sam.toString();
+
+    // Static members
+    var Human = Kind.extend({
+        toString : function() { console.log("hello : ", this); },
+        initialize : function (name) {
+            console.log("human constructor");
+            this.name = name
+        }
+    },{ //Static
+        counter : 0,
+        getCounter : function() { return this.counter; }
+    });
+
+Cache buster
+------------
+
+In order to avoid caching issues when updating your JS or HTML files, you should use the `urlArgs RequireJS attribute <http://requirejs.org/docs/api.html#config>`_. You can filter the ${buildNumber} with your build tool at each build.
+
+
+main.js:
+
+.. code-block:: javascript
+
+    require.config({
+        paths: {
+            // ...
+        },
+        urlArgs: 'appversion=${buildNumber}''
+    });
+
+main.js after filtering:
+
+.. code-block:: javascript
+
+    require.config({
+        paths: {
+            // ...
+        },
+        urlArgs: 'appversion=738792920293847'
+    });
+
+
     
 .. _Require 2.0: http://requirejs.org
 .. _Require: http://requirejs.org
