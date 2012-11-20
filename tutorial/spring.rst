@@ -12,7 +12,7 @@ Problem description
 
 During this tutorial we'll illustrate resthub usage with a sample and simple REST interface to manage tasks. Its components are:
 
-.. image:: http://www.yuml.me/c57b8a61
+.. image:: ../_static/tutorial-class-diagram.png
 
 Our REST interface will be mainly able to expose services to:
 
