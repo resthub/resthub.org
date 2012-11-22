@@ -177,11 +177,11 @@ Find:
 Do:
 +++
 
-1. **Use Backbone.ResthubView for managing rendering in TaskView. Remove render method in TaskView and modify add method in TasksView to set root element**
+1. **Use Resthub.View for managing rendering in TaskView. Remove render method in TaskView and modify add method in TasksView to set root element**
         
 2. **Re-implement render to get back the fade effect by extending it calling parent function**
 
-3. **Use Backbone.ResthubView for managing rendering in TasksView. Call the parent render function.**
+3. **Use Resthub.View for managing rendering in TasksView. Call the parent render function.**
 
 4. **In the console try adding a Task: thanks to the effect we can see that only one more Task is rendered and not the entirely list**
 

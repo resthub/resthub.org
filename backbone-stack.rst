@@ -12,23 +12,23 @@ In addition to the existing librairies included in the stack, it provides additi
    :depth: 3
    
 The Backbone.js stack includes the following librairies :
-    * **jQuery 1.7** (`documentation <http://docs.jquery.com/Main_Page>`_)
-    * **Backbone.js 0.9.2** (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter 
+    * jQuery 1.7 (`documentation <http://docs.jquery.com/Main_Page>`_)
+    * Backbone.js 0.9.2 (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter 
       <http://documentcloud.github.com/backbone/docs/backbone-localstorage.html>`_
-    * **Underscore.js 1.3.3** (`documentation <http://documentcloud.github.com/underscore/>`_)
-    * **Underscore.String 2.0.0** (`documentation <https://github.com/epeli/underscore.string#readme>`_)
-    * **Require.js 2.0** with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins 
+    * Underscore.js 1.3.3 (`documentation <http://documentcloud.github.com/underscore/>`_)
+    * Underscore.String 2.0.0 (`documentation <https://github.com/epeli/underscore.string#readme>`_)
+    * Require.js 2.0 with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins 
       (`documentation <http://requirejs.org/docs/api.html>`_)
-    * **Handlebars 1.0** (`documentation <http://handlebarsjs.com>`_)
-    * A **console shim** for browsers that don't support it
-    * **Twitter Bootstrap 2.1** (`documentation <http://twitter.github.com/bootstrap/>`_) and its JS plugins
-    * **Form Validation:** `Backbone Validation`_
-    * **Parameters support on view routing:** `Backbone Query Parameters`_
-    * **Paginated lists:** `Backbone Paginator`_
-    * **Asynchronous calls:** Async_
-    * **Dispatching keyboard shortcuts:** Keymaster_
-    * **Get and set relations (one-to-one, one-to-many, many-to-one) for Backbone models:** `Backbone Relational`_
-    * **Parsing, validating, manipulating, and formatting dates:** `Moment`_
+    * Handlebars 1.0 (`documentation <http://handlebarsjs.com>`_)
+    * A console shim + client logging to server mechanism
+    * Twitter Bootstrap 2.1 (`documentation <http://twitter.github.com/bootstrap/>`_) and its JS plugins
+    * Form Validation: `Backbone Validation`_
+    * Parameters support on view routing: `Backbone Query Parameters`_
+    * Paginated lists: `Backbone Paginator`_
+    * Asynchronous calls: Async_
+    * Dispatching keyboard shortcuts: Keymaster_
+    * Get and set relations (one-to-one, one-to-many, many-to-one) for Backbone models: `Backbone Relational`_
+    * Parsing, validating, manipulating, and formatting dates: `Moment`_
 
 Before going deeper in the RESThub Backbone stack, you should read the great documentation `Developing Backbone.js Applications <http://addyosmani.github.com/backbone-fundamentals/>`_ by Addy Osmani, it is a great introduction to pure Backbone.js.
 
