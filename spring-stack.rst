@@ -49,8 +49,6 @@ The easiest way to start is to use RESThub archetypes to create your first web a
 	mvn archetype:generate -DarchetypeCatalog=http://nexus.pullrequest.org/content/repositories/releases/
 
 You will have to choose between the following RESThub archetypes :
-	* **resthub-jpa-webservice-archetype** : simple webservice project with JPA persistence
-	* **resthub-mongodb-webservice-archetype** : simple webservice project with MongoDB persistence
 	* **resthub-jpa-backbonejs-archetype** : simple HTML5 web application with JPA persistence
 	* **resthub-mongodb-backbonejs-archetype** : simple HTML5 web application with MongoDB persistence
 	* **resthub-jpa-backbonejs-multi-archetype** : Multimodules HTML5 web application with JPA persistence
@@ -66,7 +64,7 @@ You can run it thanks to built-in Jetty support :
 Tutorial
 ========
 
-You should follow `RESThub Spring Stack tutorial <tutorial/spring.html>`_ (solution provided at the end) in order to learn step by step how to use it.
+You should follow **`RESThub Spring Stack tutorial <tutorial/spring.html>`_** in order to learn step by step how to use it.
 
 Project layout
 ==============

@@ -53,7 +53,7 @@ The `Todo RESThub 2.0 example <http://github.com/resthub/todo-example>`_ project
 Tutorial
 ========
 
-You should follow `RESThub Backbone Stack tutorial <tutorial/backbone.html>`_ (solution provided at the end) in order to learn step by step how to use it.
+You should follow **`RESThub Backbone Stack tutorial <tutorial/backbone.html>`_**  in order to learn step by step how to use it.
 
 Project layout
 ==============
