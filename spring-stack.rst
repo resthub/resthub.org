@@ -28,6 +28,7 @@ The whole RESThub 2.0 Spring stack `Javadoc <http://jenkins.pullrequest.org/job/
 Changelog
 =========
 
+ * 2012-11-28 : RESThub Spring stack 2.0.0 GA has been released !
  * 2012-11-13 : RESThub Spring stack 2.0-rc4 has been released
  * 2012-10-24 : RESThub Spring stack 2.0-rc3 has been released
  * 2012-10-22 : `RESThub Spring stack 2.0-rc2 <https://github.com/resthub/resthub-spring-stack/issues?milestone=12&state=closed>`_ has been released
@@ -46,7 +47,7 @@ The easiest way to start is to use RESThub archetypes to create your first web a
 
 .. code-block:: bash
 
-	mvn archetype:generate -DarchetypeCatalog=http://nexus.pullrequest.org/content/repositories/releases/
+	mvn archetype:generate
 
 You will have to choose between the following RESThub archetypes :
 	* **resthub-jpa-backbonejs-archetype** : simple HTML5 web application with JPA persistence
@@ -64,7 +65,7 @@ You can run it thanks to built-in Jetty support :
 Tutorial
 ========
 
-You should follow **`RESThub Spring Stack tutorial <tutorial/spring.html>`_** in order to learn step by step how to use it.
+You should follow `RESThub Spring Stack tutorial <tutorial/spring.html>`_ in order to learn step by step how to use it.
 
 Project layout
 ==============
@@ -123,8 +124,7 @@ pom.xml example :
 		<name>My project</name>
 
 		<properties>
-			<resthub.spring.stack.version>2.0-rc4</resthub.spring.stack.version>
-			<resthub.backbone.stack.version>2.0-rc4</resthub.backbone.stack.version>
+			<resthub.spring.stack.version>2.0.0</resthub.spring.stack.version>
 		</properties>
 
 		<dependencies>
@@ -137,12 +137,6 @@ pom.xml example :
 				<groupId>org.resthub</groupId>
 				<artifactId>resthub-web-server</artifactId>
 				<version>${resthub.spring.stack.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.resthub</groupId>
-				<artifactId>resthub-backbone-stack</artifactId>
-				<version>${resthub.backbone.stack.version}</version>
-				<type>war</type>
 			</dependency>
 			<dependency>
 				<groupId>javax.servlet</groupId>
@@ -198,13 +192,6 @@ pom.xml example :
 			</plugins>
 		</build>
 
-		<repositories>
-			<repository>
-				<id>resthub</id>
-				<url>http://nexus.pullrequest.org/content/groups/resthub</url>
-			</repository>
-		</repositories>
-
 	</project>
 
 The available RESThub dependencies are the following
@@ -214,31 +201,31 @@ The available RESThub dependencies are the following
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.0-rc4</version>
+        <version>2.0.0</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.0-rc4</version>
+        <version>2.0.0</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.0-rc4</version>
+        <version>2.0.0</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.0-rc4</version>
+        <version>2.0.0</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.0-rc4</version>
+        <version>2.0.0</version>
         <scope>test</scope>
     </dependency>
 
@@ -447,7 +434,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.0-rc4</version>
+        <version>2.0.0</version>
     </dependency>
 
 In order to import its `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-jpa/src/main/resources/resthubContext.xml>`_, your should activate the resthub-jpa Spring profile in your WebAppInitializer class:
@@ -554,7 +541,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.0-rc4</version>
+        <version>2.0.0</version>
     </dependency>
 
 In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-mongodb/src/main/resources/resthubContext.xml>`_, your should activate the resthub-mongodb Spring profile in your WebAppInitializer class:
@@ -626,7 +613,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-common</artifactId>
-        <version>2.0-rc4</version>
+        <version>2.0.0</version>
     </dependency>
 
 Usage
@@ -671,7 +658,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.0-rc4</version>
+        <version>2.0.0</version>
     </dependency>
 
 In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-web/resthub-web-server/src/main/resources/resthubContext.xml>`_, your should activate the resthub-web-server Spring profile in your WebAppInitializer class:
@@ -793,7 +780,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.0-rc4</version>
+        <version>2.0.0</version>
     </dependency>
 
 Usage
@@ -826,8 +813,8 @@ The ``Future.get()`` method can throw Exceptions, so the method call should be s
 
 Because the remote web server sometimes responds 4xx (client error) and 5xx (server error) HTTP status codes, RESThub HTTP Client wraps those error statuses and throws `specific runtime exceptions <https://github.com/resthub/resthub-spring-stack/tree/master/resthub-web/resthub-web-common/src/main/java/org/resthub/web/exception>`_. 
 
-OAuth2.0 integration
---------------------
+OAuth 2.0 integration
+---------------------
 
 Here is an example of a simple OAuth2 support
 
@@ -862,13 +849,13 @@ Testing
 	
 The following test stack is included in the RESThub test module :
 	* Test framework with `TestNG <http://testng.org/doc/documentation-main.html>`_. If you use Eclipse, don't forget to install the `TestNG plugin <http://testng.org/doc/eclipse.html>`_.
-	* Assertion with `Fest Assert 2 <https://github.com/alexruiz/fest-assert-2.0-rc4/wiki>`_
+	* Assertion with `Fest Assert 2 <https://github.com/alexruiz/fest-assert-2.x/wiki>`_
 	* Mock with `Mockito <http://code.google.com/p/mockito/>`_
 
 RESThub also provides generic classes in order to make testing easier.
    * AbstractTest : base class for your non transactional Spring aware unit tests
    * AbstractTransactionalTest : base class for your transactional unit tests, preconfigured with Spring test framework
-   * AbstractWebTest : base class for your unit tests that need to run and embedded servlet container
+   * AbstractWebTest : base class for your unit tests that need to run and embedded servlet container.
 
 Maven dependency
 ----------------
@@ -880,7 +867,7 @@ In order to use it in your project, add the following snippet to your pom.xml :
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.0-rc4</version>
+        <version>2.0.0</version>
         <scope>test</scope>
     </dependency>
 
@@ -964,13 +951,10 @@ A sample assertion
 Integration test
 ----------------
 
-A good practice is to separate unit test from integration test.
-The unit tests are designed to test only a specific layer of your application. This,  ignoring other layers by mocking them (see `Mockito <http://code.google.com/p/mockito/>`_).
-The integration tests are designed to test all the layers of your application in real condition with complex scenarii.
+A good practice is to separate unit tests from integration tests. The unit tests are designed to test only a specific layer of your application, ignoring other layers by mocking them (see `Mockito <http://code.google.com/p/mockito/>`_). The integration tests are designed to test all the layers of your application in real condition with complex scenarii.
 
 Maven allow us to do this separation by introducing the integration-test phase.
 To use this phase, add the following snippet to your pom.xml :
-
 
 .. code-block:: xml
 
@@ -990,21 +974,15 @@ To use this phase, add the following snippet to your pom.xml :
 
 With this plugin, Maven will seek Java files matching "\*IT.java" in test directory. And run them during the integration-test phase.
 
-Now y have two option to run your application during this phase.
-
-By programation by embedded Jetty with your test.
-
-OR
-
-By configuration using Maven and the Jetty plugin.
+You have 2 way (mutually exclusives) for writing you integration tests. Both approaches have pros and cons, so choose the one that fit the best to your needs. In both case the test you write is not in a Spring context (Spring is runned in the embeded Jety server), so you should write your test using mainly RESThub web client (that does not ue Spring at all) and assertions.
 
 Option 1 - Use embedded Jetty
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Extend your test with AbstractWebTest (as the exemple above). This class will take care to run jetty.
-Jetty will run once for all test and will stop at the end of the JVM.
+Jetty will run once (by default) for all tests and will stop at the end of the JVM.
 
-Option 2 - Use maven jetty plugin
+Option 2 - Use Maven Jetty plugin
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Add the following snippet to the jetty configuration in your pom.xml :
@@ -1036,13 +1014,14 @@ Add the following snippet to the jetty configuration in your pom.xml :
                 </executions>
             </plugin>
 
-Now if you build the project, maven will run unit tests, then package the application, then run jetty, then run integration test en finaly stop jetty.
-With this option your integration tests are not linked with your application context. You only need to configure client.
-You can also run your application with jetty:run and run separately and manualy you integration test in your IDE. It's usefull to build quickly all your integration tests.
-
+Now if you build the project, maven will run unit tests, then package the application, then run jetty, then run integration test en finaly stop jetty. You can also run your application with jetty:run and run separately and manualy you integration test in your IDE. It's usefull to build quickly all your integration tests.
 
 Spring MVC Router
 =================
 
 Spring MVC Router adds route mapping capacity to any "Spring MVC based" webapp à la PlayFramework or Ruby on Rails. For more details, check its `detailed documentation <http://resthub.github.com/springmvc-router/>`_.
 
+AMQP/Hessian based RPC
+======================
+
+Spring AMQP Hessian is a high performance and easy to monitore RPC mechanism based on RabbitMQ client and Hessian. For more details, check its `detailed documentation <https://github.com/resthub/spring-amqp-hessian>`_.

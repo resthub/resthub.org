@@ -1,4 +1,1 @@
-resthub.org
-===========
-
-RESThub site and documentation
+[RESThub site and documentation](http://resthub.org/)
