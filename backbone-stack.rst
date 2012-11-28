@@ -24,6 +24,7 @@ The Backbone.js stack includes the following librairies :
     * Twitter Bootstrap 2.1 (`documentation <http://twitter.github.com/bootstrap/>`_) and its JS plugins
     * Form Validation: `Backbone Validation`_
     * Parameters support on view routing: `Backbone Query Parameters`_
+    * Datagrid: `Backbone Datagrid`_
     * Paginated lists: `Backbone Paginator`_
     * Asynchronous calls: Async_
     * Dispatching keyboard shortcuts: Keymaster_
@@ -157,43 +158,45 @@ Here's the default main.js file :
             },
             'underscore-string': {
                 deps: [
-                'underscore'
+                    'underscore'
                 ]
             },
             'handlebars-orig': {
                 exports: 'Handlebars'
             },
-            'backbone-orig': {
+            'backbone': {
                 deps: [
-                'underscore',
-                'underscore-string',
-                'jquery'
+                    'underscore',
+                    'underscore-string',
+                    'jquery'
                 ],
                 exports: 'Backbone'
             },
             'backbone-queryparams': {
                 deps: [
-                'backbone-orig',
-                'underscore'
+                    'backbone'
                 ]
+            },
+            'backbone-datagrid': {
+                deps: [
+                    'backbone'
+                ],
+                exports: 'Backbone.Datagrid'
             },
             'backbone-paginator': {
                 deps: [
-                'backbone-orig',
-                'underscore',
-                'jquery'
+                    'backbone'
                 ],
                 exports: 'Backbone.Paginator'
             },
             'bootstrap': {
                 deps: [
-                'jquery'
+                    'jquery'
                 ]
             },
             'backbone-relational': {
                 deps: [
-                'backbone-orig',  
-                'underscore'  
+                    'backbone'
                 ]
             },
             'keymaster': {
@@ -221,6 +224,7 @@ Here's the default main.js file :
             'handlebars-orig': 'lib/handlebars',
             'handlebars': 'lib/resthub/handlebars-helpers',
             'backbone-queryparams': 'lib/backbone-queryparams',
+            'backbone-datagrid': 'lib/backbone-datagrid',
             'backbone-paginator': 'lib/backbone-paginator',
             'backbone-relational': 'lib/backbone-relational',
             async: 'lib/async',
@@ -1347,6 +1351,34 @@ of these parameters**. It can then be passed to the view constructor for initial
        ..
    },
 
+Backbone Datagrid
+-----------------
+
+`Backbone Datagrid`_ is a powerful component, based on Backbone.View, that
+displays your Bakbone collections in a dynamic datagrid table. It is highly
+customizable and configurable with sensible defaults.
+
+You will find the full documentation on its `dedicated website <Backbone
+Datagrid>`_. Do not miss the examples listed on `this page
+<http://loicfrering.github.com/backbone.datagrid/examples/`_. Their sources are
+available in the `examples <https://github.com/loicfrering/backbone.datagrid/tree/master/examples/>`_
+directory of the repository.
+
+* Solar: a simple and complete example with an in memory collection of planets from the
+  Solar System.
+
+  * `Live version <http://loicfrering.github.com/backbone.datagrid/examples/solar.html>`_
+  * `Sources <https://github.com/loicfrering/backbone.datagrid/tree/master/examples/js/solar.js>`_
+
+* GitHub: an example with a collection connected to GitHub's REST API.
+
+  * `Live version <http://loicfrering.github.com/backbone.datagrid/examples/github.html>`_
+  * `Sources <https://github.com/loicfrering/backbone.datagrid/tree/master/examples/js/github.js>`_
+
+Note that the Backbone Datagrid handles pagination by itself and does not rely
+on Backbone Paginator which is described below and should only be used to
+paginate collections which are not displayed in a datagrid.
+
 Backbone Paginator
 ------------------
 
@@ -1810,6 +1842,7 @@ main.js after filtering:
 .. _Handlebars: http://handlebarsjs.com
 .. _Backbone Validation: http://github.com/thedersen/backbone.validation
 .. _Twitter Bootstrap: http://twitter.github.com/bootstrap/
+.. _Backbone Datagrid: http://loicfrering.github.com/backbone.datagrid/
 .. _Backbone Paginator: http://addyosmani.github.com/backbone.paginator/
 .. _Backbone Query Parameters: http://github.com/jhudson8/backbone-query-parameters
 .. _Async: http://github.com/caolan/async/
