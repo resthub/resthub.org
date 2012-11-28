@@ -1358,9 +1358,9 @@ Backbone Datagrid
 displays your Bakbone collections in a dynamic datagrid table. It is highly
 customizable and configurable with sensible defaults.
 
-You will find the full documentation on its `dedicated website <Backbone
-Datagrid>`_. Do not miss the examples listed on `this page
-<http://loicfrering.github.com/backbone.datagrid/examples/`_. Their sources are
+You will find the full documentation on its `dedicated website
+<http://loicfrering.github.com/backbone.datagrid/>`_. Do not miss the examples
+listed on `this page <http://loicfrering.github.com/backbone.datagrid/examples/>`_. Their sources are
 available in the `examples <https://github.com/loicfrering/backbone.datagrid/tree/master/examples/>`_
 directory of the repository.
 
