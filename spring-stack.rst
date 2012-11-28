@@ -5,7 +5,7 @@ Spring Stack
 RESThub 2 Spring stack provides a server side full stack and guidelines for building Java/Spring application (usually web application, but not only).
 
 .. contents::
-   :depth: 3
+   :depth: 4
 
 It provides a coherent stack based on :
 	* `Java <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ (at least JDK6, JDK7 recommended)
@@ -960,6 +960,86 @@ A sample assertion
 .. code-block:: java
 
 	Assertions.assertThat(result).contains("Albert");
+
+Integration test
+----------------
+
+A good practice is to separate unit test from integration test.
+The unit tests are designed to test only a specific layer of your application. This,  ignoring other layers by mocking them (see `Mockito <http://code.google.com/p/mockito/>`_).
+The integration tests are designed to test all the layers of your application in real condition with complex scenarii.
+
+Maven allow us to do this separation by introducing the integration-test phase.
+To use this phase, add the following snippet to your pom.xml :
+
+
+.. code-block:: xml
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>2.12.4</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>integration-test</goal>
+                        <goal>verify</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+With this plugin, Maven will seek Java files matching "\*IT.java" in test directory. And run them during the integration-test phase.
+
+Now y have two option to run your application during this phase.
+
+By programation by embedded Jetty with your test.
+
+OR
+
+By configuration using Maven and the Jetty plugin.
+
+Option 1 - Use embedded Jetty
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Extend your test with AbstractWebTest (as the exemple above). This class will take care to run jetty.
+Jetty will run once for all test and will stop at the end of the JVM.
+
+Option 2 - Use maven jetty plugin
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Add the following snippet to the jetty configuration in your pom.xml :
+
+.. code-block:: xml
+
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>start-jetty</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <scanIntervalSeconds>0</scanIntervalSeconds>
+                            <daemon>true</daemon>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop-jetty</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+Now if you build the project, maven will run unit tests, then package the application, then run jetty, then run integration test en finaly stop jetty.
+With this option your integration tests are not linked with your application context. You only need to configure client.
+You can also run your application with jetty:run and run separately and manualy you integration test in your IDE. It's usefull to build quickly all your integration tests.
+
 
 Spring MVC Router
 =================
