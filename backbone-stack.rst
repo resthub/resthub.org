@@ -1354,7 +1354,7 @@ Backbone Paginator
 (``Paginator.requestPager``). It includes management of filters, sorting, etc.
 
 Client side pagination
-**********************
+++++++++++++++++++++++
 
 This lib extends Backbone_ collections. So adding options to collections is necessary:
 
@@ -1427,7 +1427,7 @@ Once the collection retrieved, ``collection.info()`` allows to get information a
    endRecord
 
 Server side pagination
-**********************
+++++++++++++++++++++++
 
 Once client side pagination implemented, server adaptation is very easy:
 
