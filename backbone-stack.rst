@@ -36,6 +36,7 @@ Before going deeper in the RESThub Backbone stack, you should read the great doc
 Changelog
 =========
 
+ * 2012-11-28 : RESThub Backbone.js stack 2.0.0 GA has been released !
  * 2012-11-13 : RESThub Backbone.js stack 2.0-rc4 has been released
  * 2012-10-24 : RESThub Backbone.js stack 2.0-rc3 has been released
  * 2012-10-22 : `RESThub Backbone.js stack 2.0-rc2 <https://github.com/resthub/resthub-backbone-stack/issues?milestone=4&state=closed>`_ has been released
@@ -54,7 +55,7 @@ The `Todo RESThub 2.0 example <http://github.com/resthub/todo-example>`_ project
 Tutorial
 ========
 
-You should follow **`RESThub Backbone Stack tutorial <tutorial/backbone.html>`_**  in order to learn step by step how to use it.
+You should follow `RESThub Backbone Stack tutorial <tutorial/backbone.html>`_  in order to learn step by step how to use it.
 
 Project layout
 ==============
