@@ -5,7 +5,7 @@ Spring Stack
 RESThub 2 Spring stack provides a server side full stack and guidelines for building Java/Spring application (usually web application, but not only).
 
 .. contents::
-   :depth: 3
+   :depth: 4
 
 It provides a coherent stack based on :
 	* `Java <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ (at least JDK6, JDK7 recommended)
@@ -992,10 +992,22 @@ With this plugin, Maven will seek Java files matching "\*IT.java" in test direct
 
 Now y have two option to run your application during this phase.
 
-By programation by extending your integration test by AbstractWebTest (see above).
-Or by configuration using Maven and the jetty plugin.
+By programation by embedded Jetty with your test.
 
-For the second option add the following snippet to the jetty configuration in your pom.xml :
+OR
+
+By configuration using Maven and the Jetty plugin.
+
+Option 1 - Use embedded Jetty
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Extend your test with AbstractWebTest (as the exemple above). This class will take care to run jetty.
+Jetty will run once for all test and will stop at the end of the JVM.
+
+Option 2 - Use maven jetty plugin
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Add the following snippet to the jetty configuration in your pom.xml :
 
 .. code-block:: xml
 
