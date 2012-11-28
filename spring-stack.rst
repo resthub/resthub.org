@@ -961,6 +961,74 @@ A sample assertion
 
 	Assertions.assertThat(result).contains("Albert");
 
+Integration test
+----------------
+
+A good practice is to separate unit test from integration test.
+The unit tests are designed to test only a specific layer of your application. This,  ignoring other layers by mocking them (see `Mockito <http://code.google.com/p/mockito/>`_).
+The integration tests are designed to test all the layers of your application in real condition with complex scenarii.
+
+Maven allow us to do this separation by introducing the integration-test phase.
+To use this phase, add the following snippet to your pom.xml :
+
+
+.. code-block:: xml
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>2.12.4</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>integration-test</goal>
+                        <goal>verify</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+With this plugin, Maven will seek Java files matching "\*IT.java" in test directory. And run them during the integration-test phase.
+
+Now y have two option to run your application during this phase.
+
+By programation by extending your integration test by AbstractWebTest (see above).
+Or by configuration using Maven and the jetty plugin.
+
+For the second option add the following snippet to the jetty configuration in your pom.xml :
+
+.. code-block:: xml
+
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>start-jetty</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <scanIntervalSeconds>0</scanIntervalSeconds>
+                            <daemon>true</daemon>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop-jetty</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+Now if you build the project, maven will run unit tests, then package the application, then run jetty, then run integration test en finaly stop jetty.
+With this option your integration tests are not linked with your application context. You only need to configure client.
+You can also run your application with jetty:run and run separately and manualy you integration test in your IDE. It's usefull to build quickly all your integration tests.
+
+
 Spring MVC Router
 =================
 
