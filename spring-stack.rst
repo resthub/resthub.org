@@ -23,7 +23,7 @@ It provides the following modules :
 	* **resthub-web-server** : generic REST webservices support based on Spring MVC 3.1 including exception mapping to HTTP status codes
 	* **resthub-web-client** : simple to use HTTP client based on AyncHttpClient
 
-The whole RESThub 2.0 Spring stack `Javadoc <http://jenkins.pullrequest.org/job/resthub-spring-stack-master/javadoc/>`_ is available.
+The whole RESThub 2.0 Spring stack `Javadoc <http://resthub.org/javadoc/2.0>`_ is available.
 
 Changelog
 =========
@@ -194,7 +194,7 @@ pom.xml example :
 
 	</project>
 
-The available RESThub dependencies are the following
+RESThub dependencies are available on Maven Central :
 
 .. code-block:: xml
 
@@ -673,7 +673,7 @@ Usage
 
 RESThub comes with a REST controller that allows you to create a CRUD webservice in a few lines. You have the choice to use a 2 layers (Controller -> Repository) or 3 layers (Controller -> Service -> Repository) software design.
 
-You can  find more details about these generic webservices, including their REST API description, on RESThub `Javadoc <http://jenkins.pullrequest.org/job/resthub-spring-stack-master/javadoc/>`_.
+You can  find more details about these generic webservices, including their REST API description, on RESThub `Javadoc <http://resthub.org/javadoc/2.0>`_.
 
 **2 layers software design**
 
@@ -764,7 +764,7 @@ POST api/logs webservice expect this kind of body :
 Web client
 ==========
 
-RESThub Web client module aims to give you an easy way to request other REST webservices. It is based on AsyncHttpClient and provides a `client API wrapper <http://jenkins.pullrequest.org/job/resthub-spring-stack-resthub2/javadoc/index.html?org/resthub/web/Client.html>`_ and OAuth2 support.
+RESThub Web client module aims to give you an easy way to request other REST webservices. It is based on AsyncHttpClient and provides a `client API wrapper <http://resthub.org/javadoc/2.0/index.html?org/resthub/web/Client.html>`_ and OAuth2 support.
 
 In order to limit conflicts it has no dependency on Spring, but only on :
  	* AsyncHttpClient `documentation <https://github.com/sonatype/async-http-client>`_ and `Javadoc <http://sonatype.github.com/async-http-client/apidocs/reference/packages.html>`_
