@@ -12,29 +12,31 @@ In addition to the existing librairies included in the stack, it provides additi
    :depth: 3
    
 The Backbone.js stack includes the following librairies :
-    * **jQuery 1.7** (`documentation <http://docs.jquery.com/Main_Page>`_)
-    * **Backbone.js 0.9.2** (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter 
+    * jQuery 1.7 (`documentation <http://docs.jquery.com/Main_Page>`_)
+    * Backbone.js 0.9.2 (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter 
       <http://documentcloud.github.com/backbone/docs/backbone-localstorage.html>`_
-    * **Underscore.js 1.3.3** (`documentation <http://documentcloud.github.com/underscore/>`_)
-    * **Underscore.String 2.0.0** (`documentation <https://github.com/epeli/underscore.string#readme>`_)
-    * **Require.js 2.0** with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins 
+    * Underscore.js 1.3.3 (`documentation <http://documentcloud.github.com/underscore/>`_)
+    * Underscore.String 2.0.0 (`documentation <https://github.com/epeli/underscore.string#readme>`_)
+    * Require.js 2.0 with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins 
       (`documentation <http://requirejs.org/docs/api.html>`_)
-    * **Handlebars 1.0** (`documentation <http://handlebarsjs.com>`_)
-    * A **console shim** for browsers that don't support it
-    * **Twitter Bootstrap 2.1** (`documentation <http://twitter.github.com/bootstrap/>`_) and its JS plugins
-    * **Form Validation:** `Backbone Validation`_
-    * **Parameters support on view routing:** `Backbone Query Parameters`_
-    * **Paginated lists:** `Backbone Paginator`_
-    * **Asynchronous calls:** Async_
-    * **Dispatching keyboard shortcuts:** Keymaster_
-    * **Get and set relations (one-to-one, one-to-many, many-to-one) for Backbone models:** `Backbone Relational`_
-    * **Parsing, validating, manipulating, and formatting dates:** `Moment`_
+    * Handlebars 1.0 (`documentation <http://handlebarsjs.com>`_)
+    * A console shim + client logging to server mechanism
+    * Twitter Bootstrap 2.1 (`documentation <http://twitter.github.com/bootstrap/>`_) and its JS plugins
+    * Form Validation: `Backbone Validation`_
+    * Parameters support on view routing: `Backbone Query Parameters`_
+    * Datagrid: `Backbone Datagrid`_
+    * Paginated lists: `Backbone Paginator`_
+    * Asynchronous calls: Async_
+    * Dispatching keyboard shortcuts: Keymaster_
+    * Get and set relations (one-to-one, one-to-many, many-to-one) for Backbone models: `Backbone Relational`_
+    * Parsing, validating, manipulating, and formatting dates: `Moment`_
 
 Before going deeper in the RESThub Backbone stack, you should read the great documentation `Developing Backbone.js Applications <http://addyosmani.github.com/backbone-fundamentals/>`_ by Addy Osmani, it is a great introduction to pure Backbone.js.
 
 Changelog
 =========
 
+ * 2012-11-28 : RESThub Backbone.js stack 2.0.0 GA has been released !
  * 2012-11-13 : RESThub Backbone.js stack 2.0-rc4 has been released
  * 2012-10-24 : RESThub Backbone.js stack 2.0-rc3 has been released
  * 2012-10-22 : `RESThub Backbone.js stack 2.0-rc2 <https://github.com/resthub/resthub-backbone-stack/issues?milestone=4&state=closed>`_ has been released
@@ -46,14 +48,14 @@ Bootstrap your project
 
 There are 2 ways to use it in your project :
     * If you are starting a new RESThub Spring + Backbone stack project, the better way to use it is to use one of the Backbone.js webappp Maven Archetypes described `here <spring-stack.html#bootstrap-your-project>`_
-    * You can simply go to the `RESThub Backbone.js stack GitHub repository <https://github.com/resthub/resthub-backbone-stack>`_, and download the repository content and copy it at the root of your webapp
+    * You can simply download `latest RESThub Backbone.js stack <https://github.com/resthub/resthub-backbone-stack/downloads>`_, and extract it at the root of your webapp
 
-The `Todo RESThub 2.0 example <http://github.com/resthub/todo-example>`_ project is the reference example project using this stack.
+The `Todo RESThub 2.0 example <https://github.com/resthub/todo-backbone-example>`_ project is the reference example project using this stack.
 
 Tutorial
 ========
 
-You should follow `RESThub Backbone Stack tutorial <tutorial/backbone.html>`_ (solution provided at the end) in order to learn step by step how to use it.
+You should follow `RESThub Backbone Stack tutorial <tutorial/backbone.html>`_  in order to learn step by step how to use it.
 
 Project layout
 ==============
@@ -157,43 +159,45 @@ Here's the default main.js file :
             },
             'underscore-string': {
                 deps: [
-                'underscore'
+                    'underscore'
                 ]
             },
             'handlebars-orig': {
                 exports: 'Handlebars'
             },
-            'backbone-orig': {
+            'backbone': {
                 deps: [
-                'underscore',
-                'underscore-string',
-                'jquery'
+                    'underscore',
+                    'underscore-string',
+                    'jquery'
                 ],
                 exports: 'Backbone'
             },
             'backbone-queryparams': {
                 deps: [
-                'backbone-orig',
-                'underscore'
+                    'backbone'
                 ]
+            },
+            'backbone-datagrid': {
+                deps: [
+                    'backbone'
+                ],
+                exports: 'Backbone.Datagrid'
             },
             'backbone-paginator': {
                 deps: [
-                'backbone-orig',
-                'underscore',
-                'jquery'
+                    'backbone'
                 ],
                 exports: 'Backbone.Paginator'
             },
             'bootstrap': {
                 deps: [
-                'jquery'
+                    'jquery'
                 ]
             },
             'backbone-relational': {
                 deps: [
-                'backbone-orig',  
-                'underscore'  
+                    'backbone'
                 ]
             },
             'keymaster': {
@@ -221,6 +225,7 @@ Here's the default main.js file :
             'handlebars-orig': 'lib/handlebars',
             'handlebars': 'lib/resthub/handlebars-helpers',
             'backbone-queryparams': 'lib/backbone-queryparams',
+            'backbone-datagrid': 'lib/backbone-datagrid',
             'backbone-paginator': 'lib/backbone-paginator',
             'backbone-relational': 'lib/backbone-relational',
             async: 'lib/async',
@@ -1347,6 +1352,34 @@ of these parameters**. It can then be passed to the view constructor for initial
        ..
    },
 
+Backbone Datagrid
+-----------------
+
+`Backbone Datagrid`_ is a powerful component, based on Backbone.View, that
+displays your Bakbone collections in a dynamic datagrid table. It is highly
+customizable and configurable with sensible defaults.
+
+You will find the full documentation on its `dedicated website
+<http://loicfrering.github.com/backbone.datagrid/>`_. Do not miss the examples
+listed on `this page <http://loicfrering.github.com/backbone.datagrid/examples/>`_. Their sources are
+available in the `examples <https://github.com/loicfrering/backbone.datagrid/tree/master/examples/>`_
+directory of the repository.
+
+* Solar: a simple and complete example with an in memory collection of planets from the
+  Solar System.
+
+  * `Live version <http://loicfrering.github.com/backbone.datagrid/examples/solar.html>`_
+  * `Sources <https://github.com/loicfrering/backbone.datagrid/tree/master/examples/js/solar.js>`_
+
+* GitHub: an example with a collection connected to GitHub's REST API.
+
+  * `Live version <http://loicfrering.github.com/backbone.datagrid/examples/github.html>`_
+  * `Sources <https://github.com/loicfrering/backbone.datagrid/tree/master/examples/js/github.js>`_
+
+Note that the Backbone Datagrid handles pagination by itself and does not rely
+on Backbone Paginator which is described below and should only be used to
+paginate collections which are not displayed in a datagrid.
+
 Backbone Paginator
 ------------------
 
@@ -1354,7 +1387,7 @@ Backbone Paginator
 (``Paginator.requestPager``). It includes management of filters, sorting, etc.
 
 Client side pagination
-**********************
+++++++++++++++++++++++
 
 This lib extends Backbone_ collections. So adding options to collections is necessary:
 
@@ -1427,7 +1460,7 @@ Once the collection retrieved, ``collection.info()`` allows to get information a
    endRecord
 
 Server side pagination
-**********************
+++++++++++++++++++++++
 
 Once client side pagination implemented, server adaptation is very easy:
 
@@ -1810,6 +1843,7 @@ main.js after filtering:
 .. _Handlebars: http://handlebarsjs.com
 .. _Backbone Validation: http://github.com/thedersen/backbone.validation
 .. _Twitter Bootstrap: http://twitter.github.com/bootstrap/
+.. _Backbone Datagrid: http://loicfrering.github.com/backbone.datagrid/
 .. _Backbone Paginator: http://addyosmani.github.com/backbone.paginator/
 .. _Backbone Query Parameters: http://github.com/jhudson8/backbone-query-parameters
 .. _Async: http://github.com/caolan/async/

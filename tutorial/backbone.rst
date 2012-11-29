@@ -1,11 +1,11 @@
-RESThub-Backbone training
+RESThub Backbone tutorial
 =========================
 
 This tutorial will help you to get an overview of resthub-backbone-stack.
 
 If you want to use this tutorial in a training mode, `a version without answers is also available <backbone-without-answer.html>`_.
 
-**Code** : you can find the code of the sample application at `<https://github.com/resthub/resthub-backbone-training>`_ (Have a look to rest branch for step 8 code).
+**Code** : you can find the code of the sample application at `<https://github.com/resthub/resthub-backbone-tutorial>`_ (Have a look to branches for each step).
 
 Step 1 : Model and View
 -----------------------
@@ -613,14 +613,14 @@ Find:
 Do:
 +++
 
-1. **Use Backbone.ResthubView for managing rendering in TaskView. Remove render method in TaskView and modify add method in TasksView to set root element**
+1. **Use Resthub.View for managing rendering in TaskView. Remove render method in TaskView and modify add method in TasksView to set root element**
 
     .. code-block:: javascript
     
         // views/task.js
-        define(['backbone', 'hbs!template/task'], function(Backbone, taskTemplate) {
+        define(['backbone', 'resthub', hbs!template/task'], function(Backbone, Resthub, taskTemplate) {
 
-          var TaskView = Backbone.ResthubView.extend({
+          var TaskView = Resthub.View.extend({
             template: taskTemplate,
             tagName: 'li',
             className: 'task',
@@ -663,13 +663,13 @@ Do:
           return this;
         },
 
-3. **Use Backbone.ResthubView for managing rendering in TasksView. Call the parent render function.**
+3. **Use Resthub.View for managing rendering in TasksView. Call the parent render function.**
 
     .. code-block:: javascript
     
-        define(['backbone', 'view/task-view', 'hbs!template/tasks'], function(Backbone, TaskView, tasksTemplate) {
+        define(['backbone', 'resthub', 'view/task-view', 'hbs!template/tasks'], function(Backbone, Resthub, TaskView, tasksTemplate) {
 
-          var TasksView = Backbone.ResthubView.extend({
+          var TasksView = Resthub.View.extend({
             template: tasksTemplate,
             initialize: function() {
               this.collection.on('add', this.add, this);
@@ -724,9 +724,9 @@ Do:
     .. code-block:: javascript
     
         // views/task.js
-        define(['backbone', 'view/taskform-view', 'hbs!template/task'], function(Backbone, TaskFormView, taskTemplate) {
+        define(['backbone', 'resthub', 'view/taskform-view', 'hbs!template/task'], function(Backbone, Resthub, TaskFormView, taskTemplate) {
 
-          var TaskView = Backbone.ResthubView.extend({
+          var TaskView = Resthub.View.extend({
             ...
             
             events: {
@@ -749,9 +749,9 @@ Do:
         });
         
         // views/taskform.js
-        define(['backbone', 'hbs!template/taskform'], function(Backbone, taskFormTemplate) {
+        define(['backbone', 'resthub', 'hbs!template/taskform'], function(Backbone, Resthub, ,taskFormTemplate) {
 
-          var TaskFormView = Backbone.ResthubView.extend({
+          var TaskFormView = Resthub.View.extend({
             template: taskFormTemplate,
             tagName: 'form',
           });
@@ -763,10 +763,10 @@ Do:
     .. code-block:: html
     
         <div class="control-group">
-          <input class="title" type="text" placeholder="Title" value="{{title}}" />
+          <input class="title" type="text" placeholder="Title" value="{{model.title}}" />
         </div>
         <div class="control-group">
-          <textarea class="description" rows="3" placeholder="Description">{{description}}</textarea>
+          <textarea class="description" rows="3" placeholder="Description">{{model.description}}</textarea>
         </div>
         <input type="submit" class="btn btn-success" value="Save" />
 
@@ -819,7 +819,7 @@ Do:
         
     .. code-block:: javascript
 
-        var TasksView = Backbone.ResthubView.extend({
+        var TasksView = Resthub.View.extend({
           template: tasksTemplate,
        
           events: {
@@ -858,7 +858,7 @@ Do:
         
     .. code-block:: javascript
     
-        var TaskFormView = Backbone.ResthubView.extend({
+        var TaskFormView = Resthub.View.extend({
           ...
           events: {
             submit: 'save',
@@ -884,7 +884,7 @@ Do:
        .. code-block:: javascript
        
             // views/taskform.js
-            var TaskFormView = Backbone.ResthubView.extend({
+            var TaskFormView = Resthub.View.extend({
               ...
               events: {
                 submit: 'save',
@@ -1024,7 +1024,7 @@ Do:
     .. code-block:: html
     
         <div class="control-group">
-          <input class="title" type="text" placeholder="Title" value="{{title}}" />
+          <input class="title" type="text" placeholder="Title" value="{{model.title}}" />
           <span class="help-inline"></span>
         </div>
         
@@ -1082,11 +1082,11 @@ Do:
     .. code-block:: html
     
         <div class="control-group">
-          <input class="title" type="text" name="title" placeholder="Title" value="{{title}}" />
+          <input class="title" type="text" name="title" placeholder="Title" value="{{model.title}}" />
           <span class="help-inline"></span>
         </div>
         <div class="control-group">
-          <textarea class="description" rows="3" name="description" placeholder="Description">{{description}}</textarea>
+          <textarea class="description" rows="3" name="description" placeholder="Description">{{model.description}}</textarea>
         </div>
         
     .. code-block:: javascript
@@ -1138,7 +1138,7 @@ Step 7: Persist & Sync
 Step 8
 ------
 
-* Download `RESThub Spring training sample project <https://github.com/resthub/resthub-spring-training/zipball/step5-solution>`_ and extract it
+* Download `RESThub Spring tutorial sample project <https://github.com/resthub/resthub-spring-tutorial/zipball/step5-solution>`_ and extract it
 * Create jpa-webservice/src/main/webapp directory, and move your JS application into it
 * Run the jpa-webservice webapp thanks to Maven Jetty plugin
 * Remove backbone-localstorage.js file and usage in JS application
