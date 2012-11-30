@@ -753,8 +753,14 @@ The previous ``SluggableSampleController`` example shows one thing: when your ap
 
 For that, you often need to decorrelate serialized objects (`DTOs <http://en.wikipedia.org/wiki/Data_transfer_object>`_) from your model.
 
-RESThub includes `ModelMapper <http://modelmapper.org/>`_ in its common module.
+RESThub includes `ModelMapper <http://modelmapper.org/>`_ in its resthub-common module.
 
+.. code-block:: java
+
+    ModelMapper modelMapper = new ModelMapper();
+    UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+
+Modelmapper has sensible defaults and can often map objects without additional configuration. For specific needs, you can use `property maps <http://modelmapper.org/user-manual/property-mapping/>`_.
 
 Client logging
 --------------
