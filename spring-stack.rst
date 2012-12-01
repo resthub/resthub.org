@@ -471,7 +471,7 @@ You also need to add an applicationContext.xml file in order to scan your reposi
 
 You can customize the default configuration by adding a database.properties resource with one or more of the following keys customized with your values. You should include only the customized ones.
 
-REShub JPA default properties are :
+RESThub JPA default properties are :
 	* dataSource.driverClassName = org.h2.Driver
 	* dataSource.url = jdbc:h2:mem:resthub;DB_CLOSE_DELAY=-1;MVCC=TRUE
 	* dataSource.maxActive = 50
@@ -481,7 +481,7 @@ REShub JPA default properties are :
 	* dataSource.password = 
 	* dataSource.validationQuery = SELECT 1
 
-REShub Hibernate default properties are :
+RESThub Hibernate default properties are :
 	* hibernate.dialect = org.hibernate.dialect.H2Dialect
 	* hibernate.show_sql = false
 	* hibernate.format_sql = true
@@ -569,7 +569,7 @@ You also need to add an applicationContext.xml file in order to scan your reposi
 
 You can customize them by adding a database.properties resource with one or more following keys customized with your values. You should include only the customized ones.
 
-REShub MongoDB default properties are :
+RESThub MongoDB default properties are :
 	* database.dbname = resthub
 	* database.host = localhost
 	* database.port = 27017
