@@ -71,7 +71,7 @@ Do:
 
     attach task to window with ``window.task = new Task(...)``
 
-5. **Try to access to title and description. Is task.title working ?**
+5. **Try to access to title and description. Is task.title working?**
 
     task.title does not work.
 
@@ -85,7 +85,7 @@ Do:
     
         task.get("title")
 
-8. **Change description attribute. What operation does backbone perform whena a model attrbute is modified ?** 
+8. **Change description attribute. What operation does backbone perform whena a model attrbute is modified?** 
 
     .. code-block:: javascript
     

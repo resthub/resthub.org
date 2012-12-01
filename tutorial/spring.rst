@@ -180,15 +180,15 @@ Do:
 Answer:
 +++++++
 
-1. **How is wrapped the list of all existing tasks ?**
+1. **How is wrapped the list of all existing tasks?**
     
     A ``GET`` request on `<http://localhost:8080/api/task?page=all>`_ shows that the list of all existing tasks is **wrapped into a Pagination object** `PageImpl`.
     
-2. **How to get a single task ?**
+2. **How to get a single task?**
     
     A ``GET`` request on `<http://localhost:8080/api/task/1>`_ **returns a single Task** object with id 1, 
     
-3. **How to update an existing task ? Update task 1 to add a description** ``new description``
+3. **How to update an existing task? Update task 1 to add a description** ``new description``
     
     A ``PUT`` request on `<http://localhost:8080/api/task/1>`_ with ContentType ``application/json`` and body : 
 
@@ -200,11 +200,11 @@ Answer:
           "description": "new description"
        }
 
-4. **How to delete a task ?**       
+4. **How to delete a task?**       
   
     A ``DELETE`` request on `<http://localhost:8080/api/task/1>`_ **delete the Task** (check with a GET on `<http://localhost:8080/api/task>`_).
     
-5. **How to create a task ?**  
+5. **How to create a task?**  
     
     A ``POST`` request on `<http://localhost:8080/api/task>`_ with ContentType ``application/json`` and body: 
 

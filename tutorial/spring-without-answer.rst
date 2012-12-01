@@ -123,11 +123,11 @@ Using an HTTP client (e.g. `Poster <https://addons.mozilla.org/en-US/firefox/add
 `REST Console <https://chrome.google.com/webstore/detail/cokgbflfommojglbmbpenpphppikmonn>`_ in Chrome), 
 explore the new API and check: 
 
-1. **How is wrapped the list of all existing tasks ?**
-2. **How to get a single task ?**
-3. **How to update an existing task ? Update task 1 to add a description** ``new description``
-4. **How to delete a task ?**       
-5. **How to create a task ?**  
+1. **How is wrapped the list of all existing tasks?**
+2. **How to get a single task?**
+3. **How to update an existing task? Update task 1 to add a description** ``new description``
+4. **How to delete a task?**       
+5. **How to create a task?**  
 
 Step 3: Customize Controller
 ----------------------------

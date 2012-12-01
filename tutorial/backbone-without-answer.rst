@@ -31,13 +31,13 @@ Do:
 
 4. **Try to see your task object in the console. Make it work**
 
-5. **Try to access to title and description. Is task.title working ?**
+5. **Try to access to title and description. Is task.title working?**
 
 6. **Inspect task and find where attributes are stored**
 
 7. **Access title attribute value**
 
-8. **Change description attribute. What operation does backbone perform whena a model attrbute is modified ?** 
+8. **Change description attribute. What operation does backbone perform whena a model attrbute is modified?** 
     
 9. **Create a TaskView and implement render with a function that simply logs "rendered"**
 
