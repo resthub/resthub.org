@@ -173,7 +173,7 @@ Do:
 
 1. **Add dependency to use Resthub2 testing tools** 
 2. In ``src/test/org/resthub/training``, add a ``controller`` directory and create a ``TaskControllerTest`` inside. 
-   We first want to make an **integration test** of our controller. i.e. a test that need to run and embedded servlet container.
+   We first want to make an **integration test** of our controller, i.e. a test that needs to run an embedded servlet container.
    **Implement a new** ``testFindByName`` **test method that creates some tasks, call our new REST interface in order to find taks by name and check that the JSON response in order to be sure that it works as expected** 
 3. **Run test and check it passes**
     
@@ -238,7 +238,7 @@ These business operations should be implemented in service layer:
       Task affectTask(Long taskId, Long userId);
   
    - In ``affectTask`` implementation, validate parameters to ensure that both userId and taskId are not null and correspond to existing objects
-   - Tip: You will need to manipulate userRepository in TaskService ...
+   - Tip 1: You will need to manipulate userRepository in TaskService ...
    - Tip 2: You don't even have to call ``repository.save()`` due to Transactional behaviour of your service
    - Tip 3: Maybe you should consider to implement ``equals()`` and ``hashCode()`` methods for User & Task   
  

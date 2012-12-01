@@ -342,7 +342,7 @@ You'll usually have a src/main/resources/logback.xml file in order to configure 
 Beans declaration and injection
 -------------------------------
 
-You should use J2EE6 annotations to declare and inject your beans.
+You should use JEE6 annotations to declare and inject your beans.
 
 To declare a bean:
 
@@ -874,7 +874,7 @@ The following test stack is included in the RESThub test module:
 RESThub also provides generic classes in order to make testing easier.
    * AbstractTest: base class for your non transactional Spring aware unit tests
    * AbstractTransactionalTest: base class for your transactional unit tests, preconfigured with Spring test framework
-   * AbstractWebTest: base class for your unit tests that need to run and embedded servlet container.
+   * AbstractWebTest: base class for your unit tests that need to run an embedded servlet container.
 
 Maven dependency
 ----------------

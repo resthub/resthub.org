@@ -4,7 +4,7 @@
 Backbone.js Stack
 =================
 
-RESThub Backbone stack provides a client-side full stack and guidelines for building enterprise grade HTML5 applications. It could be used with any server backend: Ruby, PHP, NodeJS, J2EE, Spring, Grail ...
+RESThub Backbone stack provides a client-side full stack and guidelines for building enterprise grade HTML5 applications. It could be used with any server backend: Ruby, PHP, NodeJS, JEE, Spring, Grails ...
 
 In addition to the existing librairies included in the stack, it provides additional functionalities (mainly Backbone.js addons) designed to allow you to build a real enterprise grade application, and described in this documentation.
 
@@ -549,7 +549,7 @@ Resthub provide some usefull **Handlebars helpers** included by default:
 ifinline
 ++++++++
 
-This helper provides a more fluent syntax for inline ifs. i.e. if embedded in quoted strings.
+This helper provides a more fluent syntax for inline ifs, i.e. if embedded in quoted strings.
 
 As with Handlebars ``#if``, if its first argument returns ``false``, ``undefined``, ``null``
 or ``[]`` (a "falsy" value), ``''`` is returned, otherwise ``returnVal`` argument is rendered.
