@@ -436,7 +436,7 @@ Do:
     
         // Repository
         public interface UserRepository extends JpaRepository<User, Long> {
-            // that's all !
+            // that's all!
         }
         
         // Controller

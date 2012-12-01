@@ -36,7 +36,7 @@ Before going deeper in the RESThub Backbone stack, you should read the great doc
 Changelog
 =========
 
- * 2012-11-28 : RESThub Backbone.js stack 2.0.0 GA has been released !
+ * 2012-11-28 : RESThub Backbone.js stack 2.0.0 GA has been released!
  * 2012-11-13 : RESThub Backbone.js stack 2.0-rc4 has been released
  * 2012-10-24 : RESThub Backbone.js stack 2.0-rc3 has been released
  * 2012-10-22 : `RESThub Backbone.js stack 2.0-rc2 <https://github.com/resthub/resthub-backbone-stack/issues?milestone=4&state=closed>`_ has been released
@@ -1577,7 +1577,7 @@ but executed only if there is no more callback to call. This gives:
    },
 
 
-This code work but there is **too much technical code** !
+This code works but there is **too much technical code**!
 
 Async_ provides a set of helpers to perform **asynchronous parallel processing** and synchronize the end of 
 these treatments through a final callback called once.
