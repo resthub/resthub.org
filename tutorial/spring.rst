@@ -5,7 +5,7 @@ This tutorial will help you to get an overview of resthub-spring-stack and its c
 
 If you want to use this tutorial in a training mode, `a version without answers is also available <spring-without-answer.html>`_.
 
-**Code** : you can find the code of the sample application at `<https://github.com/resthub/resthub-spring-tutorial>`_ (Have a look to branches for each step).
+**Code**: you can find the code of the sample application at `<https://github.com/resthub/resthub-spring-tutorial>`_ (Have a look to branches for each step).
 
 Problem description
 -------------------
@@ -27,10 +27,10 @@ Each step of this tutorial is proposed as a git branch. You could checkout a ste
 Step 1: Initialization
 ----------------------
 
-**Prerequisites** :
+**Prerequisites**:
 
-   - Git installed : `<http://git-scm.com/downloads>`_
-   - Maven installed : `<http://maven.apache.org/download.html>`_
+   - Git installed: `<http://git-scm.com/downloads>`_
+   - Maven installed: `<http://maven.apache.org/download.html>`_
    
 Find:
 +++++
@@ -54,7 +54,7 @@ Find:
     - Spring Data: `reference <http://www.springsource.org/spring-data>`_
         - Spring Data JPA: `reference <http://static.springsource.org/spring-data/data-jpa/docs/current/reference/html/>`_ and `Javadoc <http://static.springsource.org/spring-data/data-jpa/docs/current/api/>`_
         - Spring Data MongoDB: `reference <http://static.springsource.org/spring-data/data-mongodb/docs/current/reference/html/>`_ and `Javadoc <http://static.springsource.org/spring-data/data-mongodb/docs/current/api/>`_
-    - Hibernate ORM and JPA : `reference <http://docs.jboss.org/hibernate/orm/4.1/manual/en-US/html_single/>`_ and `Javadoc <http://docs.jboss.org/hibernate/orm/4.1/javadocs/>`_
+    - Hibernate ORM and JPA: `reference <http://docs.jboss.org/hibernate/orm/4.1/manual/en-US/html_single/>`_ and `Javadoc <http://docs.jboss.org/hibernate/orm/4.1/javadocs/>`_
     - Spring MVC 3.1: `reference <http://static.springsource.org/spring-data/data-mongodb/docs/current/reference/html/>`_
     - Spring MVC Router: `reference <https://github.com/resthub/springmvc-router>`_
     - Jackson 2.1: `reference <http://wiki.fasterxml.com/JacksonDocumentation>`_ and `Javadoc <http://wiki.fasterxml.com/JacksonJavaDocs>`_
@@ -67,7 +67,7 @@ Do:
 
 1. **Generate a Resthub2 template project structure**
 
-   You can choose which template to use : pure Java Spring server template or Server + Client template if you plan to provide a RIA client
+   You can choose which template to use: pure Java Spring server template or Server + Client template if you plan to provide a RIA client
    for your app based on `Resthub Spring Stack`
    
    Choose groupId `org.resthub.training`, artifactId `jpa-webservice`, package `org.resthub.training` and version `1.0-SNAPSHOT`.
@@ -190,7 +190,7 @@ Answer:
     
 3. **How to update an existing task? Update task 1 to add a description** ``new description``
     
-    A ``PUT`` request on `<http://localhost:8080/api/task/1>`_ with ContentType ``application/json`` and body : 
+    A ``PUT`` request on `<http://localhost:8080/api/task/1>`_ with ContentType ``application/json`` and body: 
 
     .. code-block:: javascript
 
@@ -315,7 +315,7 @@ Test your controller
         
         Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.046 sec
 
-        Results :
+        Results:
 
         Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
@@ -330,7 +330,7 @@ Test your controller
 Step 4: Users own tasks
 -----------------------
 
-**Prerequisites** : you can find some prerequisites and reference implementation of ``NotificationService`` and ``MockConfiguration`` at
+**Prerequisites**: you can find some prerequisites and reference implementation of ``NotificationService`` and ``MockConfiguration`` at
 `<http://github.com/resthub/resthub-spring-tutorial/tree/step4-prerequisites>`_
 
 Find:
@@ -556,9 +556,9 @@ These business operations should be implemented in service layer:
       Task affectTask(Long taskId, Long userId);
   
    - In ``affectTask`` implementation, validate parameters to ensure that both userId and taskId are not null and correspond to existing objects
-   - Tip : You will need to manipulate userRepository in TaskService ...
-   - Tip 2 : You don't even have to call ``repository.save()`` due to Transactional behaviour of your service
-   - Tip 3 : Maybe you should consider to implement ``equals()`` and ``hashCode()`` methods for User & Task   
+   - Tip: You will need to manipulate userRepository in TaskService ...
+   - Tip 2: You don't even have to call ``repository.save()`` due to Transactional behaviour of your service
+   - Tip 3: Maybe you should consider to implement ``equals()`` and ``hashCode()`` methods for User & Task   
    
     .. code-block:: java
 
@@ -702,7 +702,7 @@ Do:
             
             Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
-            Results :
+            Results:
 
             Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
@@ -1097,7 +1097,7 @@ Do:
             }
         }
 
-3. **Add embedded address to users : Modify User model to add an embedded entity address to store user address (city, country)**
+3. **Add embedded address to users: Modify User model to add an embedded entity address to store user address (city, country)**
 
     .. code-block:: java
     

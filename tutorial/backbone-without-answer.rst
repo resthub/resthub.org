@@ -3,7 +3,7 @@ RESThub Backbone stack tutorial
 
 This tutorial will help you to get an overview of resthub-backbone-stack.
 
-Step 1 : Model and View
+Step 1: Model and View
 -----------------------
 
 Find:
@@ -71,14 +71,14 @@ Templating
         
 Let's render our task in DOM with a template engine: Handlebars
 
-Find :
+Find:
 ######
 
 1. **Handlebars documentation**
     
 2. **How to pass a full model instance as render context in backbone**
     
-Do :
+Do:
 ####
 
 1. **Create Task handlebars template to display task. Template should start with a div with class='task'**
@@ -91,13 +91,13 @@ Do :
 Model events
 ++++++++++++
 
-Find :
+Find:
 ######
 
 1. **Backbone events documentation and model events catalog**
 
 
-Do :
+Do:
 ####
         
 1. **Update task in the console -> does not update the HTML**
@@ -145,7 +145,7 @@ Step 3: Nested Views
 7. Test in the console.
 8. Remove automatic generated divs and replace them with lis
    
-   goal is to have :
+   goal is to have:
    
    .. code-block:: html
    
@@ -154,7 +154,7 @@ Step 3: Nested Views
             <li class='task'></li>
         </ul>
         
-   instead of :
+   instead of:
    
    .. code-block:: html
    
@@ -287,7 +287,7 @@ Step 7: Persist & Sync
   collection.
   
 
-Step 8 : server backend
+Step 8: server backend
 -----------------------
 
 * Download `RESThub Spring training sample project <https://github.com/resthub/resthub-spring-training/zipball/step5-solution>`_ and extract it

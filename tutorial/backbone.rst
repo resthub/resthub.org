@@ -5,9 +5,9 @@ This tutorial will help you to get an overview of resthub-backbone-stack.
 
 If you want to use this tutorial in a training mode, `a version without answers is also available <backbone-without-answer.html>`_.
 
-**Code** : you can find the code of the sample application at `<https://github.com/resthub/resthub-backbone-tutorial>`_ (Have a look to branches for each step).
+**Code**: you can find the code of the sample application at `<https://github.com/resthub/resthub-backbone-tutorial>`_ (Have a look to branches for each step).
 
-Step 1 : Model and View
+Step 1: Model and View
 -----------------------
 
 Find:
@@ -202,7 +202,7 @@ Templating
         
 Let's render our task in DOM with a template engine: Handlebars
 
-Find :
+Find:
 ######
 
 1. **Handlebars documentation**
@@ -213,7 +213,7 @@ Find :
 
     see `<http://backbonejs.org/#View-render>`_
     
-Do :
+Do:
 ####
 
 1. **Create Task handlebars template to display task. Template should start with a div with class='task'**
@@ -264,7 +264,7 @@ Do :
 Model events
 ++++++++++++
 
-Find :
+Find:
 ######
 
 1. **Backbone events documentation and model events catalog**
@@ -272,7 +272,7 @@ Find :
     see `<http://backbonejs.org/#Events>`_ and `<http://backbonejs.org/#FAQ-events>`_ 
       
       
-Do :
+Do:
 ####
         
 1. **Update task in the console -> does not update the HTML**
@@ -555,7 +555,7 @@ Step 3: Nested Views
 7. Test in the console.
 8. Remove automatic generated divs and replace them with lis
    
-   goal is to have :
+   goal is to have:
    
    .. code-block:: html
    
@@ -564,7 +564,7 @@ Step 3: Nested Views
             <li class='task'></li>
         </ul>
         
-   instead of :
+   instead of:
    
    .. code-block:: html
    

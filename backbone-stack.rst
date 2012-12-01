@@ -4,14 +4,14 @@
 Backbone.js Stack
 =================
 
-RESThub Backbone stack provides a client-side full stack and guidelines for building enterprise grade HTML5 applications. It could be used with any server backend : Ruby, PHP, NodeJS, J2EE, Spring, Grail ...
+RESThub Backbone stack provides a client-side full stack and guidelines for building enterprise grade HTML5 applications. It could be used with any server backend: Ruby, PHP, NodeJS, J2EE, Spring, Grail ...
 
 In addition to the existing librairies included in the stack, it provides additional functionalities (mainly Backbone.js addons) designed to allow you to build a real enterprise grade application, and described in this documentation.
 
 .. contents::
    :depth: 3
    
-The Backbone.js stack includes the following librairies :
+The Backbone.js stack includes the following librairies:
     * jQuery 1.7 (`documentation <http://docs.jquery.com/Main_Page>`_)
     * Backbone.js 0.9.2 (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter 
       <http://documentcloud.github.com/backbone/docs/backbone-localstorage.html>`_
@@ -36,17 +36,17 @@ Before going deeper in the RESThub Backbone stack, you should read the great doc
 Changelog
 =========
 
- * 2012-11-28 : RESThub Backbone.js stack 2.0.0 GA has been released!
- * 2012-11-13 : RESThub Backbone.js stack 2.0-rc4 has been released
- * 2012-10-24 : RESThub Backbone.js stack 2.0-rc3 has been released
- * 2012-10-22 : `RESThub Backbone.js stack 2.0-rc2 <https://github.com/resthub/resthub-backbone-stack/issues?milestone=4&state=closed>`_ has been released
- * 2012-10-01 : `RESThub 2.0-rc1 <https://github.com/resthub/resthub-backbone-stack/issues?milestone=3&state=closed>`_ has been released
- * 2012-08-29 : `RESThub 2.0-beta2 <https://github.com/resthub/resthub-backbone-stack/issues?milestone=1&state=closed>`_ has been released
+ * 2012-11-28: RESThub Backbone.js stack 2.0.0 GA has been released!
+ * 2012-11-13: RESThub Backbone.js stack 2.0-rc4 has been released
+ * 2012-10-24: RESThub Backbone.js stack 2.0-rc3 has been released
+ * 2012-10-22: `RESThub Backbone.js stack 2.0-rc2 <https://github.com/resthub/resthub-backbone-stack/issues?milestone=4&state=closed>`_ has been released
+ * 2012-10-01: `RESThub 2.0-rc1 <https://github.com/resthub/resthub-backbone-stack/issues?milestone=3&state=closed>`_ has been released
+ * 2012-08-29: `RESThub 2.0-beta2 <https://github.com/resthub/resthub-backbone-stack/issues?milestone=1&state=closed>`_ has been released
 
 Bootstrap your project
 ======================
 
-There are 2 ways to use it in your project :
+There are 2 ways to use it in your project:
     * If you are starting a new RESThub Spring + Backbone stack project, the better way to use it is to use one of the Backbone.js webappp Maven Archetypes described `here <spring-stack.html#bootstrap-your-project>`_
     * You can simply download `latest RESThub Backbone.js stack <https://github.com/resthub/resthub-backbone-stack/downloads>`_, and extract it at the root of your webapp
 
@@ -63,7 +63,7 @@ Project layout
 Directories and filename conventions
 ------------------------------------
 
-Here is the typical RESThub Backbone.js stack based application directories and filename layout :
+Here is the typical RESThub Backbone.js stack based application directories and filename layout:
 
 .. code-block:: text
 
@@ -147,7 +147,7 @@ main.js
 
 This application bootstrap file is main.js located at your webapp root (usually src/main/webapp). The goal of this file is mainly to intialize require.js configuration. Your application code should not be here but in app.js (automatically loaded by main.js) in order to allow easy Backbone stack updates.
 
-Here's the default main.js file :
+Here's the default main.js file:
 
 .. code-block:: javascript
 
@@ -251,7 +251,7 @@ app.js
 
 app.js is where your application begins. You should customize it in order to initialize your routers and/or views.
 
-Here's the default app.js file :
+Here's the default app.js file:
 
 .. code-block:: javascript
 
@@ -263,7 +263,7 @@ Here's the default app.js file :
 Resthub.View
 ============
 
-RESThub Backbone stack provides an enhanced Backbone View named Resthub.View with the following functionalities :
+RESThub Backbone stack provides an enhanced Backbone View named Resthub.View with the following functionalities:
  * Default render() with root and context attributes
  * Automatic view dispose + callbacks unbind when a view is removed from DOM
  * View model population from a form
@@ -302,7 +302,7 @@ RESThub provides a default implementation that will render your template with **
         });
     });
 
-A sample template with automatic collection provisionning :
+A sample template with automatic collection provisionning:
 
 .. code-block:: html
 
@@ -312,16 +312,16 @@ A sample template with automatic collection provisionning :
       {{/each}}
     </ul>
 
-Or with automatic model and labels provisionning :
+Or with automatic model and labels provisionning:
 
 .. code-block:: html
 
-    <p>{{labels.user.identity}} : {{model.firstname}} {{model.name}}</li>    
+    <p>{{labels.user.identity}}: {{model.firstname}} {{model.name}}</li>    
 
-After instantiation, ``this.$root`` contains a cached jQuery element and ``this.root`` the DOM element. By default, when render() is called, Backbone stack empties the root element, and adds el to the root as a child element. You can change this behaviour with the strategy parameter that could have following values :
- * replace : replace the content of $root with $el view content
- * append : append the content of $el at the end of $root
- * prepend : prepend the content of $el at the beginning of $root
+After instantiation, ``this.$root`` contains a cached jQuery element and ``this.root`` the DOM element. By default, when render() is called, Backbone stack empties the root element, and adds el to the root as a child element. You can change this behaviour with the strategy parameter that could have following values:
+ * replace: replace the content of $root with $el view content
+ * append: append the content of $el at the end of $root
+ * prepend: prepend the content of $el at the beginning of $root
 
 .. code-block:: javascript
 
@@ -333,7 +333,7 @@ After instantiation, ``this.$root`` contains a cached jQuery element and ``this.
         
     });
 
-You can customize the rendering context by defining a context property :
+You can customize the rendering context by defining a context property:
 
 .. code-block:: javascript
 
@@ -348,7 +348,7 @@ You can customize the rendering context by defining a context property :
        
     });
 
-Or by passing a function if you need dynamic context :
+Or by passing a function if you need dynamic context:
 
 .. code-block:: javascript
 
@@ -368,7 +368,7 @@ Or by passing a function if you need dynamic context :
             };
     });
 
-Or by passing the context as a render parameter when you call it explicitely :
+Or by passing the context as a render parameter when you call it explicitely:
 
 .. code-block:: javascript
 
@@ -420,7 +420,7 @@ RESThub provides three extensions related to this functionnality:
    
 RESThub offers an extension to this mechanism that listens on any removal in the ``view.el`` DOM element and **automatically calls dispose on remove**. This means that you don't have to manage this workflow anymore and any replacement done in el parent will trigger a dispose call.
    
-i.e. : each time a jQuery ``.html(something)``, ``.remove()`` or ``.empty()`` is performed on view el parent or each time a ``remove()`` is done on the el itself, **the view will be properly destroyed**.
+i.e.: each time a jQuery ``.html(something)``, ``.remove()`` or ``.empty()`` is performed on view el parent or each time a ``remove()`` is done on the el itself, **the view will be properly destroyed**.
 
 View model population from a form
 ---------------------------------
@@ -496,7 +496,7 @@ Handlebars
 
 Client-side templating capabilities are based by default on Handlebars_.
 
-Templates are HTML fragments, without the <html>, <header> or <body> tag :
+Templates are HTML fragments, without the <html>, <header> or <body> tag:
 
 .. code-block:: html
 
@@ -514,7 +514,7 @@ Templates are HTML fragments, without the <html>, <header> or <body> tag :
 RequireJS Handlebars plugin
 ---------------------------
 
-Templates are injected into Views by the RequireJS Handlebars plugin, based on RequireJS text plugin. This hbs plugin will automatically **retrieve and compile** your template. So it should be defined in your main.js :
+Templates are injected into Views by the RequireJS Handlebars plugin, based on RequireJS text plugin. This hbs plugin will automatically **retrieve and compile** your template. So it should be defined in your main.js:
 
 .. code-block:: javascript
 
@@ -526,7 +526,7 @@ Templates are injected into Views by the RequireJS Handlebars plugin, based on R
         }
     });
 
-Sample usage in a Backbone.js View :
+Sample usage in a Backbone.js View:
 
 .. code-block:: javascript
 
@@ -544,7 +544,7 @@ Sample usage in a Backbone.js View :
 Helpers
 -------
 
-Resthub provide some usefull **Handlebars helpers** included by default :
+Resthub provide some usefull **Handlebars helpers** included by default:
 
 ifinline
 ++++++++
@@ -788,13 +788,13 @@ formatDate
 This helper provides a date formatting tool.
 The date will be parsed with the inputPattern and then formatted with the outputPattern.
 
-Parameters are :
+Parameters are:
 
- - date : the date to parse and format
- - outputPattern : the pattern used to display the date (optional)
- - inputPattern : the pattern used to parse the date (optional)
+ - date: the date to parse and format
+ - outputPattern: the pattern used to display the date (optional)
+ - inputPattern: the pattern used to parse the date (optional)
 
-inputPattern and outputPattern are optionals : the default pattern is 'YYYY-MM-DD HH:mm:ss'
+inputPattern and outputPattern are optionals: the default pattern is 'YYYY-MM-DD HH:mm:ss'
 
 Full documentation about date format can be found `here <http://momentjs.com/docs/#/displaying/format/>`_.
 
@@ -873,7 +873,7 @@ Please find below the steps needed to internationalize your application.
 
 1. **Configure i18n plugin**
 
-In your main.js file you should define a shortcut path for i18n plugin and the default language for your application :
+In your main.js file you should define a shortcut path for i18n plugin and the default language for your application:
 
 .. code-block:: javascript
 
@@ -924,7 +924,7 @@ Sample js/nls/fr-fr/labels.js file:
 
 Add a dependency in the js, typically a View, where you'll need labels. You'll absolutely need to give a scoped variable to the result (in this example ``myLabels``, but you can choose the one you want). 
 
-Prepending 'i18n!' before the file path in the dependency indicates RequireJS to get the file related to the current locale :
+Prepending 'i18n!' before the file path in the dependency indicates RequireJS to get the file related to the current locale:
 
 .. code-block:: javascript
 
@@ -936,7 +936,7 @@ Prepending 'i18n!' before the file path in the dependency indicates RequireJS to
         // ...
     });
 
-In your html template :
+In your html template:
 
 .. code-block:: html
 
@@ -946,7 +946,7 @@ In your html template :
 
 4. **Change locale**
 
-Changing locale require a page reloading, so it is usually implemented with a Backbone.js router configuration like the following one :
+Changing locale require a page reloading, so it is usually implemented with a Backbone.js router configuration like the following one:
 
 .. code-block:: javascript
 
@@ -986,8 +986,8 @@ labels.js
 .. code-block:: javascript
 
     'root': {
-        'clearitem'    : "Clear the completed item",
-        'clearitems' : 'Clear %s completed items',
+        'clearitem': "Clear the completed item",
+        'clearitems': 'Clear %s completed items',
     }
 
 RESThub also provides a ``sprintf`` handlebars helper to use directly in your templates (cf. :ref:`sprintf-helper`):
@@ -1003,14 +1003,14 @@ RESThub Backbone stack include a console.js implementation responsible for
  * Creating console.* functions if they do not exists (old IE versions)
  * Optionnaly sending logs to the server, in order to make JS error tracking and debugging easier
 
- In order to send logs to the server, import console.js in your main.js (already done by default) :
+ In order to send logs to the server, import console.js in your main.js (already done by default):
 
 .. code-block:: javascript
 
     // Load our app module and pass it to our definition function
     require(['console', 'app']);
 
-In your app.js, you can define different console.level values, which define what log level will be sent to the server :
+In your app.js, you can define different console.level values, which define what log level will be sent to the server:
 
 .. code-block:: javascript
 
@@ -1022,13 +1022,13 @@ In your app.js, you can define different console.level values, which define what
 
 Javascript syntax error are also sent to the server with an error log level.
 
-You can customize the log server url :
+You can customize the log server url:
 
 .. code-block:: javascript
     
     console.serverUrl = 'api/log'; // Default value
 
-Log are sent thanks a POST request with the following JSON body :
+Log are sent thanks a POST request with the following JSON body:
 
 .. code-block:: javascript
     
@@ -1047,7 +1047,7 @@ Publishing and subscribing are globally scoped and allow to communicate between 
 API
 ---
 
-``Backbone.Events`` API was not modified : `documentation <http://backbonejs.org/#Events>`_
+``Backbone.Events`` API was not modified: `documentation <http://backbonejs.org/#Events>`_
 
 .. code-block:: javascript
  
@@ -1133,8 +1133,8 @@ Backbone Views events hash parsing has been extended to be capable of declaring 
     
 Please note that it is mandatory to prefix your global events with ``!`` to differenciate them from DOM events. You will always have to use the ``!`` prefix to reference events later (see :ref:`pubsub-usage` for samples).
 
-With this mechanism, PubSub subscribings are automatically declared on View construction, as DOM Events : **You don't have to call PubSub.on on these declared events**.
-In the same way, PubSub subscribings for this View are automatically removed during a Backbone ``dispose()`` method call : **You don't have either to call PubSub.off on these declared events**.
+With this mechanism, PubSub subscribings are automatically declared on View construction, as DOM Events: **You don't have to call PubSub.on on these declared events**.
+In the same way, PubSub subscribings for this View are automatically removed during a Backbone ``dispose()`` method call: **You don't have either to call PubSub.off on these declared events**.
 
 Obviously, it is still possible for you to explicitely call ``on`` and ``off`` in your view on other global events that you don't want to or you can't declare on events hash (e.g. for more dynamic needs). But don't forget to bind ``this` when declaring subscription:
 
@@ -1162,7 +1162,7 @@ validators** and **provides effective validators customization and extension mec
 to implement custom behaviour (before the validation, process all form values to set to model). The behaviour of `Backbone Validation`_ perfectly matches standard
 Backbone_ workflow through ``validate`` and ``isValid`` methods.
 
-**Model** : constraints definition:
+**Model**: constraints definition:
 
 .. code-block:: javascript
 
@@ -1203,7 +1203,7 @@ Backbone_ workflow through ``validate`` and ``isValid`` methods.
 
    });
 
-**HTML5 Form** :
+**HTML5 Form**:
 
 .. code-block:: html
 
@@ -1251,7 +1251,7 @@ Backbone_ workflow through ``validate`` and ``isValid`` methods.
    {{/with}}
 
 
-**View** : initialization and usage:
+**View**: initialization and usage:
 
 .. code-block:: javascript
 
@@ -1295,7 +1295,7 @@ You also natively beneficate of custom validation callbacks allowing to render v
 Backbone Query Parameters
 -------------------------
 
-Backbone_ routes management allows to define permet such routes :
+Backbone_ routes management allows to define permet such routes:
 ``"participants":"listParticipants"`` and ``"participants?:param":"listParticipantsParameters"``. But the native 
 behaviour seems not sufficient:
 
@@ -1309,7 +1309,7 @@ Expected behaviour was that the **map a single route to a method with an array o
 
 With this lib, included once and for all in the main router, You 'll get the following:
 
-**router.js** :
+**router.js**:
 
 .. code-block:: javascript
 
@@ -1335,7 +1335,7 @@ With this lib, included once and for all in the main router, You 'll get the fol
 Query parameters array is automatically recovered **without any further operation** and **whatever the number
 of these parameters**. It can then be passed to the view constructor for initialization:
 
-**list.js** :
+**list.js**:
 
 .. code-block:: javascript
 
@@ -1490,8 +1490,8 @@ Then, in the same file, we provide a parser to get the response back and initial
        return participants;
    }
 
-Finally, we change server call : this time the ``goTo`` method extend ``fetch`` and should be called instead
-(``views/participants/list.js``) :
+Finally, we change server call: this time the ``goTo`` method extend ``fetch`` and should be called instead
+(``views/participants/list.js``):
 
 .. code-block:: javascript
 
@@ -1570,7 +1570,7 @@ but executed only if there is no more callback to call. This gives:
    afterRemove:function (nbWaitingCallbacks) {
 
        // if there is still callbacks waiting, do nothing. Otherwise it means that all request have
-       // been performed : we can manage global behaviours
+       // been performed: we can manage global behaviours
        if (nbWaitingCallbacks == 0) {
            // do something
        }
@@ -1628,7 +1628,7 @@ interrupting your calls:
     * Callback called after all ajax deletion requests
     *
     * @param err always null because default behaviour break map on first error
-    * @param results array of fetched models : contain null value in cas of error
+    * @param results array of fetched models: contain null value in cas of error
     */
    afterRemove:function (err, results) {
 
@@ -1682,7 +1682,7 @@ Guidelines
 Collection View
 ---------------
 
-If you need to render a simple list of elements, just make a single view with an each loop in the template :
+If you need to render a simple list of elements, just make a single view with an each loop in the template:
 
 .. code-block:: html
 
@@ -1700,14 +1700,14 @@ You can see more details on the `Todo example <http://github.com/resthub/todo-ex
 Always specify the context for event binding
 --------------------------------------------
 
-In order to allow automatic cleanup when the View is removed, you should always specify the context when binding models or collection events :
+In order to allow automatic cleanup when the View is removed, you should always specify the context when binding models or collection events:
 
 .. code-block:: javascript
     
-    // BAD : no context specified - event bindings won't be cleaned when the view is removed
+    // BAD: no context specified - event bindings won't be cleaned when the view is removed
     Todos.on('all', this.render);
 
-    // GOOD : context will allow automatic cleanup when the view is removed
+    // GOOD: context will allow automatic cleanup when the view is removed
     Todos.on('all', this.render, this);
 
 You should also specify the model or collection attribute of your View to make it work.
@@ -1717,13 +1717,13 @@ Static versus instance variables
 
 If you want to create different View instances, you have to manage properly the DOM element where the view will be attached as described previously. You also have to use instance variables.
 
-Backbone way of declaring a static color variable :
+Backbone way of declaring a static color variable:
 
 .. code-block:: javascript
 
     var MyView = Resthub.View.extend({
 
-        color : '#FF0000',
+        color: '#FF0000',
 
         initialize: function(options) {
             this.$root = options.root;
@@ -1733,7 +1733,7 @@ Backbone way of declaring a static color variable :
     });
     return MyView;
 
-Backbone way of declaring an instance color variable :
+Backbone way of declaring an instance color variable:
 
 .. code-block:: javascript
 
@@ -1774,8 +1774,8 @@ As described by `k33g <https://twitter.com/#!/k33g_org>`_ on his `Gist Use Objec
 
     // Create a Human class by extending Kind
     var Human = Kind.extend({
-        toString : function() { console.log("hello : ", this); },
-        initialize : function (name) {
+        toString: function() { console.log("hello: ", this); },
+        initialize: function (name) {
             console.log("human constructor");
             this.name = name
         }
@@ -1783,7 +1783,7 @@ As described by `k33g <https://twitter.com/#!/k33g_org>`_ on his `Gist Use Objec
 
     // Call parent constructor
     var SomeOne = Human.extend({
-        initialize : function(name){
+        initialize: function(name){
             SomeOne.__super__.initialize.call(this, name);
         }
     });
@@ -1798,14 +1798,14 @@ As described by `k33g <https://twitter.com/#!/k33g_org>`_ on his `Gist Use Objec
 
     // Static members
     var Human = Kind.extend({
-        toString : function() { console.log("hello : ", this); },
-        initialize : function (name) {
+        toString: function() { console.log("hello: ", this); },
+        initialize: function (name) {
             console.log("human constructor");
             this.name = name
         }
     },{ //Static
-        counter : 0,
-        getCounter : function() { return this.counter; }
+        counter: 0,
+        getCounter: function() { return this.counter; }
     });
 
 Cache buster
