@@ -5,7 +5,7 @@ Identity manager
 Introduction
 ------------
 
-Identity Manager implements a User/Group/Role management service, that can be used in several ways :
+Identity Manager implements a User/Group/Role management service, that can be used in several ways:
 
 * As a standalone service (it provides a REST API)
 * In embedded mode (part of an existing Spring application)
@@ -27,7 +27,7 @@ User passwords are encrypted with Jasypt. You can configure the desired algorith
 Architecture
 ------------
 
-Identity Manager is a full autonomous RESTHub application, with its 3 layers :
+Identity Manager is a full autonomous RESTHub application, with its 3 layers:
 
 1. DAO layer
 2. Service layer
@@ -45,7 +45,7 @@ Identity Manager is a maven multi module project, containing:
 * resthub-identity-manager: depends on the core, adds a web.xml for deployment in Server Container, and an Javascript RIA application for administration purposes.
 * resthub-identity-acl: depends on the core, provides integration with SpringSecurity 3's ACL mechanism.
 
-Identity manager test users are :
+Identity manager test users are:
 
 * admin / 4dm|n
 * test / test

@@ -24,7 +24,7 @@ Prepare
         </server>
     </servers>
 
-Release resthub-backbone-stack :
+Release resthub-backbone-stack:
 
 .. code-block:: bash
 
@@ -41,7 +41,7 @@ Release resthub-backbone-stack :
     git push resthub master
     git push resthub master --tags
 
-Release resthub-spring-stack :
+Release resthub-spring-stack:
 
 .. code-block:: bash
 
@@ -58,7 +58,7 @@ Release resthub-spring-stack :
     git push resthub master
     git push resthub master --tags
 
-Release resthub-archetypes :
+Release resthub-archetypes:
 
 .. code-block:: bash
 
@@ -75,7 +75,7 @@ Release resthub-archetypes :
     git push resthub master
     git push resthub master --tags
 
-Release todo-example :
+Release todo-example:
 
 .. code-block:: bash
 
@@ -92,7 +92,7 @@ Release todo-example :
     git push
     git push --tags
 
-Release documentation :
+Release documentation:
 
 .. code-block:: bash
 
