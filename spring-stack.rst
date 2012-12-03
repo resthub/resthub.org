@@ -28,7 +28,7 @@ The whole RESThub 2.0 Spring stack `Javadoc <http://resthub.org/javadoc/2.0>`_ i
 Changelog
 =========
 
- * 2012-12-03: RESThub Spring stack 2.0.0 GA has been released!
+ * 2012-12-04: RESThub Spring stack 2.0.0 GA has been released!
  * 2012-11-13: RESThub Spring stack 2.0-rc4 has been released
  * 2012-10-24: RESThub Spring stack 2.0-rc3 has been released
  * 2012-10-22: `RESThub Spring stack 2.0-rc2 <https://github.com/resthub/resthub-spring-stack/issues?milestone=12&state=closed>`_ has been released
@@ -50,10 +50,10 @@ The easiest way to start is to use RESThub archetypes to create your first web a
 	mvn archetype:generate
 
 You will have to choose between the following RESThub archetypes:
-	* **resthub-jpa-backbonejs-archetype**: simple HTML5 web application with JPA persistence with 2 layers (repository / controller) architecture
-	* **resthub-mongodb-backbonejs-archetype**: simple HTML5 web application with MongoDB persistence with 2 layers (repository / controller) architecture
-	* **resthub-jpa-backbonejs-multi-archetype**: Multimodules HTML5 web application with JPA persistence with 3 layers (repository / service / controller) architecture
-	* **resthub-mongodb-backbonejs-multi-archetype**: Multimodules HTML5 web application with MongoDB persistence with 3 layers (repository / service / controller) architecture
+	* **resthub-jpa-backbonejs-archetype**: simple HTML5 web application with JPA persistence
+	* **resthub-mongodb-backbonejs-archetype**: simple HTML5 web application with MongoDB persistence
+	* **resthub-jpa-backbonejs-multi-archetype**: Multimodules HTML5 web application with JPA persistence
+	* **resthub-mongodb-backbonejs-multi-archetype**: Multimodules HTML5 web application with MongoDB persistence
  
 After choosing the right archetype and answering a few questions, your project is generated and ready to use.
 You can run it thanks to built-in Jetty support:
