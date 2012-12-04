@@ -28,7 +28,7 @@ The whole RESThub 2.0 Spring stack `Javadoc <http://resthub.org/javadoc/2.0>`_ i
 Changelog
 =========
 
- * 2012-12-04: RESThub Spring stack 2.0.0 GA has been released!
+ * 2012-12-04: `RESThub Spring stack 2.0.0 GA has been released <http://pullrequest.org/2012/12/04/resthub-2.html>`_!
  * 2012-11-13: RESThub Spring stack 2.0-rc4 has been released
  * 2012-10-24: RESThub Spring stack 2.0-rc3 has been released
  * 2012-10-22: `RESThub Spring stack 2.0-rc2 <https://github.com/resthub/resthub-spring-stack/issues?milestone=12&state=closed>`_ has been released
