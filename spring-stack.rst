@@ -28,7 +28,7 @@ The whole RESThub 2.0 Spring stack `Javadoc <http://resthub.org/javadoc/2.0>`_ i
 Changelog
 =========
 
- * 2012-11-28: RESThub Spring stack 2.0.0 GA has been released!
+ * 2012-12-04: RESThub Spring stack 2.0.0 GA has been released!
  * 2012-11-13: RESThub Spring stack 2.0-rc4 has been released
  * 2012-10-24: RESThub Spring stack 2.0-rc3 has been released
  * 2012-10-22: `RESThub Spring stack 2.0-rc2 <https://github.com/resthub/resthub-spring-stack/issues?milestone=12&state=closed>`_ has been released
@@ -81,12 +81,11 @@ RESThub stack based projects follow the "Maven standard" project layout:
 	* /src/main/webapp: your HTML, CSS and javascript files go there
  
 RESThub based applications usually use one of these 2 layouts:
-	* A single WAR project, usually for demo or small projects
+	* A single WAR project
  	* A multi-module project with the following sub-modules:
  		* myproject-webapp (WAR): it is your web application, it contains static resources, environment specific configuration and it declares dependencies to other modules in the pom.xml
  		* myproject-contract (JAR): contains your POJOs (Entities, DTO ...) and service interface. This module should be used by web client or RPC mechanism to know the public classes and interfaces of your application without retreiving all the implementation dependencies. As a consequence, if you need to add some implementation dependencies (usually needed for annotations), add them as optional Maven dependencies.
  		* myproject-core (JAR): your project implementation (controllers, service implementations, repositories)
- 		* myproject-client (JAR): optional REST client that should implement controller interface with an implementation based on resthub-web-client and myproject-contract.
 
 Check the `RESThub 2 Todo example application <https://github.com/resthub/todo-example>`_ source code to learn how to design your RESThub based web application.
  
@@ -378,13 +377,13 @@ RESThub is designed to give you the choice between a 2 layers (Controller -> Rep
 
 .. code-block:: java
 
-	@Named("webSampleResourceService")
-	public class WebSampleResourceServiceImpl extends CrudServiceImpl<Sample, Long, WebSampleResourceRepository>
-        implements WebSampleResourceService {
+	@Named("sampleService")
+	public class SampleServiceImpl extends CrudServiceImpl<Sample, Long, SampleRepository>
+        implements SampleService {
 
 	    @Override @Inject
-	    public void setRepository(WebSampleResourceRepository webSampleResourceRepository) {
-	        super.setRepository(webSampleResourceRepository);
+	    public void setRepository(SampleRepository sampleRepository) {
+	        super.setRepository(sampleRepository);
 	    }
 	}
 
