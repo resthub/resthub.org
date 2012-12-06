@@ -1142,8 +1142,138 @@ Obviously, it is still possible for you to explicitely call ``on`` and ``off`` i
 
    PubSub.on("!event", function () {...}, this);
 
+   
+.. _resthub-validation:
+   
+Resthub Validation features
+===========================
+
+General description
+
+
+Usage and lifecycle
+-------------------
+
+activate synchronization
+++++++++++++++++++++++++
+
+options
++++++++
+
+includes / excludes
+###################
+
+url
+###
+
+
+force synchronization
++++++++++++++++++++++
+
+
+Server constraints mapping
+--------------------------
+
+
+Supported constraints
++++++++++++++++++++++
+
+NotNull
+#######
+
+NotBlank or NotEmpty
+####################
+
+Null
+####
+
+AssertTrue
+##########
+
+AssertFalse
+###########
+
+Size
+####
+
+Min & DecimalMin
+################
+
+Max & DecimalMax
+################
+
+Pattern
+#######
+
+URL
+###
+
+options
+~~~~~~~
+
+Range
+#####
+
+Length
+######
+
+Email
+#####
+
+CreditCardNumber
+################
+
+
+Customize constraints definition
+--------------------------------
+
+
+Merging client and server constraints
++++++++++++++++++++++++++++++++++++++
+
+
+Overriding constraints
+++++++++++++++++++++++
+
+
+Adding custom constraints
++++++++++++++++++++++++++
+
+
+Messages and internationalization
+---------------------------------
+
+Default behaviour
++++++++++++++++++
+
+Change locale
++++++++++++++
+
+Customize locally (Model)
++++++++++++++++++++++++++
+
+Customize globally (Resthub.Validation)
++++++++++++++++++++++++++++++++++++++++
+
+
+Errors management
+-----------------
+
+Default behaviour
++++++++++++++++++
+
+Customize locally (Model)
++++++++++++++++++++++++++
+
+Customize globally (Resthub.Validation)
++++++++++++++++++++++++++++++++++++++++
+
+
+
 Other librairies included in the stack
 ======================================
+
+.. _backbone-validation:
 
 Backbone Validation
 -------------------
@@ -1290,7 +1420,11 @@ Backbone_ workflow through ``validate`` and ``isValid`` methods.
            ...
        }
 
-You also natively beneficate of custom validation callbacks allowing to render validation errors in a form structured with `Twitter Bootstrap`_.
+You also natively beneficate of custom validation callbacks allowing to render validation errors in a 
+form structured with `Twitter Bootstrap`_.
+
+Since the 2.1.0 version, Resthub provides **server to client validation bindings features** in order to define constraints
+only once. See :ref:`resthub-validation` for details.
 
 Backbone Query Parameters
 -------------------------
