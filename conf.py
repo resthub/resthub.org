@@ -158,5 +158,6 @@ html_sidebars = {
                  'sourcelink.html', 'searchbox.html']
 }
 
+html_title = "RESThub, your Spring + Backbone.js stack"
 html_short_title = "RESThub 2.0"
 
