@@ -874,11 +874,12 @@ Validation API
 In a RIA, form validation could be a heavy process because you have to implement validation on both client and server side
 of your application.
 
-To be able to build, on client side, a validation behaviour based on server side constraints definition, **Resthub publishes
+To be able to build, on client side, a validation behaviour based on server side constraints definition, **Resthub provides
 an API to export, for a given model class, the complete list of its constraints definitions**.
 
-Resthub spring stack integrates, for Java Bean validation purpose, the `JSR303 specification <http://beanvalidation.org/1.0/spec/>`_
-(BeanValidation) and its reference implementation `Hibernate Validator <http://docs.jboss.org/hibernate/validator/4.3/reference/en-US/html_single/>`_.
+Resthub Spring Stack integrates the `JSR303 specification <http://beanvalidation.org/1.0/spec/>`_ (BeanValidation) 
+and its reference implementation: `Hibernate Validator <http://docs.jboss.org/hibernate/validator/4.3/reference/en-US/html_single/>`_.
+
 These validations cosntraints are, in fact, annotation hold by a Java Bean Model. e.g :
 
 .. code-block:: java
@@ -887,6 +888,7 @@ These validations cosntraints are, in fact, annotation hold by a Java Bean Model
     public String getLogin() {
         return this.login;
     }
+
 
 All these constraints and their parameters are exported by Resthub Validation API.
 

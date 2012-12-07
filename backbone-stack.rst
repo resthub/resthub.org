@@ -1148,80 +1148,317 @@ Obviously, it is still possible for you to explicitely call ``on`` and ``off`` i
 Resthub Validation features
 ===========================
 
-General description
+Since 2.1.0, Resthub comes with custom server and client validation handlers allowing to export, via a dedicated API, the
+server side declared validation constraints (see `Spring Stack documentation <./spring-stack.html#validation-api>`_) and 
+to interpret these constraints in client side.
+
+This feature allows to define once (server side) your validation constraints that will be (if configured)
+automatically mapped in client side to effective `Backbone Validation`_ (see also :ref:`backbone-validation`)
+constraints.
+
+Server side declared constraint validations will thus fully reused and you won't have to 'clone' these
+constraints in client side.
 
 
-Usage and lifecycle
--------------------
+Usage
+-----
 
-activate synchronization
+This feature is available by default but not active unless explicit configuration.  
+
+Activate synchronization
 ++++++++++++++++++++++++
 
-options
-+++++++
+Before any server side validation constraint reuse on any of your client model, **you have to 
+implement or customize your model** ``initialize()`` **function** to call the ``Resthub.Validation`` namespace
+``synchronize`` function:   
+
+.. code-block:: javascript
+
+    var UserModel = Backbone.Model.extend({
+
+        className: 'org.resthub.validation.model.User',
+
+        initialize: function() {
+            Resthub.Validation.synchronize(UserModel);
+        }
+
+    });
+    
+    return UserModel;
+    
+
+This function takes the current model as a mandatory parameter. It accepts also two optional parameters: ``messages``
+(cf. :ref:`validation-messages`) and ``errorCallback`` (cf. :ref:`validation-errors`).
+    
+Lifecycle
++++++++++
+
+Doing this, all validation constraints will be **transparently synchronized from server during a model instantiation** 
+(i.e. ``new UserModel()``). A GET request will be thus sent to server with the given className
+to get server validation constraints.
+
+Resthub Validation optimizes this process by sending the GET request **only on the first model instantiation**. So
+constraints validation synchronization will only be performed on the first instantiation of a given model - deducted 
+Backbone Validation constraints will be **reused accross all instances of this model**.
+
+Note that the synchronization process will be **reset after a locale update** (see :ref:`validation-change-locale`) or
+could be **manually forced** (see below).
+
+Force synchronization
+#####################
+
+Synchronization of a given model (in fact, on a given class name) could be forced by using a dedicated Resthub.Validation
+namespace function: ``forceSynchroForClass``.
+
+.. code-block:: javascript
+
+    Resthub.Validation.forceSynchroForClass("org.resthub.validation.model.User");
+    
+    
+This function must be called with a mandatory parameter *className* corresponding to the declared model 
+className (see :ref:`validation-options`).
+
+This operation resets the synchronized information for the given className, this mean that **the GET request 
+(and constraint binding) will be sent again on the next model instantiation**.
+
+.. _validation-options:
+    
+Parameters & Options
+++++++++++++++++++++
+
+You can configure or parametrize Resthub Validation with a set of parameters and options.
+
+className
+#########
+
+Each model to be synchronized must hold a className attribute containing the complete qualified name of the
+corresponding Java class (i.e. package + name. see `Spring Stack documentation <./spring-stack.html#validation-api>`_).
+
+.. code-block:: javascript
+
+    var UserModel = Backbone.Model.extend({
+
+        className: 'org.resthub.validation.model.User',
+
+        ...
+        
+    });
+    
+    return UserModel;
+    
 
 includes / excludes
 ###################
 
-url
-###
+By default, all constraints exported by the server API are mapped and converted into Backbone Validation constraints
+and then added as active validation constraints in client side.
+
+You can configure this behaviour for each of your model by **specifying includes or excludes retrictions on it**. 
+
+Only properties name found in an **includes** array will be **mapped** :
+
+.. code-block:: javascript
+
+    var UserModel = Backbone.Model.extend({
+
+        className: 'org.resthub.validation.model.User',
+        includes: ['login', 'firstName', 'lastName'],
+
+        ...
+        
+    });
+    
+    return UserModel;
+    
+
+Each property name found in an **excludes** array will be **ignored** :
+
+.. code-block:: javascript
+
+    var UserModel = Backbone.Model.extend({
+
+        className: 'org.resthub.validation.model.User',
+        excludes: ['password'],
+
+        ...
+        
+    });
+    
+    return UserModel;
 
 
-force synchronization
-+++++++++++++++++++++
+API url
+#######
+
+The validation api base url can also be configured in Resthub.Validation namespace ``options.apiUrl`` object :
+
+.. code-block:: javascript
+
+    Resthub.Validation.options.apiUrl = 'new/url';
+    
+
+Default value is ``api/validation``.
 
 
 Server constraints mapping
 --------------------------
 
+Once all server validation constraints retrieved from server, Resthub Validation tries to map each constraint to
+a valid Backbone Validation constraint, if supported.
 
 Supported constraints
 +++++++++++++++++++++
 
+Supported constraints are described below. You will find in this chapter the description of the mapped constraints
+and the manner it is mapped to a Backbone Validation constraint.
+
+If the client receive a non supported server validation constraint, it will be ignored unless you provide a specific
+and custom constraint validator (see :ref:`validation-add-constraint`).
+
 NotNull
 #######
+
+    The property must not be undefined or null and, in case of String cannot be neither empty ("") 
+    nor blank ("   ").
 
 NotBlank or NotEmpty
 ####################
 
+    The property must not be undefined or null, in case of String cannot be neither empty ("") 
+    nor blank ("   "), in case of array cannot be empty.
+
 Null
 ####
+
+    The property must be null or undefined or, in case of String, empty ("") or blank ("   ").
 
 AssertTrue
 ##########
 
+    The property must be either a boolean to ``true`` or a String equals to ``"true"``.
+
+    null values are considered valid.
+
 AssertFalse
 ###########
+
+    The property must be either a boolean to ``false`` or a String different of ``"true"``.
 
 Size
 ####
 
-Min & DecimalMin
-################
+    The property must be a String or an array with size between the specified boundaries (included).
 
-Max & DecimalMax
-################
+    null values are considered valid.
+
+    parameters:
+        - *min*: size the property must be higher or equal to
+        - *max*: size the property must be lower or equal to
+
+
+Min
+###
+
+    The property must be an integer number whose value must be higher or equal to the specified minimum.
+
+    null values are considered valid.
+
+    parameters:
+        - *value*: value the property must be higher or equal to
+    
+DecimalMin
+##########
+
+    The property must be floating number whose value must be higher or equal to the specified minimum.
+
+    null values are considered valid.
+
+    parameters:
+        - *value*: value the property must be higher or equal to
+
+Max
+###
+
+    The property must be an integer number whose value must be lower or equal to the specified minimum.
+
+    null values are considered valid.
+
+    parameters:
+        - *value*: value the property must be lower or equal to
+
+DecimalMax
+##########
+
+    The property must be an integer number whose value must be lower or equal to the specified minimum.
+
+    null values are considered valid.
+
+    parameters:
+        - *value*: value the property must be lower or equal to
 
 Pattern
 #######
 
+    The property must match the specified regular expression.
+
+    null values are considered valid.
+
+    parameters:
+        - *regexp*: regular expression to match
+
 URL
 ###
 
+    The property must represent a valid URL. Parameters allow to verify specific parts of the parsed URL.
+    Per default the property must match ``/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[.\!\/\\w]*))?)/``
+
+    null values are considered valid.
+
+    parameters: 
+        - *protocol*: specify the protocol the property must match. Per default any protocol is allowed.
+        - *host*: specify the host regexp the property must match. Per default any host is allowed.
+        - *port*: specify the port the property must match. Per default any port is allowed.
+
+        
 options
 ~~~~~~~
 
+You can **customize URL validator pattern** to match by overriding ``Resthub.Validation.options.URL.pattern``: 
+
+.. code-block:: javascript:
+
+   Resthub.Validation.options.URL.pattern = /my pattern/; 
+
+   
 Range
 #####
 
+    The property must be numeric values or string representation of the numeric value with value between specified range.
+    
+    parameters: 
+        - *min*: value the property must be higher or equal to
+        - *max*: value the property must be lower or equal to
+
+        
 Length
 ######
+
+    The property must be a string with length between min and max included.
+    
+    parameters: 
+        - *min*: value the property length must be higher or equal to
+        - *max*: value the property length must be lower or equal to
+        
 
 Email
 #####
 
+    The property must be a valid email (see `Backbone Validation built in email pattern constraint <https://github.com/thedersen/backbone.validation#pattern>`_).
+
 CreditCardNumber
 ################
+
+    The property must be a valid credit card number according `Lunh algorithm <http://en.wikipedia.org/wiki/Luhn_algorithm>`_.
 
 
 Customize constraints definition
@@ -1235,16 +1472,20 @@ Merging client and server constraints
 Overriding constraints
 ++++++++++++++++++++++
 
+.. _validation-add-constraint
 
 Adding custom constraints
 +++++++++++++++++++++++++
 
+.. _validation-messages:
 
 Messages and internationalization
 ---------------------------------
 
 Default behaviour
 +++++++++++++++++
+
+.. _validation-change-locale:
 
 Change locale
 +++++++++++++
@@ -1255,6 +1496,7 @@ Customize locally (Model)
 Customize globally (Resthub.Validation)
 +++++++++++++++++++++++++++++++++++++++
 
+.. _validation-errors:
 
 Errors management
 -----------------
@@ -1847,7 +2089,7 @@ In order to allow automatic cleanup when the View is removed, you should always 
 You should also specify the model or collection attribute of your View to make it work.
 
 Static versus instance variables
--------------------------------
+--------------------------------
 
 If you want to create different View instances, you have to manage properly the DOM element where the view will be attached as described previously. You also have to use instance variables.
 
