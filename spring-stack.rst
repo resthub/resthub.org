@@ -96,7 +96,7 @@ Check the `RESThub 2 Todo example application <https://github.com/resthub/todo-e
  
 How to run the todo application:
  * Download the `zip file <https://github.com/resthub/todo-example/zipball/master>`_ and extract it
- * Install `MongoDB <http://www.mongodb.org/downloads>`_, create the data folder (C:\data\db by default) and run mondgod
+ * Install `MongoDB <http://www.mongodb.org/downloads>`_, create the data folder (C:\\data\\db or /data/db by default) and run mondgod
  * Run mvn jetty:run in the todo-example directory
  * Open your browser and browse http://localhost:8080/index.html
 
@@ -477,7 +477,7 @@ You can customize the default configuration by adding a database.properties reso
 
 RESThub JPA default properties are:
 	* dataSource.driverClassName = org.h2.Driver
-	* dataSource.url = jdbc:h2:mem:resthub;DB_CLOSE_DELAY=-1;MVCC=TRUE
+	* dataSource.url = jdbc\:h2\:mem\:resthub;DB_CLOSE_DELAY=-1;MVCC=TRUE
 	* dataSource.maxActive = 50
 	* dataSource.maxWait = 1000
 	* dataSource.poolPreparedStatements = true
@@ -526,7 +526,7 @@ In order to add it to your JPA based application, add these lines to your WebApp
     }
 
 When running the webapp, the database console will be available at http://localhost:8080/console/database/ URL with following parameters:
- * JDBC URL: jdbc:h2:mem:resthub
+ * JDBC URL:jdbc\:h2\:mem\:resthub
  * Username: sa
  * Password:
 
