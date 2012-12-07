@@ -1,7 +1,7 @@
 .. title:: RESThub
 
 .. image:: _static/spring+backbone.png
-	:align: center
+    :align: center
 
 Presentation
 ============
@@ -12,8 +12,7 @@ It provides tooling, libraries and documentation in order to build modular web a
 Feel free to contact us on `RESThub discussion group <https://groups.google.com/forum/?fromgroups=#!forum/resthub-dev>`_.
 
 .. image:: _static/architecture-overview.png
-	:align: center
-	
+    :align: center
 
 Table of contents
 =================
@@ -23,5 +22,3 @@ Table of contents
 
     spring-stack
     backbone-stack
-    
-	
