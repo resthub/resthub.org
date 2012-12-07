@@ -1184,8 +1184,6 @@ implement or customize your model** ``initialize()`` **function** to call the ``
 
     });
     
-    return UserModel;
-    
 
 This function takes the current model as a mandatory parameter. It accepts also two optional parameters: ``messages``
 (cf. :ref:`validation-messages`) and ``errorCallback`` (cf. :ref:`validation-errors`).
@@ -1244,8 +1242,6 @@ corresponding Java class (i.e. package + name. see `Spring Stack documentation <
         
     });
     
-    return UserModel;
-    
 
 includes / excludes
 ###################
@@ -1268,8 +1264,6 @@ Only properties name found in an **includes** array will be **mapped** :
         
     });
     
-    return UserModel;
-    
 
 Each property name found in an **excludes** array will be **ignored** :
 
@@ -1283,8 +1277,6 @@ Each property name found in an **excludes** array will be **ignored** :
         ...
         
     });
-    
-    return UserModel;
 
 
 API url
@@ -1470,34 +1462,34 @@ constraints synchronized from server or adding custom constraint mapper for a sp
 Adding client constraints
 +++++++++++++++++++++++++
 
-You can provide additional client constraints as usual in a standard Backbone Validation way. This client specific 
-constraints will then be merged with synchronized server constraints : 
+You can **provide additional client constraints** as usual in a standard Backbone Validation way. This client specific 
+constraints will then be merged with synchronized server constraints: 
+
 
 .. code-block:: javascript
 
-    var UserModel = Backbone.Model.extend({
+   var UserModel = Backbone.Model.extend({
 
-        className: 'org.resthub.validation.model.User',
+       className: 'org.resthub.validation.model.User',
 
-        initialize: function() {
-            Resthub.Validation.synchronize(UserModel);
-        },
+       initialize: function() {
+           Resthub.Validation.synchronize(UserModel);
+       },
 
-        validation: {
-            confirmPassword: {
-                equalTo: 'password'
-            }
-        }
-
-    });
-    return UserModel;
+       validation: {
+           confirmPassword: {
+               equalTo: 'password'
+           }
+       }
+   });
 
 
 Overriding constraints
 ++++++++++++++++++++++
 
-You can also override a property constraint already synchronized from server : client constraint will only
+You can also **override a property constraint already synchronized from server** : client constraint will only
 be keeped: 
+
 
 .. code-block:: javascript
 
@@ -1515,14 +1507,44 @@ be keeped:
                 pattern: \my pattern\
             }
         }
-
     });
-    return UserModel;
+    
 
-.. _validation-add-constraint
+.. _validation-add-constraint:
 
 Adding custom constraints
 +++++++++++++++++++++++++
+
+If provided a custom JSR303 compliant validation annotation on server side, you can easily add a custom client validator
+for your custom constraint with a dedicated Resthub Validation API allowing to define a new validator or override an 
+existing one and retrieve an existing validator: 
+
+.. code-block:: javascript
+
+    // add or replace the validator associated to the given constraintType.
+    // validator parameter should be a function
+    ResthubValidation.addValidator = function(constraintType, validator) {
+        validators[constraintType] = validator;
+    };
+
+    // retrieve the validator associated to a given constraint type
+    ResthubValidation.getValidator = function(constraintType) {
+        return validators[constraintType];
+    };
+
+
+To map your new constraint, you only have to declare a new validator associated to your constraint type (the annotation
+name in server side) : 
+
+.. code-block:: javascript
+
+    Resthub.Validation.addValidator('TelephoneNumber', function(constraint, msg) {
+        return {
+            pattern: /^[+]?([0-9]*[\\.\\s\\-\\(\\)]|[0-9]+){6,24}$/,
+            msg: msg
+        };
+    });
+    
 
 .. _validation-messages:
 
