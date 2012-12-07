@@ -1464,13 +1464,60 @@ CreditCardNumber
 Customize constraints definition
 --------------------------------
 
+Once synchronized, model validation constraints can be customized by adding specific client validation, overriding
+constraints synchronized from server or adding custom constraint mapper for a specific BeanValidation server constraint.
 
-Merging client and server constraints
-+++++++++++++++++++++++++++++++++++++
+Adding client constraints
++++++++++++++++++++++++++
+
+You can provide additional client constraints as usual in a standard Backbone Validation way. This client specific 
+constraints will then be merged with synchronized server constraints : 
+
+.. code-block:: javascript
+
+    var UserModel = Backbone.Model.extend({
+
+        className: 'org.resthub.validation.model.User',
+
+        initialize: function() {
+            Resthub.Validation.synchronize(UserModel);
+        },
+
+        validation: {
+            confirmPassword: {
+                equalTo: 'password'
+            }
+        }
+
+    });
+    return UserModel;
 
 
 Overriding constraints
 ++++++++++++++++++++++
+
+You can also override a property constraint already synchronized from server : client constraint will only
+be keeped: 
+
+.. code-block:: javascript
+
+    var UserModel = Backbone.Model.extend({
+
+        className: 'org.resthub.validation.model.User',
+
+        initialize: function() {
+            Resthub.Validation.synchronize(UserModel);
+        },
+
+        validation: {
+            email: {
+                required: true,
+                pattern: \my pattern\
+            }
+        }
+
+    });
+    return UserModel;
 
 .. _validation-add-constraint
 
