@@ -522,7 +522,7 @@ In order to add it to your JPA based application, add these lines to your WebApp
     }
 
 When running the webapp, the database console will be available at http://localhost:8080/console/database/ URL with following parameters:
-    * JDBC URL:jdbc\:h2\:mem\:resthub
+    * JDBC URL: jdbc\:h2\:mem\:resthub
     * Username: sa
     * Password:
 
