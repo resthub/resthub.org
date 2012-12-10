@@ -58,7 +58,7 @@ Do:
 
         });
 
-3. **Instantiate a task in main.js with attributes title and description**
+3. **Instantiate a task in app.js with attributes title and description**
 
     .. code-block:: javascript
 
