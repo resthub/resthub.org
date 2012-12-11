@@ -291,7 +291,7 @@ RESThub provides a default implementation that will render your template with **
 
 .. code-block:: javascript
 
-    define(['underscore', 'backbone', 'hbs!template/my'], function(_, Backbone, myTemplate){
+    define(['underscore', 'resthub', 'hbs!template/my'], function(_, Resthub, myTemplate){
         var MyView = Resthub.View.extend({
             
             template: myTemplate,
@@ -532,7 +532,7 @@ Sample usage in a Backbone.js View:
 
 .. code-block:: javascript
 
-    define(['jquery', 'backbone', 'hbs!template/todo'],function($, Backbone, todoTmpl) {
+    define(['jquery', 'resthub', 'hbs!template/todo'],function($, Resthub, todoTmpl) {
         var TodoView = Resthub.View.extend({
 
         //... is a list tag.
@@ -1168,11 +1168,7 @@ Backbone_ workflow through ``validate`` and ``isValid`` methods.
 
 .. code-block:: javascript
 
-   define([
-       'underscore',
-       'backbone',
-       'resthub-backbone-validation'
-   ], function (_, Backbone) {
+   define(['underscore', 'backbone'], function (_, Backbone) {
 
        /**
         * Definition of a Participant model object
