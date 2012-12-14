@@ -151,8 +151,9 @@ Here's the default main.js file:
 
 .. code-block:: javascript
 
+    //Set the require.js configuration for your application.
     require.config({
-
+    
         shim: {
             'underscore': {
                 exports: '_'
@@ -207,14 +208,14 @@ Here's the default main.js file:
                 exports: 'async'
             }
         },
-
+    
         // Libraries
         paths: {
             jquery: 'lib/jquery',
             underscore: 'lib/underscore',
             'underscore-string': 'lib/underscore-string',
-            'backbone-orig': 'lib/backbone',
-            backbone: 'lib/resthub/backbone-resthub',
+            backbone: 'lib/backbone',
+            resthub: 'lib/resthub/resthub',
             localstorage: 'lib/localstorage',
             text: 'lib/text',
             i18n: 'lib/i18n',
@@ -231,13 +232,14 @@ Here's the default main.js file:
             async: 'lib/async',
             keymaster: 'lib/keymaster',
             hbs: 'lib/resthub/require-handlebars',
-            'moment': 'lib/moment',
-            template: '../template'
+            moment: 'lib/moment',
+            template: '../template',
+            console: 'lib/resthub/console'
         }
     });
-
+    
     // Load our app module and pass it to our definition function
-    require(['app']);
+    require(['console', 'app']);
 
 **shim** config is part of `Require 2.0`_ and allows to `Configure the dependencies and exports for older, traditional "browser globals" scripts that do not use define() to declare the dependencies and set a module value`. See `<http://requirejs.org/docs/api.html#config-shim>`_ for more details.
 
@@ -289,7 +291,7 @@ RESThub provides a default implementation that will render your template with **
 
 .. code-block:: javascript
 
-    define(['underscore', 'backbone', 'hbs!template/my'], function(_, Backbone, myTemplate){
+    define(['underscore', 'resthub', 'hbs!template/my'], function(_, Resthub, myTemplate){
         var MyView = Resthub.View.extend({
             
             template: myTemplate,
@@ -530,7 +532,7 @@ Sample usage in a Backbone.js View:
 
 .. code-block:: javascript
 
-    define(['jquery', 'backbone', 'hbs!template/todo'],function($, Backbone, todoTmpl) {
+    define(['jquery', 'resthub', 'hbs!template/todo'],function($, Resthub, todoTmpl) {
         var TodoView = Resthub.View.extend({
 
         //... is a list tag.
@@ -1888,11 +1890,7 @@ Backbone_ workflow through ``validate`` and ``isValid`` methods.
 
 .. code-block:: javascript
 
-   define([
-       'underscore',
-       'backbone',
-       'resthub-backbone-validation'
-   ], function (_, Backbone) {
+   define(['underscore', 'backbone'], function (_, Backbone) {
 
        /**
         * Definition of a Participant model object
