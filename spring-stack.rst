@@ -95,7 +95,7 @@ RESThub based applications usually use one of these 2 layouts:
 Check the `RESThub 2 Todo example application <https://github.com/resthub/todo-example>`_ source code to learn how to design your RESThub based web application.
  
 How to run the todo application:
-    * Download the `zip file <https://github.com/resthub/todo-example/zipball/master>`_ and extract it
+    * Download the `zip file <https://github.com/resthub/todo-backbone-example/zipball/master>`_ and extract it
     * Install `MongoDB <http://www.mongodb.org/downloads>`_, create the data folder (C:\\data\\db or /data/db by default) and run mondgod
     * Run mvn jetty:run in the todo-example directory
     * Open your browser and browse http://localhost:8080/index.html
@@ -857,7 +857,7 @@ used to send the OAuth token.
 
     Client httpClient = new Client().setOAuth2Builder(builder);
     String result = httpClient.url("http://.../api/sample").get().getBody();
- 
+
 Testing
 =======
 
