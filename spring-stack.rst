@@ -97,7 +97,7 @@ Check the `RESThub 2 Todo example application <https://github.com/resthub/todo-e
 How to run the todo application:
     * Download the `zip file <https://github.com/resthub/todo-backbone-example/zipball/master>`_ and extract it
     * Install `MongoDB <http://www.mongodb.org/downloads>`_, create the data folder (C:\\data\\db or /data/db by default) and run mondgod
-    * Run mvn jetty:run in the todo-example directory
+    * Run mvn jetty:run in the todo-backbone-example directory
     * Open your browser and browse http://localhost:8080/index.html
 
 Configuration
