@@ -858,8 +858,6 @@ used to send the OAuth token.
     Client httpClient = new Client().setOAuth2Builder(builder);
     String result = httpClient.url("http://.../api/sample").get().getBody();
 
-<<<<<<< HEAD
-
 Validation API
 ==============
 
@@ -1042,9 +1040,6 @@ As `Hibernate Validator <http://docs.jboss.org/hibernate/validator/4.3/reference
 Hibernate Validators constraints which format are JSR303 compliant are also supported. More globally, **any extension of JSR303 specification
 would be supported** if the standard BeanValidation constraint definition API is used.
 
-    
-=======
->>>>>>> 5a3ddc13fb0c06509f2fd81e397bb342124c37b7
 Testing
 =======
 
