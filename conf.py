@@ -159,5 +159,5 @@ html_sidebars = {
 }
 
 html_title = "RESThub, your Spring + Backbone.js stack"
-html_short_title = "RESThub 2.0"
+html_short_title = "RESThub 2.1"
 
