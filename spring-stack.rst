@@ -23,6 +23,23 @@ It provides the following modules:
     * **resthub-web-server**: generic REST webservices support based on Spring MVC 3.1 including exception mapping to HTTP status codes
     * **resthub-web-client**: simple to use HTTP client based on AyncHttpClient
 
+Released artifacts are available from `Maven Central <http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.resthub%22>`_ and will be automatically found without adding any additional repository.
+
+Snapshot artifacts are available from `Sonatype OSS Snapshot repository <https://oss.sonatype.org/content/repositories/snapshots/org/resthub>`_. In order to use it for your projects, you should add the following element to your pom.xml :
+
+.. code-block:: xml
+
+    <repositories>
+        <repository>
+            <id>snapshot</id>
+             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+
 The whole RESThub 2.0 Spring stack `Javadoc <http://resthub.org/javadoc/2.0>`_ is available.
 
 Changelog
@@ -740,6 +757,55 @@ With sluggable behaviour we have URL lke GET /sample/niceref.
 
     Be aware that when you override a Spring MVC controller method, your new method automatically reuse method level annotations from parent classes, but not parameter level annotations. That's why you need to specify parameters annotations again in order to make it work, like in the previous code sample.
 
+Custom JSON Views
+-----------------
+
+Spring MVC provides out-of-the-box support for returning your domain model in JSON, using Jackson under the covers. However, often you may find that you want to return different views of the data, depending on the method that is invoked.  Thanks to RESThub support for custom JSON views (based on `Marty Pitt implementation <http://martypitt.wordpress.com/2012/11/05/custom-json-views-with-spring-mvc-and-jackson/>`_), it is possible easily.
+
+Usual use cases for using custom JSON Views are :
+ * Fix serialization issues in a flexible way (not like @JsonIgnore or @JsonBackReference annotation) for children-parent relations
+ * Avoid loading too much data when used with JPA lazy loading + OpenSessionInView filter
+ * Sometimes avoid to send some information to the client, for example a password field for a User class (needed in BO but not in FO for security reasons)
+
+In order to use it, just add one or more JsonView interfaces (usually declared in the same java file than your domain class), in our case SummaryView. Please have a look to `Jackson JsonView documentation <http://wiki.fasterxml.com/JacksonJsonViews>`_ for more details.
+
+.. code-block:: java
+
+    public class Book {
+
+        @JsonView(SummaryView.class)
+        private Integer id;
+
+        private String title;
+
+        @JsonView(SummaryView.class)
+        private String author;
+
+        private String review;
+
+        public static interface SummaryView {}
+    }
+
+
+Usage for the JsonView is activated on a per controller method or class basis with the @ResponseView annotation like bellow :
+
+.. code-block:: java
+
+    @RequestMapping("{id}/summary")
+    @ResponseView(Book.SummaryView.class)
+    public @ResponseBody Book getSummary(@PathVariable("id") Integer id)
+    {
+        return data.get(id - 1);
+    }
+
+    @RequestMapping("{id}")
+    public @ResponseBody Book getDetail(@PathVariable("id") Integer id)
+    {
+        return data.get(id - 1);
+    }
+
+The first method getSummary() will only serialize id and author properties, and getDetail() will serialize all properties. It also work on collection (List<Book> for example).
+
 Model and DTOs with ModelMapper
 -------------------------------
 
@@ -776,6 +842,7 @@ POST api/logs webservice expect this kind of body:
 
     [{"level":"warn","message":"log message 1","time":"2012-11-13T08:18:53.342Z"},
     {"level":"info","message":"log message 1","time":"2012-11-13T08:18:52.972Z"}]
+
 
 Web client
 ==========
