@@ -931,13 +931,13 @@ Validation API
 In a RIA, form validation could be a heavy process because you have to implement validation on both client and server side
 of your application.
 
-To be able to build, on client side, a validation behaviour based on server side constraints definition, **Resthub provides
+To be able to build, on the client side, a validation behaviour based on server side constraints definition, **RESThub provides
 an API to export, for a given model class, the complete list of its constraints definitions**.
 
-Resthub Spring Stack integrates the `JSR303 specification <http://beanvalidation.org/1.0/spec/>`_ (BeanValidation) 
+RESThub Spring Stack integrates the `JSR303 specification <http://beanvalidation.org/1.0/spec/>`_ (BeanValidation) 
 and its reference implementation: `Hibernate Validator <http://docs.jboss.org/hibernate/validator/4.3/reference/en-US/html_single/>`_.
 
-These validations cosntraints are, in fact, annotation hold by a Java Bean Model. e.g :
+These validations constraints are, in fact, annotations held by a Java Bean Model. e.g :
 
 .. code-block:: java
 
@@ -947,9 +947,9 @@ These validations cosntraints are, in fact, annotation hold by a Java Bean Model
     }
 
 
-All these constraints and their parameters are exported by Resthub Validation API.
+All these constraints and their parameters are exported by RESThub Validation API.
 
-Resthub provides, in client side, a full support of this API to implement client side validation natively 
+RESThub provides, on the client side, a full support of this API to implement client side validation natively 
 (see `Backbone Stack documentation <./backbone-stack.html#resthub-validation-features>`_).
     
 
@@ -993,7 +993,7 @@ Validation REST API can then be reached through ``/api/validation`` but takes so
 2. **locale**
 
    As an optional request parameter, the API takes the locale string indicating your internationalization preferences. You can
-   then provide a valid i18n locale string to choose the disired message locale.
+   then provide a valid i18n locale string to choose the desired message locale.
    
    e.g : http://localhost:8181/api/validation/org.resthub.validation.model.User?locale=en-us
    
@@ -1100,10 +1100,10 @@ The response format could be XML or JSON and contains the following:
 Supported annotations
 ---------------------
 
-Resthub Validation API is based on `JSR303 specification <http://beanvalidation.org/1.0/spec/>`_ (BeanValidation) Validation constraints. **Any standard BeanValidation
+RESThub Validation API is based on `JSR303 specification <http://beanvalidation.org/1.0/spec/>`_ (BeanValidation) Validation constraints. **Any standard BeanValidation
 Constraint is supported** (and exported) by this API.
 
-As `Hibernate Validator <http://docs.jboss.org/hibernate/validator/4.3/reference/en-US/html_single/>`_ is used as BeanValidation implementation, Resthub Validation also exports and supports specific
+As `Hibernate Validator <http://docs.jboss.org/hibernate/validator/4.3/reference/en-US/html_single/>`_ is used as BeanValidation implementation, RESThub Validation also exports and supports specific
 Hibernate Validators constraints which format are JSR303 compliant are also supported. More globally, **any extension of JSR303 specification
 would be supported** if the standard BeanValidation constraint definition API is used.
 
