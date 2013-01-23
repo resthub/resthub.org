@@ -1141,16 +1141,16 @@ Obviously, it is still possible for you to explicitely call ``on`` and ``off`` i
 Resthub Validation features
 ===========================
 
-Since 2.1.0, Resthub comes with custom server and client validation handlers allowing to export, via a dedicated API, the
+Since 2.1.0, RESThub comes with custom server and client validation handlers allowing to export, via a dedicated API, the
 server side declared validation constraints (see `Spring Stack documentation <./spring-stack.html#validation-api>`_) and 
-to interpret these constraints in client side.
+to interpret these constraints on the client side.
 
 This feature allows to define once (server side) your validation constraints that will be (if configured)
-automatically mapped in client side to effective `Backbone Validation`_ (see also :ref:`backbone-validation`)
+automatically mapped on the client side to effective `Backbone Validation`_ (see also :ref:`backbone-validation`)
 constraints.
 
-Server side declared constraint validations will thus fully reused and you won't have to 'clone' these
-constraints in client side.
+Server side declared constraint validations will thus be fully reused and you won't have to 'clone' these
+constraints on the client side.
 
 
 Usage
@@ -1161,7 +1161,7 @@ This feature is available by default but not active unless explicit configuratio
 Activate synchronization
 ++++++++++++++++++++++++
 
-Before any server side validation constraint reuse on any of your client model, **you have to 
+Before any server side validation constraint reuse on any of your client models, **you have to 
 implement or customize your model** ``initialize()`` **function** to call the ``Resthub.Validation`` namespace
 ``synchronize`` function:   
 
@@ -1185,7 +1185,7 @@ This function takes the current model as a mandatory parameter. It accepts also 
 Activate Backbone Validation in views
 +++++++++++++++++++++++++++++++++++++
 
-resthub Validation will be effective only if Backbone Validation is correctly configured in view 
+RESThub Validation will be effective only if Backbone Validation is correctly configured in view 
 (see :ref:`backbone-validation`). For instance: 
 
 .. code-block:: javascript
@@ -1227,7 +1227,7 @@ resthub Validation will be effective only if Backbone Validation is correctly co
     });
     
     
-This code sample is taken from a complete validation sample that you can found 
+This code sample is taken from a complete validation sample that you can find 
 `here <https://github.com/bmeurant/resthub-validation-sample>`_. Don't hesitate to checkout this sample
 to see working samples.
 
@@ -1236,12 +1236,12 @@ to see working samples.
 Lifecycle
 +++++++++
 
-Doing this, all validation constraints will be **transparently synchronized from server during a model instantiation** 
-(i.e. ``new UserModel()``). A GET request will be thus sent to server with the given className
+Doing this, all validation constraints will be **transparently synchronized from the server during a model instantiation** 
+(i.e. ``new UserModel()``). A GET request will be thus sent to the server with the given className
 to get server validation constraints.
 
 Resthub Validation optimizes this process by sending the GET request **only on the first model instantiation**. So
-constraints validation synchronization will only be performed on the first instantiation of a given model - deducted 
+constraints validation synchronization will only be performed on the first instantiation of a given model - deduced 
 Backbone Validation constraints will be **reused accross all instances of this model**.
 
 Note that the synchronization process will be **reset after a locale update** (see :ref:`validation-change-locale`) or
@@ -1269,7 +1269,7 @@ This operation resets the synchronized information for the given className, this
 Parameters & Options
 ++++++++++++++++++++
 
-You can configure or parametrize Resthub Validation with a set of parameters and options.
+You can configure or parametrize RESThub Validation with a set of parameters and options.
 
 API url
 #######
@@ -1332,7 +1332,7 @@ includes / excludes
 ###################
 
 By default, **all constraints exported by the server API are mapped** and converted into Backbone Validation constraints
-and then added as active validation constraints in client side.
+and then added as active validation constraints on the client side.
 
 You can configure this behaviour **for each of your model by specifying includes or excludes retrictions on it**. 
 
@@ -1375,7 +1375,7 @@ Each property name found in an **excludes** array will be **ignored** :
 Server constraints mapping
 --------------------------
 
-Once all server validation constraints retrieved from server, Resthub Validation tries to map each constraint to
+Once all server validation constraints retrieved from server, RESThub Validation tries to map each constraint to
 a valid Backbone Validation constraint, if supported.
 
 .. _validation-supported-constraints:
@@ -1384,7 +1384,7 @@ Supported constraints
 +++++++++++++++++++++
 
 Supported constraints are described below. You will find in this chapter the description of the mapped constraints
-and the manner it is mapped to a Backbone Validation constraint.
+and the way it is mapped to a Backbone Validation constraint.
 
 If the client receive a non supported server validation constraint, it will be ignored unless you provide a specific
 and custom constraint validator (see :ref:`validation-add-constraint`).
@@ -1569,8 +1569,8 @@ constraints **will then be merged** with synchronized server constraints:
 Overriding constraints
 ++++++++++++++++++++++
 
-You can also **override a property constraint already synchronized from server** : client constraint will only
-be keeped: 
+You can also **override a property constraint already synchronized from server** : only the client constraint will
+be kept: 
 
 
 .. code-block:: javascript
@@ -1597,8 +1597,8 @@ be keeped:
 Adding custom constraints
 +++++++++++++++++++++++++
 
-If provided a custom JSR303 compliant validation annotation on server side, you can easily add a custom client validator
-for your custom constraint with a dedicated Resthub Validation API allowing to **define a new validator or override an 
+If provided a custom JSR303 compliant validation annotation on the server side, you can easily add a custom client validator
+for your custom constraint with a dedicated RESThub Validation API allowing to **define a new validator or override an 
 existing one** and retrieve an existing validator: 
 
 .. code-block:: javascript
@@ -1702,7 +1702,7 @@ e.g. :
     },
     
     
-If a messages object is provided, globally or locally (see below), Resthub Validation will check if the current
+If a messages object is provided, globally or locally (see below), RESThub Validation will check if the current
 constraint exists in messages and affect this message value to the corresponding built Backbone Validation
 constraint. If the key does not exist, the default message returned by server is returned.
       
