@@ -269,7 +269,7 @@ Find:
 
 1. **Backbone events documentation and model events catalog**
 
-    see `<http://backbonejs.org/#Events>`_ and `<http://backbonejs.org/#FAQ-events>`_ 
+    see `<http://backbonejs.org/#Events>`_ and `<http://backbonejs.org/#Events-catalog>`_ 
       
       
 Do:

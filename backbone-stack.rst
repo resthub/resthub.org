@@ -2466,7 +2466,7 @@ this.$() is a shortcut for this.$el.find(). You should use it for all your view 
 Events
 ------
 
-Backbone default event list is available `here <http://backbonejs.org/#FAQ-events>`_.
+Backbone default event list is available `here <http://backbonejs.org/#Events-catalog>`_.
 
 Inheritance
 -----------
