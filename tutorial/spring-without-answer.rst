@@ -141,12 +141,12 @@ Let's try to implement a ``findByName`` implementation that returns a Task based
 Do:
 +++
 
-1. **Modify** ``TaskController.java`` **to add a new method called** ``findByName`` **with a name parameter mapped to** ``/api/task/name/{name}``.
+1. **Modify** ``TaskController.java`` **to add a new method called** ``findByTitle`` **with a name parameter mapped to** ``/api/task/title/{title}``.
 
    **Tip:** Consider using ``@ResponseBody`` annotation (see `<http://static.springsource.org/spring/docs/current/spring-framework-reference/html/mvc.html#mvc-ann-responsebody>`_)
 
    Implement this by adding a new repository method (see `Spring Data JPA documentation <http://static.springsource.org/spring-data/data-jpa/docs/current/api/>`_).
-   Check on your browser that `<http://localhost:8080/api/task/name/{name}>`_ with an existing name works.
+   Check on your browser that `<http://localhost:8080/api/task/title/{title}>`_ with an existing title works.
    
    e.g.
 
@@ -161,7 +161,7 @@ Do:
 Test your controller
 ++++++++++++++++++++
 
-We are going to test our new controller ``findByName`` method.
+We are going to test our new controller ``findByTitle`` method.
 
 Find:
 #####

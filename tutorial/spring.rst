@@ -55,7 +55,7 @@ Find:
         - Spring Data JPA: `reference <http://static.springsource.org/spring-data/data-jpa/docs/current/reference/html/>`_ and `Javadoc <http://static.springsource.org/spring-data/data-jpa/docs/current/api/>`_
         - Spring Data MongoDB: `reference <http://static.springsource.org/spring-data/data-mongodb/docs/current/reference/html/>`_ and `Javadoc <http://static.springsource.org/spring-data/data-mongodb/docs/current/api/>`_
     - Hibernate ORM and JPA: `reference <http://docs.jboss.org/hibernate/orm/4.1/manual/en-US/html_single/>`_ and `Javadoc <http://docs.jboss.org/hibernate/orm/4.1/javadocs/>`_
-    - Spring MVC 3.1: `reference <http://static.springsource.org/spring-data/data-mongodb/docs/current/reference/html/>`_
+    - Spring MVC: `reference <http://static.springsource.org/spring-data/data-mongodb/docs/current/reference/html/>`_
     - Spring MVC Router: `reference <https://github.com/resthub/springmvc-router>`_
     - Jackson 2.1: `reference <http://wiki.fasterxml.com/JacksonDocumentation>`_ and `Javadoc <http://wiki.fasterxml.com/JacksonJavaDocs>`_
     - AsyncHttpClient: `reference <https://github.com/sonatype/async-http-client>`_ and `Javadoc <http://sonatype.github.com/async-http-client/apidocs/reference/packages.html>`_
@@ -75,7 +75,7 @@ Do:
        As described in `Resthub documentation <http://resthub.org/2/getting-started.html>`_, create your local project by executing 
        ``mvn archetype:generate -DarchetypeCatalog=http://nexus.pullrequest.org/content/repositories/releases/`` in your `training` directory.
 
-       - When **archetype** prompt, choose `1`: `org.resthub:resthub-jpa-webservice-archetype`. or 2 if you want also that a basic resthub-backbone-stack project
+       - When **archetype** prompt, choose `org.resthub:resthub-jpa-webservice-archetype`. or `org.resthub:resthub-jpa-backbonejs-archetype` if you want also that a basic resthub-backbone-stack project
          will be generated. Enter
        - When **groupId** prompt, choose your `groupId`: `org.resthub.training`. Enter
        - When **artifactId** prompt, choose your `artifactId`: `jpa-webservice`. Enter
@@ -182,7 +182,7 @@ Answer:
 
 1. **How is wrapped the list of all existing tasks?**
     
-    A ``GET`` request on `<http://localhost:8080/api/task?page=all>`_ shows that the list of all existing tasks is **wrapped into a Pagination object** `PageImpl`.
+    A ``GET`` request on `<http://localhost:8080/api/task>`_ shows that the list of all existing tasks is **wrapped into a Pagination object** `PageImpl`.
     
 2. **How to get a single task?**
     
@@ -225,25 +225,30 @@ Let's try to implement a ``findByName`` implementation that returns a Task based
 Do:
 +++
 
-1. **Modify** ``TaskController.java`` **to add a new method called** ``findByName``  **with a name parameter mapped to** ``/api/task/name/{name}`` returning a single task element if exists.
+1. **Modify** ``TaskController.java`` **to add a new method called** ``findByTitle``  **with a name parameter mapped to** ``/api/task/title/{title}`` returning a single task element if exists.
 
-  Implementation is done by adding a new repository findByName() method (see `<http://static.springsource.org/spring-data/data-jpa/docs/current/api/org/springframework/data/jpa/repository/JpaRepository.html#findAll()>`_) in interface.
-  
+  **Tip:** Consider using ``@ResponseBody`` annotation (see `<http://static.springsource.org/spring/docs/current/spring-framework-reference/html/mvc.html#mvc-ann-responsebody>`_)
+
+  Implement this by adding a new repository method (see `Spring Data JPA documentation <http://static.springsource.org/spring-data/data-jpa/docs/current/api/>`_).
+  Check on your browser that `<http://localhost:8080/api/task/title/{title}>`_ with an existing title works.
+   
+  e.g.
+   
   .. code-block:: Java
     
-    Task findByName(String name);
+    Task findByTitle(String title);
   
 
   And in controller: 
   
   .. code-block:: Java
     
-    @RequestMapping(value = "name/{name}", method = RequestMethod.GET) @ResponseBody
-    public Task searchByName(@PathVariable String name) {
-      return this.repository.findByName(name);
+    @RequestMapping(value = "title/{title}", method = RequestMethod.GET) @ResponseBody
+    public Task searchByTitle(@PathVariable String title) {
+      return this.repository.findByTitle(title);
     }
 
-  Check on your browser that `<http://localhost:8080/api/task/name/testTask1>`_ works and display a simple list of tasks, without pagination.
+  Check on your browser that `<http://localhost:8080/api/task/title/testTask1>`_ works and display a simple list of tasks, without pagination.
 
   .. code-block:: javascript
 
@@ -254,10 +259,26 @@ Do:
     }
 
     
-see `<https://github.com/resthub/resthub-spring-tutorial/tree/step3-solution>`_ for complete solution.
+see `<https://github.com/resthub/resthub-spring-training/tree/step3-solution>`_ for complete solution.
 
 Test your controller
 ++++++++++++++++++++
+
+We are going to test our new controller ``findByTitle`` method.
+
+Find:
+#####
+
+1. **Resthub2 testing tooling documentation**
+
+Do:
+### 
+
+1. **Add dependency to use Resthub2 testing tools** 
+2. In ``src/test/org/resthub/training``, add a ``controller`` directory and create a ``TaskControllerTest`` inside. 
+   We first want to make an **integration test** of our controller, i.e. a test that needs to run an embedded servlet container.
+   **Implement a new** ``testFindByTitle`` **test method that creates some tasks, call our new REST interface in order to find taks by name and check that the JSON response in order to be sure that it works as expected** 
+3. **Run test and check it passes**
 
 1. **Add dependency to use Resthub2 testing tools**
 
@@ -272,7 +293,7 @@ Test your controller
    
 2. In ``src/test/org/resthub/training``, add a ``controller`` directory and create a ``TaskControllerTest`` inside. 
    We first want to make an **integration test** of our controller, i.e. a test that needs to run an embedded servlet container.
-   **Implement a new** ``testFindByName`` **test method that creates some tasks and call controller.** 
+   **Implement a new** ``testFindByTitle`` **test method that creates some tasks and call controller.** 
    
    Verify that the new controller returns a response that is not null, with the right name.
 
@@ -282,19 +303,19 @@ Test your controller
     .. code-block:: Java
     
         public class TaskControllerTest extends AbstractWebTest {
-            protected String rootUrl() {
+            public TaskControllerTest() {
                 // Activate resthub-web-server and resthub-jpa Spring profiles
                 super("resthub-web-server,resthub-jpa");
             }
 
 
             @Test
-            public void testFindByName() {
+            public void testFindByTitle() {
                 this.request("api/task").xmlPost(new Task("task1"));
                 this.request("api/task").xmlPost(new Task("task2"));
-                Task task1 = this.request("api/task/name/task1").getJson().resource(Task.class);
+                Task task1 = this.request("api/task/title/task1").jsonGet().resource(Task.class);
                 Assertions.assertThat(task1).isNotNull();
-                Assertions.assertThat(task1.getName()).isEqualsTo("task1");
+                Assertions.assertThat(task1.getTitle()).isEqualTo("task1");
             }
         }
        
@@ -330,8 +351,8 @@ Test your controller
 Step 4: Users own tasks
 -----------------------
 
-**Prerequisites**: you can find some prerequisites and reference implementation of ``NotificationService`` and ``MockConfiguration`` at
-`<http://github.com/resthub/resthub-spring-tutorial/tree/step4-prerequisites>`_
+**Prerequisites** : you can find some prerequisites and reference implementation of ``NotificationService`` and ``MockConfiguration`` at
+`<http://github.com/resthub/resthub-spring-training/tree/step4-prerequisites>`_
 
 Find:
 +++++
@@ -427,8 +448,8 @@ Do:
             ...
         }
             
-    see complete solution for `User <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/model/User.java>`_
-    and `Task <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/model/Task.java>`_
+    see complete solution for `User <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/model/User.java>`_
+    and `Task <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/model/Task.java>`_
 
 2. **Provide dedicated Repository and Controller for user**
 
@@ -436,7 +457,7 @@ Do:
     
         // Repository
         public interface UserRepository extends JpaRepository<User, Long> {
-            // that's all!
+            // that's all !
         }
         
         // Controller
@@ -453,8 +474,8 @@ Do:
 
         }
         
-    see complete solution for `controller <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/controller/UserController.java>`_
-    and `repository <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/repository/UserRepository.java>`_
+    see complete solution for `controller <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/controller/UserController.java>`_
+    and `repository <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/repository/UserRepository.java>`_
 
 3. **Modify** ``TaskInitializer`` **in order to provide some sample users associated to tasks at startup**
    
@@ -483,7 +504,7 @@ Do:
             }
         }
         
-    see complete solution for `TaskInitializer <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/TaskInitializer.java>`_
+    see complete solution for `TaskInitializer <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/TaskInitializer.java>`_
 
    
 4. **Check on your browser that User API** `<http://localhost:8080/api/user>`_ **works and provides simple CRUD and that** `<http://localhost:8080/api/task>`_ **still works**.
@@ -499,6 +520,8 @@ But if you have more than simple CRUD needs, resthub provides also a generic **S
         
             // Interface
             public interface TaskService extends CrudService<Task, Long> {
+            
+                Task findByTitle(String title);
 
             }
             
@@ -511,6 +534,11 @@ But if you have more than simple CRUD needs, resthub provides also a generic **S
                 @Inject
                 public void setRepository(TaskRepository taskRepository) {
                     super.setRepository(taskRepository);
+                }
+                
+                @Override
+                public Task findByTitle(String title) {
+                    return this.repository.findByTitle(title);
                 }
             }
             
@@ -526,9 +554,10 @@ But if you have more than simple CRUD needs, resthub provides also a generic **S
                     this.service = service;
                 }
 
-                @RequestMapping(value = "name/{name}", method = RequestMethod.GET) @ResponseBody
-                public List<Todo> searchByName(@PathVariable String name) {
-                  return this.repository.findByName(name);
+                @RequestMapping(value = "title/{title}", method = RequestMethod.GET)
+                @ResponseBody
+                public Task searchByTitle(@PathVariable String title) {
+                    return this.service.findByTitle(title);
                 }
 
             }
@@ -542,7 +571,9 @@ These business operations should be implemented in service layer:
 7. **Declare and implement method** ``affectTaskToUser`` **in (**``TaskService`` / ``TaskServiceImpl`` **)**
    
    Notification simulation should be performed by implementing a custom ``NotificationService`` that simply
-   logs the event (you can also get the implementation from our repo in step4 solution). It is important to have an independant service (for mocking - see below - purposes)
+   logs the event (you can also get the implementation from our repo in step4-prerequisites : 
+   https://github.com/resthub/resthub-spring-tutorial/tree/step4-prerequisites). 
+   It is important to have an independant service (for mocking - see below - purposes)
    and you should not simply log in your new method. 
   
    **Signatures:**
@@ -556,9 +587,9 @@ These business operations should be implemented in service layer:
       Task affectTask(Long taskId, Long userId);
   
    - In ``affectTask`` implementation, validate parameters to ensure that both userId and taskId are not null and correspond to existing objects
-   - Tip 1: You will need to manipulate userRepository in TaskService ...
-   - Tip 2: You don't even have to call ``repository.save()`` due to Transactional behaviour of your service
-   - Tip 3: Maybe you should consider to implement ``equals()`` and ``hashCode()`` methods for User & Task   
+   - Tip : You will need to manipulate userRepository in TaskService ...
+   - Tip 2 : You don't even have to call ``repository.save()`` due to Transactional behaviour of your service
+   - Tip 3 : Maybe you should consider to implement ``equals()`` and ``hashCode()`` methods for User & Task   
    
     .. code-block:: java
 
@@ -622,11 +653,11 @@ These business operations should be implemented in service layer:
                 return task;
             }
     
-    see complete solution for `TaskService <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/TaskService.java>`_,
-    `TaskServiceImpl <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/impl/TaskServiceImpl.java>`_,
-    `TaskController <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/controller/TaskController.java>`_,
-    `NotificationService <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/NotificationService.java>`_,
-    `NotificationServiceImpl <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/impl/NotificationServiceImpl.java>`_
+    see complete solution for `TaskService <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/TaskService.java>`_,
+    `TaskServiceImpl <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/impl/TaskServiceImpl.java>`_,
+    `TaskController <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/controller/TaskController.java>`_,
+    `NotificationService <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/NotificationService.java>`_,
+    `NotificationServiceImpl <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/impl/NotificationServiceImpl.java>`_
    
 Test your new service
 +++++++++++++++++++++
@@ -702,7 +733,7 @@ Do:
             
             Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
-            Results:
+            Results :
 
             Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
@@ -736,7 +767,7 @@ Do:
 .. code-block:: java
 
    @Configuration
-   @ImportResource("classpath*:resthubContext.xml", "classpath*:applicationContext.xml")
+   @ImportResource({"classpath*:resthubContext.xml", "classpath*:applicationContext.xml"})
    @Profile("test")
    public class MocksConfiguration {
        @Bean(name = "notificationService")
@@ -752,11 +783,11 @@ This class allows to define a mocked alias bean to notificationService bean for 
 
 .. code-block:: java
 
-   @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = MocksConfiguration.class)
-   @ActiveProfiles({"test", "resthub-jpa"})
-   public class TaskServiceIntegrationTest extends AbstractTest {
+    @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = MocksConfiguration.class)
+    @ActiveProfiles({"test", "resthub-jpa"})
+    public class TaskServiceIntegrationTest extends AbstractTest {
       ...
-   }
+    }
    
 3. **Modify your test to check that** ``NotificationService.send()`` **method is called once when a user is affected to a task and twice if there was
    already a user affected to this task. Check the values of parameters passed to send method.**
@@ -764,7 +795,7 @@ This class allows to define a mocked alias bean to notificationService bean for 
        .. code-block:: java
        
           @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = MocksConfiguration.class)
-          @ActiveProfiles("test")
+          @ActiveProfiles({"test", "resthub-jpa"})
           public class TaskServiceIntegrationTest extends AbstractTest {
           
               @Inject
@@ -805,7 +836,7 @@ This class allows to define a mocked alias bean to notificationService bean for 
               }
           }
           
-       see complete solution for `TaskServiceIntegrationTest <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/test/java/org/resthub/training/service/integration/TaskServiceIntegrationTest.java>`_
+       see complete solution for `TaskServiceIntegrationTest <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/test/java/org/resthub/training/service/integration/TaskServiceIntegrationTest.java>`_
 
   
 This mock allows us to verify integration with others services and API whitout testing all these external tools.
@@ -905,7 +936,7 @@ Do:
             Assertions.assertThat(returnedTask.getUser()).isEqualTo(this.user);
         }
         
-    see complete solution for `TaskServiceTest <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/test/java/org/resthub/training/service/TaskServiceTest.java>`_,
+    see complete solution for `TaskServiceTest <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/test/java/org/resthub/training/service/TaskServiceTest.java>`_,
 
     
 Working mainly with unit tests (whithout launching spring context, etc.) is really more efficient to write and run and should be preffered to
@@ -940,10 +971,10 @@ Do:
                 return resource.getId();
             }
 
-            @RequestMapping(method = RequestMethod.GET, params = "page=no")
+            @RequestMapping(value = "title/{title}", method = RequestMethod.GET)
             @ResponseBody
-            public List<Task> findAllNonPaginated() {
-                return this.service.findAll();
+            public Task searchByTitle(@PathVariable String title) {
+                return this.service.findByTitle(title);
             }
 
             @RequestMapping(value = "{taskId}/user/{userId}", method = RequestMethod.PUT)
@@ -953,22 +984,23 @@ Do:
             }
         }
         
-    see complete solution for `TaskController <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/controller/TaskController.java>`_,
+    see complete solution for `TaskController <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/controller/TaskController.java>`_,
 
 
 You can test in your browser (or, better, add a test in ``TaskControllerTest``) that the new API is operational.
 
     .. code-block:: java
     
-         @Test
-         public void testAffectTaskToUser() {
-             Task task = this.request("api/task").xmlPost(new Task("task1")).resource(Task.class);
-             User user = this.request("api/user")).xmlPost(new User("user1")).resource(User.class);
-             String responseBody = this.request("api/task/" + task.getId() + "/user/" + user.getId()).put("").getBody();
-             Assertions.assertThat(responseBody).isNotEmpty();
-             Assertions.assertThat(responseBody).contains("task1");
-             Assertions.assertThat(responseBody).contains("user1");
-         }
+        @Test
+        public void testAffectTaskToUser() {
+            Task task = this.request("api/task").xmlPost(new Task("new Task")).resource(Task.class);
+            User user = this.request("api/user").xmlPost(new User("new User")).resource(User.class);
+            String responseBody = this.request("api/task/" + task.getId() + "/user/" + user.getId()).put("").getBody();
+            Assertions.assertThat(responseBody).isNotEmpty();
+            Assertions.assertThat(responseBody).contains("new Task");
+            Assertions.assertThat(responseBody).contains("new User");
+        }
+
 
 
 Step 5: Validate your beans and embed entities
