@@ -488,17 +488,20 @@ You also need to add an applicationContext.xml file in order to scan your reposi
 
     </beans>
 
-You can customize the default configuration by adding a database.properties resource with one or more of the following keys customized with your values. You should include only the customized ones.
+You can customize the default configuration by adding a database.properties resource with one or more of the following keys customized with your values (see `BoneCP documentation for details<http://jolbox.com/>`_). You should include only the customized ones.
 
 RESThub JPA default properties are:
     * dataSource.driverClassName = org.h2.Driver
     * dataSource.url = jdbc\:h2\:mem\:resthub;DB_CLOSE_DELAY=-1;MVCC=TRUE
-    * dataSource.maxActive = 50
-    * dataSource.maxWait = 1000
-    * dataSource.poolPreparedStatements = true
     * dataSource.username = sa
-    * dataSource.password = 
-    * dataSource.validationQuery = SELECT 1
+    * dataSource.password =
+    * dataSource.minConnectionsPerPartition = 10
+    * dataSource.maxConnectionsPerPartition = 50
+    * dataSource.partitionCount = 3
+    * dataSource.idleConnectionTestPeriodInSeconds = 60
+    * dataSource.statementsCacheSize = 100
+    * dataSource.connectionTestStatement = /* ping*/ SELECT 1
+
 
 RESThub Hibernate default properties are:
     * hibernate.dialect = org.hibernate.dialect.H2Dialect
