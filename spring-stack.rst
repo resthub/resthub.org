@@ -846,6 +846,27 @@ POST api/logs webservice expect this kind of body:
     [{"level":"warn","message":"log message 1","time":"2012-11-13T08:18:53.342Z"},
     {"level":"info","message":"log message 1","time":"2012-11-13T08:18:52.972Z"}]
 
+Exception Mapping
+-----------------
+
+You should add your own Exception handlers in order to handle your application custom exceptions by using @ControllerAdvice (will be scan like a bean in your classpath) and @ExceptionHandler annotations :
+
+.. code-block:: java
+
+    @ControllerAdvice
+    public class ResthubExceptionHandler extends ResponseEntityExceptionHandler {
+
+        @ExceptionHandler(value={
+                MyFirstException.class,
+                MySecondException.class
+        })
+        public ResponseEntity<Object> handleCustomException(Exception ex, WebRequest request) {
+            // ...
+
+            return new ResponseEntity<Object>(body, headers, status);
+        }
+
+    }
 
 Web client
 ==========
