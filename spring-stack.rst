@@ -10,7 +10,7 @@ RESThub 2 Spring stack provides a server side full stack and guidelines for buil
 It provides a coherent stack based on:
     * `Java <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ (at least JDK6, JDK7 recommended)
     * `Tomcat 7 <http://tomcat.apache.org/download-70.cgi>`_ (RESThub can also be used for non web applications)
-    * Spring 3.1 (`reference manual <http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html>`_ and `Javadoc <http://static.springsource.org/spring/docs/3.1.x/javadoc-api/>`_)
+    * Spring 3.2.1 (`reference manual <http://static.springsource.org/spring/docs/3.2.x/spring-framework-reference/html>`_ and `Javadoc <http://static.springsource.org/spring/docs/3.2.x/javadoc-api/>`_)
     * SQL and NoSQL Persistence with `Spring Data <http://www.springsource.org/spring-data>`_
     * Logging with SLF4J (`manual <http://www.slf4j.org/manual.html>`_) and Logback (`manual <http://logback.qos.ch/manual/index.html>`_)
     * Maven 3.0 (`complete reference <http://www.sonatype.com/books/mvnref-book/reference/public-book.html>`_) is the reference build tool used.
@@ -20,7 +20,7 @@ It provides the following modules:
     * **resthub-jpa**: support for JPA based persistence based on Spring Data, including embedded H2 database for testing
     * **resthub-mongodb**: support for MongoDB based on Spring Data
     * **resthub-test**: testing stack based on TestNG, Mockito and Fest Assert 2
-    * **resthub-web-server**: generic REST webservices support based on Spring MVC 3.1 including exception mapping to HTTP status codes
+    * **resthub-web-server**: generic REST webservices support based on Spring MVC 3.2 including exception mapping to HTTP status codes
     * **resthub-web-client**: simple to use HTTP client based on AyncHttpClient
 
 Released artifacts are available from `Maven Central <http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.resthub%22>`_ and will be automatically found without adding any additional repository.
@@ -40,11 +40,12 @@ Snapshot artifacts are available from `Sonatype OSS Snapshot repository <https:/
     </repositories>
 
 
-The whole RESThub 2.0 Spring stack `Javadoc <http://resthub.org/javadoc/2.0>`_ is available.
+The whole RESThub 2.1 Spring stack `Javadoc <http://jenkins.pullrequest.org/job/resthub-spring-stack-master/javadoc/>`_ is available.
 
 Changelog
 =========
 
+* TBD : `RESThub Spring stack 2.1.0-rc1 <https://github.com/resthub/resthub-spring-stack/blob/master/CHANGELOG.rst>`_
 * 2012-12-04: `RESThub Spring stack 2.0.0 GA has been released <http://pullrequest.org/2012/12/04/resthub-2.html>`_!
 * 2012-11-13: RESThub Spring stack 2.0-rc4 has been released
 * 2012-10-24: RESThub Spring stack 2.0-rc3 has been released
@@ -72,10 +73,10 @@ To create your project based or RESThub archetypes, just open a command line ter
 
 .. code-block:: bash
 
-    mvn archetype:generate -DarchetypeArtifactId=resthub-jpa-backbonejs-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.0.0
-    mvn archetype:generate -DarchetypeArtifactId=resthub-mongodb-backbonejs-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.0.0
-    mvn archetype:generate -DarchetypeArtifactId=resthub-jpa-backbonejs-multi-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.0.0
-    mvn archetype:generate -DarchetypeArtifactId=resthub-mongodb-backbonejs-multi-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.0.0
+    mvn archetype:generate -DarchetypeArtifactId=resthub-jpa-backbonejs-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.0-rc1
+    mvn archetype:generate -DarchetypeArtifactId=resthub-mongodb-backbonejs-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.0-rc1
+    mvn archetype:generate -DarchetypeArtifactId=resthub-jpa-backbonejs-multi-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.0-rc1
+    mvn archetype:generate -DarchetypeArtifactId=resthub-mongodb-backbonejs-multi-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.0-rc1
  
 After choosing the right archetype and answering a few questions, your project is generated and ready to use.
 You can run it thanks to built-in Jetty support:
@@ -145,7 +146,7 @@ pom.xml example:
         <name>My project</name>
 
         <properties>
-            <resthub.spring.stack.version>2.0.0</resthub.spring.stack.version>
+            <resthub.spring.stack.version>2.1.0-rc1</resthub.spring.stack.version>
         </properties>
 
         <dependencies>
@@ -221,31 +222,31 @@ RESThub dependencies are available on Maven Central:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0-rc1</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0-rc1</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0-rc1</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0-rc1</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0-rc1</version>
         <scope>test</scope>
     </dependency>
 
@@ -278,7 +279,7 @@ WebAppInitializer.java example:
 Spring profiles
 ~~~~~~~~~~~~~~~
 
-RESThub 2 uses `Spring 3.1 profiles <http://blog.springsource.com/2011/02/14/spring-3-1-m1-introducing-profile/>`_ to let you activate or not each module. It allows you to add Maven dependencies for example on resthub-jpa and resthub-web-server and let you control when you activate these modules. It is especially useful when running unit tests: when testing your service layer, you may not need to activate the resthub-web-server module.
+RESThub 2 uses `Spring 3.2 profiles <http://blog.springsource.com/2011/02/14/spring-3-1-m1-introducing-profile/>`_ to let you activate or not each module. It allows you to add Maven dependencies for example on resthub-jpa and resthub-web-server and let you control when you activate these modules. It is especially useful when running unit tests: when testing your service layer, you may not need to activate the resthub-web-server module.
 
 You can also use Spring profile for your own application Spring configuration.
 
@@ -453,7 +454,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0-rc1</version>
     </dependency>
 
 In order to import its `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-jpa/src/main/resources/resthubContext.xml>`_, your should activate the resthub-jpa Spring profile in your WebAppInitializer class:
@@ -561,7 +562,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0-rc1</version>
     </dependency>
 
 In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-mongodb/src/main/resources/resthubContext.xml>`_, your should activate the resthub-mongodb Spring profile in your WebAppInitializer class:
@@ -632,7 +633,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-common</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0-rc1</version>
     </dependency>
 
 Usage
@@ -658,7 +659,7 @@ RESThub Web Server module is designed for REST webservices development. Both JSO
     Currently Jackson XML dataformat does not support non wrapped List serialization. As a consequence, the findAll (GET /) method is not supported for XML content-type yet. `You can follow the related Jackson issue on GitHub <https://github.com/FasterXML/jackson-dataformat-xml/issues/38>`_.
 
 It provides some abstract REST controller classes, and includes the following dependencies:
-    * Spring MVC 3.1 (`reference manual <http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html/mvc.html>`_)
+    * Spring MVC 3.2 (`reference manual <http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html/mvc.html>`_)
     * Jackson 2.1 (`documentation <http://wiki.fasterxml.com/JacksonDocumentation>`_)
 
 RESThub exception resolver allow to map common exceptions (Spring, JPA) to the right HTTP status codes:
@@ -679,7 +680,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0-rc1</version>
     </dependency>
 
 In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-web/resthub-web-server/src/main/resources/resthubContext.xml>`_, your should activate the resthub-web-server Spring profile in your WebAppInitializer class:
@@ -887,7 +888,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0-rc1</version>
     </dependency>
 
 Usage
@@ -1154,7 +1155,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0-rc1</version>
         <scope>test</scope>
     </dependency>
 

@@ -12,16 +12,16 @@ In addition to the existing librairies included in the stack, it provides additi
    :depth: 3
 
 The Backbone.js stack includes the following librairies:
-    * jQuery 1.7 (`documentation <http://docs.jquery.com/Main_Page>`_)
-    * Backbone.js 0.9.2 (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter 
+    * jQuery 1.9.1 (`documentation <http://docs.jquery.com/Main_Page>`_)
+    * Backbone.js 0.9.10 (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter 
       <http://documentcloud.github.com/backbone/docs/backbone-localstorage.html>`_
-    * Underscore.js 1.3.3 (`documentation <http://documentcloud.github.com/underscore/>`_)
+    * Underscore.js 1.4.4 (`documentation <http://documentcloud.github.com/underscore/>`_)
     * Underscore.String 2.0.0 (`documentation <https://github.com/epeli/underscore.string#readme>`_)
-    * Require.js 2.0 with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins 
+    * Require.js 2.1.4 with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins 
       (`documentation <http://requirejs.org/docs/api.html>`_)
-    * Handlebars 1.0 (`documentation <http://handlebarsjs.com>`_)
+    * Handlebars 1.0-beta6 (`documentation <http://handlebarsjs.com>`_)
     * A console shim + client logging to server mechanism
-    * Twitter Bootstrap 2.1 (`documentation <http://twitter.github.com/bootstrap/>`_) and its JS plugins
+    * Twitter Bootstrap 2.3 (`documentation <http://twitter.github.com/bootstrap/>`_) and its JS plugins
     * Form Validation: `Backbone Validation`_
     * Parameters support on view routing: `Backbone Query Parameters`_
     * Datagrid: `Backbone Datagrid`_
@@ -36,6 +36,7 @@ Before going deeper in the RESThub Backbone stack, you should read the great doc
 Changelog
 =========
 
+* TBD : `RESThub Backbone.js stack 2.1.0-rc1 <https://github.com/resthub/resthub-backbone-stack/blob/master/CHANGELOG.rst>`_
 * 2012-12-04: `RESThub Backbone.js stack 2.0.0 GA has been released <http://pullrequest.org/2012/12/04/resthub-2.html>`_!
 * 2012-11-13: RESThub Backbone.js stack 2.0-rc4 has been released
 * 2012-10-24: RESThub Backbone.js stack 2.0-rc3 has been released
@@ -397,26 +398,14 @@ If you need to customize the render() function, you can replace or extend it. He
 
 Automatic view dispose + callbacks unbind
 -----------------------------------------
+  
+RESThub offers an extension to this mechanism that listens on any removal in the ``view.el`` DOM element and **automatically calls stopListening() on remove**. This means that you don't have to manage this workflow anymore and any replacement done in el parent will trigger a dispose call.
 
-``Resthub.View`` now includes a ``dispose`` function (antipated from Backbone.js master) that cleans all view, model and collection bindings to properly clean up a view. This method is called by another View method ``remove`` that also performs a jquery ``view.el`` DOM remove.
-
-RESThub provides three extensions related to this functionnality:
-
-1- ``dispose`` extension to automatically unbind ``Backbone.Validation``: when removing a view and, if ``Backbone.Validation`` is defined, you also had to unbind validation events that call ``validate``, ``preValidate`` and ``isValid`` methods. **This is now automatically done for you by RESThub** in ``dispose``.
-   
-2- Addition of an ``onDispose()`` method called on top of ``dispose``: this method is empty by default but can be implemented to perform some additional actions (unbind, etc.) immediately before the effective view disposal. You simply have to define such a method in your views:
-
-.. code-block:: javascript
-
-    onDispose: function() {
-        // do something
-    }
-
-3- Automatic bind ``dispose`` call on element remove event: the ``dispose`` method previously described is called by the ``remove`` Backbone_ view method. But this method still has to be manually called by users (for instance in your router).
-   
-RESThub offers an extension to this mechanism that listens on any removal in the ``view.el`` DOM element and **automatically calls dispose on remove**. This means that you don't have to manage this workflow anymore and any replacement done in el parent will trigger a dispose call.
-   
 i.e.: each time a jQuery ``.html(something)``, ``.remove()`` or ``.empty()`` is performed on view el parent or each time a ``remove()`` is done on the el itself, **the view will be properly destroyed**.
+
+.. warning::
+
+    Since Backbone 0.9.10 (included in RESThub Backbone stack 2.1), you should use listenTo() and stopListening() instead of on() and off(), since it will allow Backbone.js to manage properly event listener cleanup.
 
 View model population from a form
 ---------------------------------
@@ -749,7 +738,7 @@ will produce:
 This helper is very usefull for Internationalization_, and can take any number of parameters.
 
 modulo
-++++++++
+++++++
 
 This helper provides a modulo function.
 
@@ -1029,88 +1018,14 @@ Log are sent thanks a POST request with the following JSON body:
     {"level":"warn","message":"log message","time":"2012-11-13T08:18:52.972Z"}
 
 RESThub web server provide a builtin implementation of the serverside logging webservice, see the `related documentation <spring-stack.html#client-logging>`_ for more details.
+  
+Message bus
+-----------
 
-.. _pubsub:
+Since backbone now extends Events, you can use it as a message bus for your global events.
+In order to facilitate global events usage in Backbone Views, RESThub provides some syntactic sugar in ``Resthub.View``.
 
-Publish Subscribe
-=================
-
-RESThub provides a publish / subscribe mechanism in your application with a tiny native ``Backbone.Events`` extension.
-Publishing and subscribing are globally scoped and allow to communicate between views within your app.
-
-API
----
-
-``Backbone.Events`` API was not modified: `documentation <http://backbonejs.org/#Events>`_
-
-.. code-block:: javascript
- 
-    // Bind one or more space separated events, `events`, to a `callback`
-    // function. Passing `"all"` will bind the callback to all events fired.
-    on: function(events, callback, context);
-
-    // Remove one or many callbacks. If `context` is null, removes all callbacks
-    // with that function. If `callback` is null, removes all callbacks for the
-    // event. If `events` is null, removes all bound callbacks for all events.
-    off: function(events, callback, context);
-
-    // Trigger one or many events, firing all bound callbacks. Callbacks are
-    // passed the same arguments as `trigger` is, apart from the event name
-    // (unless you're listening on `"all"`, which will cause your callback to
-    // receive the true name of the event as the first argument).
-    trigger: function(events);
-
-.. _pubsub-usage:   
-
-Usage
------
-
-PubSub component can be accessed globally but we strongly recommend to import it with Require_.
-
-.. code-block:: javascript
-
-    define(['pubsub'], function(Pubsub) {
-
-        ...
-
-        // subscribe to one event (do not forget the context:this)
-        Pubsub.on("!test-event", function () { ... }, this);
-
-        // subscribe to multiple events
-        Pubsub.on("!test-event !test-event2", function () { ... }, this);
-
-        // trigger one event
-        Pubsub.trigger("!test-event");
-
-        // trigger multiple events
-        Pubsub.trigger("!test-event !test-event2");
-
-        // unsubscribe from one event
-        Pubsub.off("!test-event");
-
-        // unsubscribe from multiple events
-        Pubsub.off("!test-event !test-event2");
-
-        // unsubscribe from all
-        Pubsub.off();
-
-        ...
-    }
-
-Because of ``Bacbone.ResthubView`` and PubSub integration mechanisms (see below), the ``!`` prefix for any global PubSub event is **strongly recommended**. 
-
-.. warning::
-
-   Not following this convention does not have any impact on PubSub behaviour but prevents usage of integrated Resthub.View PubSub events declaration (see below)
-
-.. _pubsub-in-views:
-   
-PubSub and Backbone Views integration
--------------------------------------
-
-In order to facilitate global PubSub events in Backbone Views, RESThub provides some syntactic sugar in ``Resthub.View``.
-
-Backbone Views events hash parsing has been extended to be capable of declaring global PubSub events as it is already done for DOM events binding. To declare such global events in your Backbone View, you only have to add it in events hash:
+Backbone Views events hash parsing has been extended to be capable of declaring global events as it is already done for DOM events binding. To declare such global events in your Backbone View, you only have to add it in events hash:
 
 .. code-block:: javascript
 
@@ -1118,28 +1033,19 @@ Backbone Views events hash parsing has been extended to be capable of declaring 
         // regular DOM event bindings
         "click #btn1":"buttonClicked",
         "click #btn2":"buttonClicked",
-        // global PubSub events
+        // global events
         "!global":"globalFired",
         "!global1":"globalFired",
         "!globalParams":"globalFiredParams"
     },
 
-Please note that it is mandatory to prefix your global events with ``!`` to differenciate them from DOM events. You will always have to use the ``!`` prefix to reference events later (see :ref:`pubsub-usage` for samples).
-
-With this mechanism, PubSub subscribings are automatically declared on View construction, as DOM Events: **You don't have to call PubSub.on on these declared events**.
-In the same way, PubSub subscribings for this View are automatically removed during a Backbone ``dispose()`` method call: **You don't have either to call PubSub.off on these declared events**.
-
-Obviously, it is still possible for you to explicitely call ``on`` and ``off`` in your view on other global events that you don't want to or you can't declare on events hash (e.g. for more dynamic needs). But don't forget to bind ``this` when declaring subscription:
-
-.. code-block:: javascript
-
-    PubSub.on("!event", function () {...}, this);
-
+Please note that it is mandatory to prefix your global events with ``!`` to differenciate them from DOM events.
+Under the cover, listenTo() and stopListening() are used so events cleanup will be done automatically by the view.
    
 .. _resthub-validation:
    
-Resthub Validation features
-===========================
+Validation
+==========
 
 Since 2.1.0, RESThub comes with custom server and client validation handlers allowing to export, via a dedicated API, the
 server side declared validation constraints (see `Spring Stack documentation <./spring-stack.html#validation-api>`_) and 
@@ -1151,7 +1057,6 @@ constraints.
 
 Server side declared constraint validations will thus be fully reused and you won't have to 'clone' these
 constraints on the client side.
-
 
 Usage
 -----
@@ -1499,7 +1404,7 @@ options
 
 You can **customize URL validator pattern** to match by overriding ``Resthub.Validation.options.URL.pattern``: 
 
-.. code-block:: javascript:
+.. code-block:: javascript
 
    Resthub.Validation.options.URL.pattern = /my pattern/; 
 
@@ -2404,7 +2309,7 @@ If you need to render a simple list of elements, just make a single view with an
 
 But if each element of your collection requires a separate view (typically when you listen on some events on it or if it contains a form), in order to comply with separation of concerns and encapsulation principles, you should create separate views for the collection and the model. The model view should be able to render itself.
 
-You can see more details on the `Todo example <http://github.com/resthub/todo-example>`_ (have a look to TodosView and TodoView).
+You can see more details on the `Todo example <https://github.com/resthub/todo-backbone-example>`_ (have a look to TodosView and TodoView).
 
 Always specify the context for event binding
 --------------------------------------------
@@ -2522,7 +2427,6 @@ Cache buster
 
 In order to avoid caching issues when updating your JS or HTML files, you should use the `urlArgs RequireJS attribute <http://requirejs.org/docs/api.html#config>`_. You can filter the ${buildNumber} with your build tool at each build.
 
-
 main.js:
 
 .. code-block:: javascript
@@ -2545,7 +2449,8 @@ main.js after filtering:
         urlArgs: 'appversion=738792920293847'
     });
 
-.. _Require 2.0: http://requirejs.org
+In order to avoid bugs (like no change displayed after an update) due to Internet Explorer agressive caching strategy, Ajax request cache is disable at jQuery level when using IE.
+
 .. _Require: http://requirejs.org
 .. _Handlebars: http://handlebarsjs.com
 .. _Backbone Validation: http://github.com/thedersen/backbone.validation
