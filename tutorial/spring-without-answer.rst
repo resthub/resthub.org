@@ -43,7 +43,7 @@ Do:
 
 1. **Generate a Resthub2 template project structure**
 
-   You can choose which template to use: pure Java Spring server template or Server + Client template if you plan to provide a RIA client
+   You can choose which template to use: using a JPA repository or a mongo repository as a date backend
    for your app based on `Resthub Spring Stack`
    
    Choose groupId `org.resthub.training`, artifactId `jpa-webservice`, package `org.resthub.training` and version `1.0-SNAPSHOT`.
@@ -58,46 +58,38 @@ Let's take a look at the generated project. Its structure is:
 
    |--- src
    |   |--- main
-   |   |    | --- java
-   |   |    |     | --- org
-   |   |    |           | --- resthub
-   |   |    |                 | --- training
-   |   |    |                       | --- controller
-   |   |    |                       |     | --- SampleController.java
-   |   |    |                       | --- model
-   |   |    |                       |     | --- Sample.java
-   |   |    |                       | --- repository
-   |   |    |                       |     | --- SampleRepository.java
-   |   |    |                       | --- SampleInitializer.java
-   |   |    |                       | --- WebAppConfigurer.java
-   |   |    |                       | --- WebAppInitializer.java
-   |   |    | --- resources
-   |   |          | --- applicationContext.xml
-   |   |          | --- database.properties
-   |   |          | --- logback.xml
-   |   |--- test
    |        | --- java
-   |              | --- org
-   |                    | --- resthub
-   |                          | --- training
+   |        |     | --- org
+   |        |           | --- resthub
+   |        |                 | --- training
+   |        |                       | --- controller
+   |        |                       |     | --- SampleController.java
+   |        |                       | --- model
+   |        |                       |     | --- Sample.java
+   |        |                       | --- repository
+   |        |                       |     | --- SampleRepository.java
+   |        |                       | --- SampleInitializer.java
+   |        |                       | --- WebAppInitializer.java
+   |        | --- resources
+   |        |     | --- applicationContext.xml
+   |        |    | --- database.properties
+   |        |     | --- logback.xml
+   |        |--- webapp
    | --- pom.xml
    
 ``src/main/java`` contains all java sources under the package ``org.resthub.training`` as specified during archetype generation.
 This package contains the following sub packages and files: 
 
-- **controller**: This package contains all your application controllers, i.e. your web API. In the generated sample, the archetype provided
-  you a SampleController that simply extend ``RepositoryBasedRestController`` and apply its behaviour to the *Sample* model and
-  *SampleRepository*: ``SampleController extends RepositoryBasedRestController<Sample, Long, SampleRepository>``. This generic ``RepositoryBasedRestController``
-  provides basic CRUD functionalities: see Resthub2 documentation for details.
+- **controller**: This package contains all your application controllers, i.e. your web API. In the generated sample, the archetype gave you a SampleController that simply extends ``RepositoryBasedRestController`` and applies its behaviour to the *Sample* model and
+  *SampleRepository*: ``SampleController extends RepositoryBasedRestController<Sample, Long, SampleRepository>``. This generic ``RepositoryBasedRestController`` provides basic CRUD functionalities: see RESThub2 documentation for details.
 - **model**: This package contains all you domain models.
 - **repository**: This package contains your repositories, i.e. classes that provide methods to manipulate, persist and retrieve your objects from your JPA
-  manager (and so your database). In the generated sample, the archetype provided you a SampleRepository that simply extend Spring-Data ``JpaRepository``.
-  for behaviour, see Spring-Data JPA documentation for details.
-- **initializers**: initializers are special classes executed at application startup to setup your webapp. ``WebappInitializer`` load your spring application contexts, setup filters, etc. (all actions that you previously configured in your web.xml). The archetype provided you a ``SampleInitializer`` to setup sepcific domain model initializations such as data creation.
-- **configurers**: configurers are using Spring Java Config to allow you define you Spring beans and your Spring configuration. They contains the same information than your old applicationContext.xml files, but described with Java code in the ``WebAppConfigurer`` class.
-- ``src/main/resources`` contains all non java source files and, in particular, your spring application context (kept for some parts that still need an applicationContext.xml file like Spring Security), your database configuration file and you logging configuration.
+  manager (and so your database). In the generated sample, the archetype gave you a SampleRepository that simply extends Spring-Data ``JpaRepository``.
+  For behaviour, see Spring-Data JPA documentation for details.
+- **initializers**: Initializers are special classes executed at application startup to setup your webapp. ``WebappInitializer`` load your spring application contexts,
+  setup filters, etc. (all actions that you previously configured in your web.xml). The archetype provided you a ``SampleInitializer`` to setup sepcific domain model initializations such as data creation.
+- ``src/main/resources`` contains all non java source files and, in particular, your spring application context, your database configuration file and you logging configuration.
 - ``src/test/`` contains, obviously, all you test related files and has the same structure as src/main (i.e. *java* and *resources*).
-
 
 Step 2: Customize Model
 -----------------------
@@ -154,7 +146,7 @@ Do:
 
    {
        "id": 1,
-       "name": "testTask1",
+       "title": "testTask1",
        "description": "bla bla"
    }
 
