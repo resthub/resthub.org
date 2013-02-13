@@ -1,4 +1,4 @@
-Resthub Spring stack tutorial
+RESThub Spring stack tutorial
 =============================
 
 This tutorial will help you to get an overview of resthub-spring-stack and its components.
@@ -35,19 +35,19 @@ Step 1: Initialization
 Find:
 +++++
 
-1. **Resthub2 getting started guide**
+1. **RESThub2 documentation for Spring stack**
 
-    see `<http://resthub.org/2/getting-started.html>`_
+    see `<../spring-stack.html>`_
 
-2. **Resthub2 documentation for Spring stack**
+2. **RESThub2 Bootstrap your Spring project**
 
-    see `<http://resthub.org/2/spring-stack.html>`_
+    see `<../spring-stack.html#bootstrap-your-project>`_
 
-3. **Resthub2 javadoc site**
+3. **RESThub2 javadoc site**
 
-    see `<http://resthub.org/javadoc/2.1/>`_
+    see `<http://resthub.org/javadoc/latest/>`_
     
-4. **List of Resthub2 underlying frameworks and corresponding documentation**
+4. **List of RESThub2 underlying frameworks and corresponding documentation**
 
     - Maven: `complete reference <http://www.sonatype.com/books/mvnref-book/reference/public-book.html>`_
     - Spring 3.2: `reference manual <http://static.springsource.org/spring/docs/3.2.x/spring-framework-reference/html>`_ and `Javadoc <http://static.springsource.org/spring/docs/3.2.x/javadoc-api/>`_
@@ -55,7 +55,7 @@ Find:
         - Spring Data JPA: `reference <http://static.springsource.org/spring-data/data-jpa/docs/current/reference/html/>`_ and `Javadoc <http://static.springsource.org/spring-data/data-jpa/docs/current/api/>`_
         - Spring Data MongoDB: `reference <http://static.springsource.org/spring-data/data-mongodb/docs/current/reference/html/>`_ and `Javadoc <http://static.springsource.org/spring-data/data-mongodb/docs/current/api/>`_
     - Hibernate ORM and JPA: `reference <http://docs.jboss.org/hibernate/orm/4.1/manual/en-US/html_single/>`_ and `Javadoc <http://docs.jboss.org/hibernate/orm/4.1/javadocs/>`_
-    - Spring MVC: `reference <http://static.springsource.org/spring-data/data-mongodb/docs/current/reference/html/>`_
+    - Spring MVC 3.2: `reference <http://static.springsource.org/spring/docs/3.2.x/spring-framework-reference/html/mvc.html>`_
     - Spring MVC Router: `reference <https://github.com/resthub/springmvc-router>`_
     - Jackson 2.1: `reference <http://wiki.fasterxml.com/JacksonDocumentation>`_ and `Javadoc <http://wiki.fasterxml.com/JacksonJavaDocs>`_
     - AsyncHttpClient: `reference <https://github.com/sonatype/async-http-client>`_ and `Javadoc <http://sonatype.github.com/async-http-client/apidocs/reference/packages.html>`_
@@ -65,18 +65,15 @@ Find:
 Do:
 +++
 
-1. **Generate a Resthub2 template project structure**
+1. **Generate a RESThub2 template project structure**
 
-   You can choose which template to use: pure Java Spring server template or Server + Client template if you plan to provide a RIA client
-   for your app based on `Resthub Spring Stack`
+   You can choose which template to use: pure Java Spring server template or Server + Client template if you plan to provide a RIA client for your app based on `RESThub Spring Stack`
    
    Choose groupId `org.resthub.training`, artifactId `jpa-webservice`, package `org.resthub.training` and version `1.0-SNAPSHOT`.
    
-       As described in `Resthub documentation <http://resthub.org/2/getting-started.html>`_, create your local project by executing 
-       ``mvn archetype:generate -DarchetypeCatalog=http://nexus.pullrequest.org/content/repositories/releases/`` in your `training` directory.
+       As described in `RESThub documentation <../spring-stack.html#bootstrap-your-project>`_, create your local project by executing ``mvn archetype:generate -Dfilter=org.resthub:resthub`` in your `training` directory.
 
-       - When **archetype** prompt, choose `org.resthub:resthub-jpa-webservice-archetype`. or `org.resthub:resthub-jpa-backbonejs-archetype` if you want also that a basic resthub-backbone-stack project
-         will be generated. Enter
+       - When **archetype** prompt, choose `resthub-jpa-backbonejs-archetype`. Enter
        - When **groupId** prompt, choose your `groupId`: `org.resthub.training`. Enter
        - When **artifactId** prompt, choose your `artifactId`: `jpa-webservice`. Enter
        - When **version** and **package** prompt, Enter.
@@ -87,13 +84,13 @@ Do:
 2. **Run your project with mvn**
 
     Run ``mvn jetty:run`` from your `training/jpa-webservice` directory. Jetty should launch your application
-    and says: 
+    and say: 
 
     .. code-block:: script
 
        [INFO] Started Jetty Server
 
-3. **Check on your browser that your project works that the response is an XML serialization of a Sample object with id 1**.
+3. **Check on your browser that your project works that the response is an XML serialization of a collection of Sample objects**.
 
     Check `<http://localhost:8080/api/sample>`_
 
@@ -103,45 +100,36 @@ Let's take a look at the generated project. Its structure is:
 
    |--- src
    |   |--- main
-   |   |    | --- java
-   |   |    |     | --- org
-   |   |    |           | --- resthub
-   |   |    |                 | --- training
-   |   |    |                       | --- controller
-   |   |    |                       |     | --- SampleController.java
-   |   |    |                       | --- model
-   |   |    |                       |     | --- Sample.java
-   |   |    |                       | --- repository
-   |   |    |                       |     | --- SampleRepository.java
-   |   |    |                       | --- SampleInitializer.java
-   |   |    |                       | --- WebAppConfigurer.java
-   |   |    |                       | --- WebAppInitializer.java
-   |   |    | --- resources
-   |   |          | --- applicationContext.xml
-   |   |          | --- database.properties
-   |   |          | --- logback.xml
-   |   |--- test
    |        | --- java
-   |              | --- org
-   |                    | --- resthub
-   |                          | --- training
+   |        |     | --- org
+   |        |           | --- resthub
+   |        |                 | --- training
+   |        |                       | --- controller
+   |        |                       |     | --- SampleController.java
+   |        |                       | --- model
+   |        |                       |     | --- Sample.java
+   |        |                       | --- repository
+   |        |                       |     | --- SampleRepository.java
+   |        |                       | --- SampleInitializer.java
+   |        |                       | --- WebAppInitializer.java
+   |        | --- resources
+   |        |     | --- applicationContext.xml
+   |        |    | --- database.properties
+   |        |     | --- logback.xml
+   |        |--- webapp
    | --- pom.xml
    
 ``src/main/java`` contains all java sources under the package ``org.resthub.training`` as specified during archetype generation.
 This package contains the following sub packages and files: 
 
-- **controller**: This package contains all your application controllers, i.e. your web API. In the generated sample, the archetype provided
-  you a SampleController that simply extend ``RepositoryBasedRestController`` and apply its behaviour to the *Sample* model and
-  *SampleRepository*: ``SampleController extends RepositoryBasedRestController<Sample, Long, SampleRepository>``. This generic ``RepositoryBasedRestController``
-  provides basic CRUD functionalities: see Resthub2 documentation for details.
+- **controller**: This package contains all your application controllers, i.e. your web API. In the generated sample, the archetype gave you a SampleController that simply extends ``RepositoryBasedRestController`` and applies its behaviour to the *Sample* model and
+  *SampleRepository*: ``SampleController extends RepositoryBasedRestController<Sample, Long, SampleRepository>``. This generic ``RepositoryBasedRestController`` provides basic CRUD functionalities: see RESThub2 documentation for details.
 - **model**: This package contains all you domain models.
 - **repository**: This package contains your repositories, i.e. classes that provide methods to manipulate, persist and retrieve your objects from your JPA
-  manager (and so your database). In the generated sample, the archetype provided you a SampleRepository that simply extend Spring-Data ``JpaRepository``.
-  for behaviour, see Spring-Data JPA documentation for details.
-- **configurers**: configurers are using Spring Java Config to allow you define you Spring beans and your Spring configuration. They contains the same information than your old applicationContext.xml files, but described with Java code in the ``WebAppConfigurer`` class.
+  manager (and so your database). In the generated sample, the archetype gave you a SampleRepository that simply extends Spring-Data ``JpaRepository``.
+  For behaviour, see Spring-Data JPA documentation for details.
 - **initializers**: Initializers are special classes executed at application startup to setup your webapp. ``WebappInitializer`` load your spring application contexts,
-  setup filters, etc. (all actions that you previously configured in your web.xml). The archetype provided you a ``SampleInitializer`` to setup sepcific domain model
-  initializations such as data creation.
+  setup filters, etc. (all actions that you previously configured in your web.xml). The archetype provided you a ``SampleInitializer`` to setup sepcific domain model initializations such as data creation.
 - ``src/main/resources`` contains all non java source files and, in particular, your spring application context, your database configuration file and you logging configuration.
 - ``src/test/`` contains, obviously, all you test related files and has the same structure as src/main (i.e. *java* and *resources*).
 
@@ -151,8 +139,7 @@ Step 2: Customize Model
 
 Let's start to customize the project generated by our archetype.
 
-We are going to create Contoller, Repository and, obviously Model for our Task object. We'll also adapt our Initializer in order to provide
-some sample data at application startup. 
+We are going to create Contoller, Repository and, obviously Model for our Task object. We'll also adapt our Initializer in order to create some sample data at application startup. 
 
 Do:
 +++
@@ -175,10 +162,14 @@ Do:
 
     re-run ``mvn jetty:run`` from your `training/jpa-webservice` directory. 
 
-    Check on your browser that `<http://localhost:8080/api/task>`_ works and display XML representation for a sample object with id 1.
+    Check on your browser that `<http://localhost:8080/api/task>`_ works and display XML representation for a collection of task objects.
 
 Answer:
 +++++++
+
+Using an HTTP client (e.g. `Poster <https://addons.mozilla.org/en-US/firefox/addon/poster/>`_ in Firefox or 
+`REST Console <https://chrome.google.com/webstore/detail/cokgbflfommojglbmbpenpphppikmonn>`_ in Chrome), 
+explore the new API and check: 
 
 1. **How is wrapped the list of all existing tasks?**
     
@@ -218,14 +209,14 @@ Answer:
 Step 3: Customize Controller
 ----------------------------
 
-We now have a basic REST interface uppon our Task model object providing default methods and behaviour implemented by resthub.
+We now have a basic REST interface upon our Task model object providing default methods and behaviour implemented by RESThub.
 
-Let's try to implement a ``findByName`` implementation that returns a Task based on it name: 
+Let's try to implement a ``findByTitle`` method that returns a Task based on its title: 
 
 Do:
 +++
 
-1. **Modify** ``TaskController.java`` **to add a new method called** ``findByTitle``  **with a name parameter mapped to** ``/api/task/title/{title}`` returning a single task element if exists.
+1. **Modify** ``TaskController.java`` **to add a new method called** ``findByTitle``  **with a name parameter mapped to** ``/api/task/title/{title}`` returning a single task element if it exists.
 
   **Tip:** Consider using ``@ResponseBody`` annotation (see `<http://static.springsource.org/spring/docs/current/spring-framework-reference/html/mvc.html#mvc-ann-responsebody>`_)
 
@@ -254,7 +245,7 @@ Do:
 
     {
       "id": 1,
-      "name": "testTask1",
+      "title": "testTask1",
       "description": "bla bla"
     }
 
@@ -269,18 +260,14 @@ We are going to test our new controller ``findByTitle`` method.
 Find:
 #####
 
-1. **Resthub2 testing tooling documentation**
+1. **RESThub2 testing tooling documentation**
+
+   see `<../spring-stack.html#testing>`_ 
 
 Do:
 ### 
 
-1. **Add dependency to use Resthub2 testing tools** 
-2. In ``src/test/java/org/resthub/training``, add a ``controller`` directory and create a ``TaskControllerTest`` inside. 
-   We first want to make an **integration test** of our controller, i.e. a test that needs to run an embedded servlet container.
-   **Implement a new** ``testFindByTitle`` **test method that creates some tasks, call our new REST interface in order to find taks by name and check that the JSON response in order to be sure that it works as expected** 
-3. **Run test and check it passes**
-
-1. **Add dependency to use Resthub2 testing tools**
+1. **Add dependency to use RESThub2 testing tools**
 
     .. code-block:: xml
 
@@ -298,7 +285,7 @@ Do:
    Verify that the new controller returns a response that is not null, with the right name.
 
     Our test ``TaskControllerTest`` should extend resthub ``AbstractWebTest`` 
-    (see `documentation <http://jenkins.pullrequest.org/job/resthub-spring-stack-master/javadoc/org/resthub/test/common/AbstractWebTest.html>`_)
+    (see `documentation <http://resthub.org/javadoc/latest/org/resthub/test/AbstractTest.html>`_)
     
     .. code-block:: Java
     
@@ -365,12 +352,12 @@ Find:
 
     see `reference <http://wiki.fasterxml.com/JacksonAnnotations>`_
     
-3. **Resthub2 Crud Services documentation**
+3. **RESThub2 Crud Services documentation**
 
-    see `Crud Services <http://resthub.org/2/spring-stack.html#crud-services>`_ and 
-    `Javadoc <http://jenkins.pullrequest.org/job/resthub-spring-stack-master/javadoc/org/resthub/common/service/CrudService.html>`_
+    see `Crud Services <../spring-stack.html#crud-services>`_ and 
+    `Javadoc <http://resthub.org/javadoc/latest/org/resthub/common/service/CrudService.html>`_
     
-4. **Resthub2 different kind of controllers documentation**
+4. **RESThub2 different kind of controllers documentation**
 
     see `Web server<spring-stack.html#web-server>`_
     
@@ -513,7 +500,7 @@ You can thus add domain models and provide for each one a simple CRUD API whitho
 But if you have more than simple CRUD needs, resthub provides also a generic **Service layer** that could be extended to fit your business needs: 
 
 5. **Create a new dedicated service (** ``TaskService``/``TaskServiceImpl`` **) for business user management** 
-    - The new service should beneficiate of all CRUD Resthub services and work uppon TaskRepository.
+    - The new service should beneficiate from all CRUD RESThub services and work upon TaskRepository.
     - Update your controller to manager this new 3 layers architecture
     
         .. code-block:: java
@@ -667,7 +654,7 @@ We will now write an integration test for our new service:
 Find:
 #####
 
-1. **Resthub2 testing tooling documentation**
+1. **RESThub2 testing tooling documentation**
 
    see `<spring-stack.html#testing>`_
 
