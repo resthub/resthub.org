@@ -45,12 +45,12 @@ Find:
 
 3. **Resthub2 javadoc site**
 
-    see `<http://jenkins.pullrequest.org/job/resthub-spring-stack-master/javadoc>`_
+    see `<http://resthub.org/javadoc/2.1/>`_
     
 4. **List of Resthub2 underlying frameworks and corresponding documentation**
 
     - Maven: `complete reference <http://www.sonatype.com/books/mvnref-book/reference/public-book.html>`_
-    - Spring 3.1: `reference manual <http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html>`_ and `Javadoc <http://static.springsource.org/spring/docs/3.1.x/javadoc-api/>`_
+    - Spring 3.2: `reference manual <http://static.springsource.org/spring/docs/3.2.x/spring-framework-reference/html>`_ and `Javadoc <http://static.springsource.org/spring/docs/3.2.x/javadoc-api/>`_
     - Spring Data: `reference <http://www.springsource.org/spring-data>`_
         - Spring Data JPA: `reference <http://static.springsource.org/spring-data/data-jpa/docs/current/reference/html/>`_ and `Javadoc <http://static.springsource.org/spring-data/data-jpa/docs/current/api/>`_
         - Spring Data MongoDB: `reference <http://static.springsource.org/spring-data/data-mongodb/docs/current/reference/html/>`_ and `Javadoc <http://static.springsource.org/spring-data/data-mongodb/docs/current/api/>`_
@@ -370,17 +370,17 @@ Find:
     see `Crud Services <http://resthub.org/2/spring-stack.html#crud-services>`_ and 
     `Javadoc <http://jenkins.pullrequest.org/job/resthub-spring-stack-master/javadoc/org/resthub/common/service/CrudService.html>`_
     
-4. **Resthub2 Different kind of controllers documentation**
+4. **Resthub2 different kind of controllers documentation**
 
-    see `Web server<http://resthub.org/2/spring-stack.html#web-server>`_
+    see `Web server<spring-stack.html#web-server>`_
     
 5. **Spring assertions documentation**
 
-    see `documentation <http://static.springsource.org/spring/docs/3.0.x/javadoc-api/org/springframework/util/Assert.html>`_
+    see `documentation <http://static.springsource.org/spring/docs/3.2.x/javadoc-api/org/springframework/util/Assert.html>`_
     
 6. **Spring transactions documentation**
 
-    see `documentation <http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html/transaction.html#transaction-declarative-annotations>`_
+    see `documentation <http://static.springsource.org/spring/docs/3.2.x/spring-framework-reference/html/transaction.html#transaction-declarative-annotations>`_
 
 Do:
 +++
@@ -669,7 +669,7 @@ Find:
 
 1. **Resthub2 testing tooling documentation**
 
-   see `<http://resthub.org/2/spring-stack.html#testing>`_
+   see `<spring-stack.html#testing>`_
 
 Do:
 ###  
