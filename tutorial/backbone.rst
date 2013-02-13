@@ -109,7 +109,7 @@ Do:
           return TaskView;
         });
 
-10. **Instantiate view in main and render it. Verify that "rendered" is logged. Try to render view multiple times in console**
+10. **Instantiate view in app and render it. Verify that "rendered" is logged. Try to render view multiple times in console**
 
         .. code-block:: javascript
 
@@ -130,9 +130,9 @@ Do:
             rendered
             Object { cid="view1", options={...}, $el=[1], more...}
 
-11. **Instantiate the view with a task model in main. Modify TaskView render to log the title of the task. No other modification should be made on TaskView**
+11. **Instantiate the view with a task model in app. Modify TaskView render to log the title of the task. No other modification should be made on TaskView**
 
-        main.js: 
+        app.js: 
 
         .. code-block:: javascript
         
@@ -191,7 +191,7 @@ Do:
           return this;
         }
 
-2. **render the view and attach $el to the DOM 'tasks' element (in main.js)**
+2. **render the view and attach $el to the DOM 'tasks' element (in app.js)**
 
     .. code-block:: javascript
     
@@ -337,7 +337,7 @@ Step 2: Collections
           {{/each}}
         </ul>
  
-6. **In main: instanciate two task and add them into a new tasks collections. Instantiate View and render it and attach $el to '#tasks' div**
+6. **In app: instanciate two task and add them into a new tasks collections. Instantiate View and render it and attach $el to '#tasks' div**
 
     .. code-block:: javascript
     
@@ -499,7 +499,7 @@ Step 3: Nested Views
 
     .. code-block:: javascript
     
-        // main.js
+        // app.js
         
         ...
         
@@ -1155,7 +1155,7 @@ Step 8
       return Tasks;
     });
 
-    // main.js
+    // app.js
     tasks.fetch({ data: { page: 'no'} });
 
 * Validate that retreive, delete, create and update actions work as expected with this whole new jpa-webservice backend

@@ -27,7 +27,7 @@ Do:
           
 2. **Create a Task model**
 
-3. **Instantiate a task in main.js with attributes title and description**
+3. **Instantiate a task in app.js with attributes title and description**
 
 4. **Try to see your task object in the console. Make it work**
 
@@ -41,9 +41,9 @@ Do:
     
 9. **Create a TaskView and implement render with a function that simply logs "rendered"**
 
-10. **Instantiate view in main and render it. Verify that "rendered" is logged. Try to render view multiple times in console**
+10. **Instantiate view in app and render it. Verify that "rendered" is logged. Try to render view multiple times in console**
 
-11. **Instantiate the view with a task model in main. Modify TaskView render to log the title of the task. No other modification should be made on TaskView**
+11. **Instantiate the view with a task model in app. Modify TaskView render to log the title of the task. No other modification should be made on TaskView**
 
 
 Write in DOM
@@ -63,7 +63,7 @@ Do:
             
 1. **Modify render to display a task inside a div with class='task' containing title in a h1 and description in a p**
 
-2. **render the view and attach $el to the DOM 'tasks' element (in main.js)**
+2. **render the view and attach $el to the DOM 'tasks' element (in app.js)**
 
 
 Templating
@@ -116,7 +116,7 @@ Step 2: Collections
 5. **Iterate through the items in the collection in the template**. **Template should start with an** ``ul``
    **element with class='task-list'**
  
-6. **In main: instanciate two task and add them into a new tasks collections. Instantiate View and render it and attach $el to '#tasks' div**
+6. **In app: instanciate two task and add them into a new tasks collections. Instantiate View and render it and attach $el to '#tasks' div**
 
 7. **try adding an item to the collection in the console**
         
