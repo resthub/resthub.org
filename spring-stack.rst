@@ -732,6 +732,9 @@ You can  find more details about these generic webservices, including their REST
         }
     }
 
+Sluggable controller
+--------------------
+
 By default, generic controller use the database identifier (table primary key for JPA on MongoDB ID) in URLs to identify a resource. You can change this behaviour by overriding controller implementations to use the field you want. For example, this is common to use a human readable identifier called reference or slug to identify a resource. You can do that with generic repositories only by overriding findById() controller method:
 
 .. code-block:: java
