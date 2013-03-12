@@ -895,11 +895,8 @@ Sample js/nls/fr-fr/labels.js file:
 .. code-block:: javascript
 
     define({
-        // root is mandatory.
-        'root': {
-            'titles': {
-                'login': 'Connexion'
-            }
+        'titles': {
+            'login': 'Connexion'
         }
     });
 
@@ -924,7 +921,7 @@ In your html template:
 .. code-block:: html
 
     <div class="title">
-        <h1><%= labels.titles.login %></h1>
+        <h1>{{labels.titles.login}}</h1>
     </div>
 
 4. **Change locale**
