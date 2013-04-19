@@ -11,7 +11,7 @@ In addition to the existing librairies included in the stack, it provides additi
 .. contents::
    :depth: 3
 
-The Backbone.js stack includes the following librairies:
+The Backbone.js 2.1.0 stack includes the following librairies:
     * jQuery 1.9.1 (`documentation <http://docs.jquery.com/Main_Page>`_)
     * Backbone.js 0.9.10 (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter 
       <http://documentcloud.github.com/backbone/docs/backbone-localstorage.html>`_
@@ -36,8 +36,8 @@ Before going deeper in the RESThub Backbone stack, you should read the great doc
 Changelog
 =========
 
-* TBD : `RESThub Backbone.js stack 2.1.0-rc1 <https://github.com/resthub/resthub-backbone-stack/blob/master/CHANGELOG.rst>`_
-* 2012-12-04: `RESThub Backbone.js stack 2.0.0 GA has been released <http://pullrequest.org/2012/12/04/resthub-2.html>`_!
+* 2013-03-26: `RESThub Backbone.js stack 2.1.0 has been released <https://github.com/resthub/resthub-backbone-stack/blob/master/CHANGELOG.rst>`_
+* 2012-12-04: `RESThub Backbone.js stack 2.0.0 has been released <http://pullrequest.org/2012/12/04/resthub-2.html>`_!
 * 2012-11-13: RESThub Backbone.js stack 2.0-rc4 has been released
 * 2012-10-24: RESThub Backbone.js stack 2.0-rc3 has been released
 * 2012-10-22: `RESThub Backbone.js stack 2.0-rc2 <https://github.com/resthub/resthub-backbone-stack/issues?milestone=4&state=closed>`_ has been released

@@ -312,7 +312,7 @@ Do:
 
    .. code-block:: script
 
-        mvn -Dtest=TaskControllerTest#testCreateResource test
+        mvn -Dtest=TaskControllerTest test
         
         -------------------------------------------------------
          T E S T S
