@@ -11,15 +11,15 @@ In addition to the existing librairies included in the stack, it provides additi
 .. contents::
    :depth: 3
 
-The Backbone.js 2.1.0 stack includes the following librairies:
+The Backbone.js 2.1.1 stack includes the following librairies:
     * jQuery 1.9.1 (`documentation <http://docs.jquery.com/Main_Page>`_)
-    * Backbone.js 0.9.10 (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter 
+    * Backbone.js 1.0 (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter 
       <http://documentcloud.github.com/backbone/docs/backbone-localstorage.html>`_
     * Underscore.js 1.4.4 (`documentation <http://documentcloud.github.com/underscore/>`_)
-    * Underscore.String 2.0.0 (`documentation <https://github.com/epeli/underscore.string#readme>`_)
-    * Require.js 2.1.4 with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins 
+    * Underscore.String 2.3.0 (`documentation <https://github.com/epeli/underscore.string#readme>`_)
+    * Require.js 2.1.5 with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins 
       (`documentation <http://requirejs.org/docs/api.html>`_)
-    * Handlebars 1.0-beta6 (`documentation <http://handlebarsjs.com>`_)
+    * Handlebars 1.0-rc3 (`documentation <http://handlebarsjs.com>`_)
     * A console shim + client logging to server mechanism
     * Twitter Bootstrap 2.3 (`documentation <http://twitter.github.com/bootstrap/>`_) and its JS plugins
     * Form Validation: `Backbone Validation`_
@@ -51,7 +51,7 @@ There are 2 ways to use it in your project:
     * If you are starting a new RESThub Spring + Backbone stack project, the better way to use it is to use one of the Backbone.js webappp Maven Archetypes described `here <spring-stack.html#bootstrap-your-project>`_
     * You can simply download `latest RESThub Backbone.js stack <https://github.com/resthub/resthub-backbone-stack/archive/resthub-2.1.0.zip>`_, and extract it at the root of your webapp
 
-The `Todo RESThub 2.0 example <https://github.com/resthub/todo-backbone-example>`_ project is the reference example project using this stack.
+The `Todo RESThub example <https://github.com/resthub/todo-backbone-example>`_ project is the reference example project using this stack.
 
 Tutorial
 ========
@@ -2308,20 +2308,18 @@ But if each element of your collection requires a separate view (typically when 
 
 You can see more details on the `Todo example <https://github.com/resthub/todo-backbone-example>`_ (have a look to TodosView and TodoView).
 
-Always specify the context for event binding
---------------------------------------------
+Always use listenTo instead of on
+---------------------------------
 
-In order to allow automatic cleanup when the View is removed, you should always specify the context when binding models or collection events:
+In order to allow automatic cleanup when the View is removed, you should always use listenTo function instead of on
 
 .. code-block:: javascript
 
     // BAD: no context specified - event bindings won't be cleaned when the view is removed
-    Todos.on('all', this.render);
+    Todos.on('sync', this.render);
 
     // GOOD: context will allow automatic cleanup when the view is removed
-    Todos.on('all', this.render, this);
-
-You should also specify the model or collection attribute of your View to make it work.
+    this.listenTo(Todos, 'sync', this.render);
 
 Static versus instance variables
 --------------------------------
