@@ -2308,20 +2308,18 @@ But if each element of your collection requires a separate view (typically when 
 
 You can see more details on the `Todo example <https://github.com/resthub/todo-backbone-example>`_ (have a look to TodosView and TodoView).
 
-Always specify the context for event binding
---------------------------------------------
+Always use listenTo instead of on
+---------------------------------
 
-In order to allow automatic cleanup when the View is removed, you should always specify the context when binding models or collection events:
+In order to allow automatic cleanup when the View is removed, you should always use listenTo function instead of on
 
 .. code-block:: javascript
 
     // BAD: no context specified - event bindings won't be cleaned when the view is removed
-    Todos.on('all', this.render);
+    Todos.on('sync', this.render);
 
     // GOOD: context will allow automatic cleanup when the view is removed
-    Todos.on('all', this.render, this);
-
-You should also specify the model or collection attribute of your View to make it work.
+    this.listenTo(Todos, 'sync', this.render);
 
 Static versus instance variables
 --------------------------------
