@@ -1197,7 +1197,7 @@ AbstractTest or AbstractTransactionalTest
 
         @AfterMethod
         public void tearDown() {
-            for (SampleRepository resource : repository.findAll()) {
+            for (Sample resource : repository.findAll()) {
                 repository.delete(resource);
             }
         }
