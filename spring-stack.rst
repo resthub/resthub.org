@@ -45,6 +45,7 @@ The whole RESThub 2.1 Spring stack `Javadoc <http://resthub.org/javadoc/2.1/>`_ 
 Changelog
 =========
 
+* 2013-05-17: `RESThub Spring stack 2.1.1 <https://github.com/resthub/resthub-spring-stack/issues?milestone=19&state=closed>`_
 * 2013-03-26: `RESThub Spring stack 2.1.0 <https://github.com/resthub/resthub-spring-stack/blob/master/CHANGELOG.rst>`_
 * 2012-12-04: `RESThub Spring stack 2.0.0 GA has been released <http://pullrequest.org/2012/12/04/resthub-2.html>`_!
 * 2012-11-13: RESThub Spring stack 2.0-rc4 has been released
@@ -222,31 +223,31 @@ RESThub dependencies are available on Maven Central:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.1.0</version>
+        <version>2.1.1</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.1.0</version>
+        <version>2.1.1</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.1.0</version>
+        <version>2.1.1</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.1.0</version>
+        <version>2.1.1</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.1.0</version>
+        <version>2.1.1</version>
         <scope>test</scope>
     </dependency>
 
@@ -454,7 +455,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.1.0</version>
+        <version>2.1.1</version>
     </dependency>
 
 In order to import its `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-jpa/src/main/resources/resthubContext.xml>`_, your should activate the resthub-jpa Spring profile in your WebAppInitializer class:
@@ -562,7 +563,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.1.0</version>
+        <version>2.1.1</version>
     </dependency>
 
 In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-mongodb/src/main/resources/resthubContext.xml>`_, your should activate the resthub-mongodb Spring profile in your WebAppInitializer class:
@@ -633,7 +634,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-common</artifactId>
-        <version>2.1.0</version>
+        <version>2.1.1</version>
     </dependency>
 
 Usage
@@ -680,7 +681,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.1.0</version>
+        <version>2.1.1</version>
     </dependency>
 
 In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-web/resthub-web-server/src/main/resources/resthubContext.xml>`_, your should activate the resthub-web-server Spring profile in your WebAppInitializer class:
@@ -891,7 +892,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.1.0</version>
+        <version>2.1.1</version>
     </dependency>
 
 Usage
@@ -1158,7 +1159,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.1.0</version>
+        <version>2.1.1</version>
         <scope>test</scope>
     </dependency>
 

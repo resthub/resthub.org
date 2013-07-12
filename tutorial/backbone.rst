@@ -5,7 +5,7 @@ This tutorial will help you to get an overview of resthub-backbone-stack.
 
 If you want to use this tutorial in a training mode, `a version without answers is also available <backbone-without-answer.html>`_.
 
-**Code**: you can find the code of the sample application at `<https://github.com/resthub/resthub-backbone-tutorial>`_ (Have a look to branches for each step).
+**Code**: you can find the code of the sample application at `<https://github.com/resthub/resthub-backbone-tutorial>`_
 
 Step 1: Model and View
 -----------------------
@@ -283,7 +283,7 @@ Do:
 
           var TaskView = Backbone.View.extend({
             initialize: function() {
-              this.model.on('change', this.render, this);
+              this.listenTo(this.model, 'change', this.render);
             },
             render: function() {
               this.$el.html(taskTemplate(this.model.toJSON()));
@@ -402,7 +402,7 @@ Step 2: Collections
 
           var TasksView = Backbone.View.extend({
             initialize: function() {
-              this.collection.on('add', this.render, this);
+              this.listenTo(this.collection, 'add', this.render);
             },
             render: function() {
                 this.$el.html(tasksTemplate(this.collection.toJSON()));
@@ -432,31 +432,7 @@ Step 2: Collections
         
     HTML is updated with the new task in collection.
     
-9. **Add a nice fade effect**
-
-    .. code-block:: javascript
-    
-        define(['backbone', 'hbs!template/tasks'], function(Backbone, tasksTemplate) {
-
-          var TasksView = Backbone.View.extend({
-            initialize: function() {
-              this.collection.on('add', this.render, this);
-            },
-            render: function() {
-              this.$el.fadeOut(function() {
-                this.$el.html(tasksTemplate(this.collection.toJSON()));
-                this.$el.fadeIn();
-              }.bind(this));
-              return this;
-            }
-          });
-
-          return TasksView;
-
-        });
-
-
-10. **Add a task to the collection in the console** -> the *whole* collection in rerendered.
+9. **Add a task to the collection in the console** -> the *whole* collection in rerendered.
 
     .. code-block:: javascript
     
@@ -487,11 +463,8 @@ Step 3: Nested Views
     
         // views/tasks.js
         render: function() {
-          this.$el.fadeOut(function() {
-            this.$el.html(tasksTemplate(this.collection.toJSON()));
-            this.collection.forEach(this.add, this);
-            this.$el.fadeIn();
-          }.bind(this));
+          this.$el.html(tasksTemplate(this.collection.toJSON()));
+          this.collection.forEach(this.add, this);
           return this;
         },
 
@@ -536,24 +509,12 @@ Step 3: Nested Views
     .. code-block:: javascript
     
         initialize: function() {
-          this.collection.on('add', this.add, this);
+          this.render();
+          this.listenTo(this.collection, 'add', this.add);
         },
-
-6. Add a nice fade effect to TaskView.
-
-    .. code-block:: javascript
-    
-        // view/task.js
-        render: function() {
-            this.$el.fadeOut(function() {
-              this.$el.html(taskTemplate(this.model.toJSON()));
-              this.$el.fadeIn();
-            }.bind(this));
-            return this;
-        }
-        
-7. Test in the console.
-8. Remove automatic generated divs and replace them with lis
+      
+6. Test in the console.
+7. Remove automatic generated divs and replace them with lis
    
    goal is to have:
    
@@ -586,7 +547,7 @@ Step 3: Nested Views
               ...
             
     
-9. Manage click in TaskView to toggle task's details visibility.
+8. Manage click in TaskView to toggle task's details visibility.
 
     .. code-block:: javascript
     
@@ -631,7 +592,7 @@ Do:
             },
             
             initialize: function() {
-              this.model.on('change', this.render, this);
+              this.listenTo(this.model, 'change', this.render);
             },
             
             toggleDetails: function() {
@@ -651,19 +612,7 @@ Do:
         }
         ...
         
-2. **Re-implement render to get back the fade effect by extending it calling parent function**
-
-    .. code-block:: javascript
-    
-        render: function() {
-          this.$el.fadeOut(function() {
-            TaskView.__super__.render.apply(this);
-            this.$el.fadeIn();
-          }.bind(this));
-          return this;
-        },
-
-3. **Use Resthub.View for managing rendering in TasksView. Call the parent render function.**
+2. **Use Resthub.View for managing rendering in TasksView. Call the parent render function.**
 
     .. code-block:: javascript
     
@@ -672,7 +621,8 @@ Do:
           var TasksView = Resthub.View.extend({
             template: tasksTemplate,
             initialize: function() {
-              this.collection.on('add', this.add, this);
+              this.render();
+              this.listenTo(this.collecion, 'add', this.add);
             },
             render: function() {
               TasksView.__super__.render.apply(this);
@@ -689,7 +639,7 @@ Do:
 
         });
 
-4. **In the console try adding a Task: thanks to the effect we can see that only one more Task is rendered and not the entirely list**
+3. **In the console try adding a Task: thanks to the effect we can see that only one more Task is rendered and not the entirely list**
 
     .. code-block:: javascript
     
@@ -705,7 +655,7 @@ Do:
         >>> tasks.add(task3);
         Object { length=3, models=[3], _byId={...}, more...}
 
-5. **In the console, update an existing Task: thanks to the effect we can see that just this task is updated**
+4. **In the console, update an existing Task: thanks to the effect we can see that just this task is updated**
 
     .. code-block:: javascript
 
@@ -771,8 +721,7 @@ Do:
         <input type="submit" class="btn btn-success" value="Save" />
 
 2. **When the form is submitted, update the task with the changes and display it
-   again -> note that the change event is not triggered when there was no
-   changes at all.**
+   again.**
   
     .. code-block:: javascript
     
@@ -780,32 +729,15 @@ Do:
         
         ...
         save: function() {
-          this.model.set({
+          this.model.save({
             title: this.$('.title').val(),
             description: this.$('.description').val(),
           });
           return false;
         }
         ...
-  
-3. **Force change event to be raised once and only once**
-
-    .. code-block:: javascript
-    
-        // views/taskform.js
-        
-        ...
-        save: function() {
-          this.model.set({
-            title: this.$('.title').val(),
-            description: this.$('.description').val(),
-          }, {silent: true});
-          this.model.trigger('change', this.model);
-          return false;
-        }
-        ...  
-  
-4. **Add a button to create a new empty task. In TasksView, bind its click event
+   
+3. **Add a button to create a new empty task. In TasksView, bind its click event
    to a create method which instantiate a new empty task with a TaskView which
    is directly editable. Add** ``class="btn btn-primary"`` **to this button**
   
@@ -834,7 +766,7 @@ Do:
           }
         });
   
-5. **Note that you have to add the task to the collection otherwise when you
+4. **Note that you have to add the task to the collection otherwise when you
    render the whole collection again, the created tasks disappear. Try by attach
    tasksView to windows and call render() from console**
    
@@ -847,7 +779,7 @@ Do:
           taskView.edit();
         }
 
-6. **Add a cancel button in TaskFormView to cancel task edition. Add a**
+5. **Add a cancel button in TaskFormView to cancel task edition. Add a**
    ``class="btn cancel"`` **to this button**
    
     .. code-block:: html
@@ -900,8 +832,8 @@ Do:
             // views/task.js
             ...
             initialize: function() {
-              this.model.on('change', this.render, this);
-              this.model.on('destroy', this.remove, this);
+              this.listenTo(this.model, 'change', this.render);
+              this.listenTo(this.model, 'destroy', this.remove);
             },
             ...
        
@@ -940,8 +872,8 @@ Do:
     
         ...
         initialize: function() {
-          this.collection.on('add', this.add, this);
-          this.collection.on('remove', this.destroyTask, this);
+          this.listenTo(this.collection, 'add', this.add);
+          this.listenTo(this.collection, 'remove', this.destroyTask);
         },
         
         ...
@@ -1034,12 +966,13 @@ Do:
     .. code-block:: javascript
     
         initialize: function() {
-          this.model.on('error', this.error, this);
+          this.listenTo(this.model, 'add', this.add);
+          this.model.on('invalid', this.invalid, this);
         },
         
         ...
         
-        error: function(model, error) {
+        invalid: function(model, error) {
           this.$('.control-group:first-child').addClass('error');
           this.$('.help-inline').html(error);
         }
@@ -1069,7 +1002,7 @@ Do:
         define(['backbone', 'hbs!template/taskform'], function(Backbone, taskFormTemplate) {
           ...
           initialize: function() {
-            this.model.on('error', this.error, this);
+            this.listenTo(this.model, 'invalid', this.invalid);
             Backbone.Validation.bind(this);
           },
           ...

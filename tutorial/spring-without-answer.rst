@@ -173,7 +173,7 @@ Step 4: Users own tasks
 -----------------------
 
 **Prerequisites**: you can find some prerequisites and reference implementation of ``NotificationService`` and ``MocksConfiguration`` at
-`<http://github.com/resthub/resthub-spring-training/tree/step4-prerequisites>`_
+`<http://github.com/resthub/resthub-spring-tutorial/tree/step4-prerequisites>`_
 
 Find:
 +++++

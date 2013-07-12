@@ -11,7 +11,7 @@ In addition to the existing librairies included in the stack, it provides additi
 .. contents::
    :depth: 3
 
-The Backbone.js 2.1.1 stack includes the following librairies:
+The Backbone.js 2.1.2 stack includes the following librairies:
     * jQuery 1.9.1 (`documentation <http://docs.jquery.com/Main_Page>`_)
     * Backbone.js 1.0 (`documentation <http://documentcloud.github.com/backbone/>`_) and its `localstorage adapter 
       <http://documentcloud.github.com/backbone/docs/backbone-localstorage.html>`_
@@ -19,7 +19,7 @@ The Backbone.js 2.1.1 stack includes the following librairies:
     * Underscore.String 2.3.0 (`documentation <https://github.com/epeli/underscore.string#readme>`_)
     * Require.js 2.1.5 with `i18n <http://requirejs.org/docs/api.html#i18n>`_ and `text <http://requirejs.org/docs/api.html#text>`_ plugins 
       (`documentation <http://requirejs.org/docs/api.html>`_)
-    * Handlebars 1.0-rc3 (`documentation <http://handlebarsjs.com>`_)
+    * Handlebars 1.0 (`documentation <http://handlebarsjs.com>`_)
     * A console shim + client logging to server mechanism
     * Twitter Bootstrap 2.3 (`documentation <http://twitter.github.com/bootstrap/>`_) and its JS plugins
     * Form Validation: `Backbone Validation`_
@@ -36,6 +36,7 @@ Before going deeper in the RESThub Backbone stack, you should read the great doc
 Changelog
 =========
 
+* 2013-05-17: `RESThub Backbone.js stack 2.1.1 has been released <https://github.com/resthub/resthub-backbone-stack/blob/master/CHANGELOG.rst>`_
 * 2013-03-26: `RESThub Backbone.js stack 2.1.0 has been released <https://github.com/resthub/resthub-backbone-stack/blob/master/CHANGELOG.rst>`_
 * 2012-12-04: `RESThub Backbone.js stack 2.0.0 has been released <http://pullrequest.org/2012/12/04/resthub-2.html>`_!
 * 2012-11-13: RESThub Backbone.js stack 2.0-rc4 has been released
@@ -49,7 +50,7 @@ Bootstrap your project
 
 There are 2 ways to use it in your project:
     * If you are starting a new RESThub Spring + Backbone stack project, the better way to use it is to use one of the Backbone.js webappp Maven Archetypes described `here <spring-stack.html#bootstrap-your-project>`_
-    * You can simply download `latest RESThub Backbone.js stack <https://github.com/resthub/resthub-backbone-stack/archive/resthub-2.1.0.zip>`_, and extract it at the root of your webapp
+    * You can simply download `latest RESThub Backbone.js stack <https://github.com/resthub/resthub-backbone-stack/archive/resthub-backbone-stack-2.1.1.zip>`_, and extract it at the root of your webapp
 
 The `Todo RESThub example <https://github.com/resthub/todo-backbone-example>`_ project is the reference example project using this stack.
 
@@ -146,99 +147,7 @@ main.js
 
 This application bootstrap file is main.js located at your webapp root (usually src/main/webapp). The goal of this file is mainly to intialize require.js configuration. Your application code should not be here but in app.js (automatically loaded by main.js) in order to allow easy Backbone stack updates.
 
-Here's the default main.js file:
-
-.. code-block:: javascript
-
-    //Set the require.js configuration for your application.
-    require.config({
-    
-        shim: {
-            'underscore': {
-                exports: '_'
-            },
-            'underscore-string': {
-                deps: [
-                    'underscore'
-                ]
-            },
-            'handlebars-orig': {
-                exports: 'Handlebars'
-            },
-            'backbone': {
-                deps: [
-                    'underscore',
-                    'underscore-string',
-                    'jquery'
-                ],
-                exports: 'Backbone'
-            },
-            'backbone-queryparams': {
-                deps: [
-                    'backbone'
-                ]
-            },
-            'backbone-datagrid': {
-                deps: [
-                    'backbone'
-                ],
-                exports: 'Backbone.Datagrid'
-            },
-            'backbone-paginator': {
-                deps: [
-                    'backbone'
-                ],
-                exports: 'Backbone.Paginator'
-            },
-            'bootstrap': {
-                deps: [
-                    'jquery'
-                ]
-            },
-            'backbone-relational': {
-                deps: [
-                    'backbone'
-                ]
-            },
-            'keymaster': {
-                exports: 'key'
-            },
-            'async': {
-                exports: 'async'
-            }
-        },
-    
-        // Libraries
-        paths: {
-            jquery: 'lib/jquery',
-            underscore: 'lib/underscore',
-            'underscore-string': 'lib/underscore-string',
-            backbone: 'lib/backbone',
-            resthub: 'lib/resthub/resthub',
-            localstorage: 'lib/localstorage',
-            text: 'lib/text',
-            i18n: 'lib/i18n',
-            pubsub: 'lib/resthub/pubsub',
-            'bootstrap': 'lib/bootstrap',
-            'backbone-validation-orig': 'lib/backbone-validation',
-            'backbone-validation': 'lib/resthub/backbone-validation-ext',
-            'handlebars-orig': 'lib/handlebars',
-            'handlebars': 'lib/resthub/handlebars-helpers',
-            'backbone-queryparams': 'lib/backbone-queryparams',
-            'backbone-datagrid': 'lib/backbone-datagrid',
-            'backbone-paginator': 'lib/backbone-paginator',
-            'backbone-relational': 'lib/backbone-relational',
-            async: 'lib/async',
-            keymaster: 'lib/keymaster',
-            hbs: 'lib/resthub/require-handlebars',
-            moment: 'lib/moment',
-            template: '../template',
-            console: 'lib/resthub/console'
-        }
-    });
-    
-    // Load our app module and pass it to our definition function
-    require(['console', 'app']);
+Here's the `default main.js file <https://github.com/resthub/resthub-backbone-stack/blob/master/js/main.js>_.
 
 **shim** config is part of `Require 2.0`_ and allows to `Configure the dependencies and exports for older, traditional "browser globals" scripts that do not use define() to declare the dependencies and set a module value`. See `<http://requirejs.org/docs/api.html#config-shim>`_ for more details.
 
@@ -295,8 +204,7 @@ RESThub provides a default implementation that will render your template with **
             template: myTemplate,
 
             initialize: function() {
-                _.bind(this.render, this);
-                this.collection.on('reset', this.render, this);
+                this.listenTo(this.collection, 'sync', this.render);
             }
         });
     });

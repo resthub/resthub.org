@@ -250,7 +250,7 @@ Do:
     }
 
     
-see `<https://github.com/resthub/resthub-spring-training/tree/step3-solution>`_ for complete solution.
+see `<https://github.com/resthub/resthub-spring-tutorial/tree/step3-solution>`_ for complete solution.
 
 Test your controller
 ++++++++++++++++++++
@@ -339,7 +339,7 @@ Step 4: Users own tasks
 -----------------------
 
 **Prerequisites** : you can find some prerequisites and reference implementation of ``NotificationService`` and ``MocksConfiguration`` at
-`<http://github.com/resthub/resthub-spring-training/tree/step4-prerequisites>`_
+`<http://github.com/resthub/resthub-spring-tutorial/tree/step4-prerequisites>`_
 
 Find:
 +++++
@@ -435,8 +435,8 @@ Do:
             ...
         }
             
-    see complete solution for `User <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/model/User.java>`_
-    and `Task <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/model/Task.java>`_
+    see complete solution for `User <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/model/User.java>`_
+    and `Task <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/model/Task.java>`_
 
 2. **Provide dedicated Repository and Controller for user**
 
@@ -461,8 +461,8 @@ Do:
 
         }
         
-    see complete solution for `controller <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/controller/UserController.java>`_
-    and `repository <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/repository/UserRepository.java>`_
+    see complete solution for `controller <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/controller/UserController.java>`_
+    and `repository <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/repository/UserRepository.java>`_
 
 3. **Modify** ``TaskInitializer`` **in order to provide some sample users associated to tasks at startup**
    
@@ -491,7 +491,7 @@ Do:
             }
         }
         
-    see complete solution for `TaskInitializer <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/TaskInitializer.java>`_
+    see complete solution for `TaskInitializer <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/TaskInitializer.java>`_
 
    
 4. **Check on your browser that User API** `<http://localhost:8080/api/user>`_ **works and provides simple CRUD and that** `<http://localhost:8080/api/task>`_ **still works**.
@@ -640,11 +640,11 @@ These business operations should be implemented in service layer:
                 return task;
             }
     
-    see complete solution for `TaskService <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/TaskService.java>`_,
-    `TaskServiceImpl <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/impl/TaskServiceImpl.java>`_,
-    `TaskController <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/controller/TaskController.java>`_,
-    `NotificationService <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/NotificationService.java>`_,
-    `NotificationServiceImpl <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/impl/NotificationServiceImpl.java>`_
+    see complete solution for `TaskService <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/TaskService.java>`_,
+    `TaskServiceImpl <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/impl/TaskServiceImpl.java>`_,
+    `TaskController <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/controller/TaskController.java>`_,
+    `NotificationService <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/NotificationService.java>`_,
+    `NotificationServiceImpl <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/service/impl/NotificationServiceImpl.java>`_
    
 Test your new service
 +++++++++++++++++++++
@@ -823,7 +823,7 @@ This class allows to define a mocked alias bean to notificationService bean for 
               }
           }
           
-       see complete solution for `TaskServiceIntegrationTest <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/test/java/org/resthub/training/service/integration/TaskServiceIntegrationTest.java>`_
+       see complete solution for `TaskServiceIntegrationTest <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/test/java/org/resthub/training/service/integration/TaskServiceIntegrationTest.java>`_
 
   
 This mock allows us to verify integration with others services and API whitout testing all these external tools.
@@ -923,7 +923,7 @@ Do:
             Assertions.assertThat(returnedTask.getUser()).isEqualTo(this.user);
         }
         
-    see complete solution for `TaskServiceTest <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/test/java/org/resthub/training/service/TaskServiceTest.java>`_,
+    see complete solution for `TaskServiceTest <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/test/java/org/resthub/training/service/TaskServiceTest.java>`_,
 
     
 Working mainly with unit tests (whithout launching spring context, etc.) is really more efficient to write and run and should be preffered to
@@ -971,7 +971,7 @@ Do:
             }
         }
         
-    see complete solution for `TaskController <https://github.com/resthub/resthub-spring-training/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/controller/TaskController.java>`_,
+    see complete solution for `TaskController <https://github.com/resthub/resthub-spring-tutorial/blob/step4-solution/jpa-webservice/src/main/java/org/resthub/training/controller/TaskController.java>`_,
 
 
 You can test in your browser (or, better, add a test in ``TaskControllerTest``) that the new API is operational.

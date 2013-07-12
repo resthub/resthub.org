@@ -122,9 +122,7 @@ Step 2: Collections
         
 8. **Bind collection's add event in the view to render**
   
-9. **Add a nice fade effect**
-
-10. **Add a task to the collection in the console** -> the *whole* collection in rerendered.
+9. **Add a task to the collection in the console** -> the *whole* collection in rerendered.
 
 
 Step 3: Nested Views
@@ -139,11 +137,10 @@ Step 3: Nested Views
 4. Add tasks to the collection in the console -> the *whole* list is still rerendered.
 
 5. Update TasksView to only append one task when added to the collection instead of rendering the whole list again.
+     
+6. Test in the console.
 
-6. Add a nice fade effect to TaskView.
-        
-7. Test in the console.
-8. Remove automatic generated divs and replace them with lis
+7. Remove automatic generated divs and replace them with lis
    
    goal is to have:
    
@@ -179,13 +176,11 @@ Do:
 
 1. **Use Resthub.View for managing rendering in TaskView. Remove render method in TaskView and modify add method in TasksView to set root element**
         
-2. **Re-implement render to get back the fade effect by extending it calling parent function**
+2. **Use Resthub.View for managing rendering in TasksView. Call the parent render function.**
 
-3. **Use Resthub.View for managing rendering in TasksView. Call the parent render function.**
+3. **In the console try adding a Task: thanks to the effect we can see that only one more Task is rendered and not the entirely list**
 
-4. **In the console try adding a Task: thanks to the effect we can see that only one more Task is rendered and not the entirely list**
-
-5. **In the console, update an existing Task: thanks to the effect we can see that just this task is updated**
+4. **In the console, update an existing Task: thanks to the effect we can see that just this task is updated**
 
 
 Step 5: Forms
@@ -256,13 +251,13 @@ Do:
    
 3. **Update TaskForm template to add a span with class** ``help-inline`` **immediately after title input**
         
-4. **In TaskFormView bind model's error event on a function which renders
-   validation errors. On error, add class "error" on title input and display error in span "help-inline"**  
+4. **In TaskFormView bind model's invalid event on a function which renders
+   validation errors. On invalid, add class "error" on title input and display error in span "help-inline"**  
         
 5. **Use Backbone.Validation for easy validation management**
 
 6. **Note that Backbone.Validation can handle for you error displaying in your
-   views: remove error bindings and method and ensure that you form input have
+   views: remove invalid bindings and method and ensure that you form input have
    a name attribute equals to the model attribute name**
    
 7. **Rewrite save method using resthub** ``populateModel`` and backbone ``isValid``
@@ -275,7 +270,7 @@ Step 7: Persist & Sync
   reinitialized.
 * Use Backbone local storage extension to persist our tasks into the local
   storage.
-* Bind the collection's reset event on TasksView.render to render the
+* Bind the collection's sync event on TasksView.render to render the
   collection once synced with the local storage.
 * Warning: you need to specify the model attribute in the Tasks collection to
   tell the collection which model object is gonna be used internally.
@@ -290,7 +285,7 @@ Step 7: Persist & Sync
 Step 8: server backend
 -----------------------
 
-* Download `RESThub Spring training sample project <https://github.com/resthub/resthub-spring-training/zipball/step5-solution>`_ and extract it
+* Download `RESThub Spring training sample project <https://github.com/resthub/resthub-spring-tutorial/zipball/step5-solution>`_ and extract it
 * Create jpa-webservice/src/main/webapp directory, and move your JS application into it
 * Run the jpa-webservice webapp thanks to Maven Jetty plugin
 * Remove backbone-localstorage.js file and usage in JS application
