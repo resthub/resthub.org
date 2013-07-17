@@ -28,7 +28,7 @@ The Backbone.js 2.1.2 stack includes the following librairies:
     * Paginated lists: `Backbone Paginator`_
     * Asynchronous calls: Async_
     * Dispatching keyboard shortcuts: Keymaster_
-    * Get and set relations (one-to-one, one-to-many, many-to-one) for Backbone models: `Backbone Relational`_
+    * Get and set relations (one-to-one, one-to-many, many-to-one) for Backbone models: `Backbone Associations`_
     * Parsing, validating, manipulating, and formatting dates: `Moment`_
 
 Before going deeper in the RESThub Backbone stack, you should read the great documentation `Developing Backbone.js Applications <http://addyosmani.github.com/backbone-fundamentals/>`_ by Addy Osmani, it is a great introduction to pure Backbone.js.
@@ -50,7 +50,7 @@ Bootstrap your project
 
 There are 2 ways to use it in your project:
     * If you are starting a new RESThub Spring + Backbone stack project, the better way to use it is to use one of the Backbone.js webappp Maven Archetypes described `here <spring-stack.html#bootstrap-your-project>`_
-    * You can simply download `latest RESThub Backbone.js stack <https://github.com/resthub/resthub-backbone-stack/archive/resthub-backbone-stack-2.1.1.zip>`_, and extract it at the root of your webapp
+    * You can simply download `latest RESThub Backbone.js stack <https://github.com/resthub/resthub-backbone-stack/archive/master.zip>`_, and extract it at the root of your webapp
 
 The `Todo RESThub example <https://github.com/resthub/todo-backbone-example>`_ project is the reference example project using this stack.
 
@@ -147,7 +147,7 @@ main.js
 
 This application bootstrap file is main.js located at your webapp root (usually src/main/webapp). The goal of this file is mainly to intialize require.js configuration. Your application code should not be here but in app.js (automatically loaded by main.js) in order to allow easy Backbone stack updates.
 
-Here's the `default main.js file <https://github.com/resthub/resthub-backbone-stack/blob/master/js/main.js>_.
+Here's the `default main.js file <https://github.com/resthub/resthub-backbone-stack/blob/master/js/main.js>`_.
 
 **shim** config is part of `Require 2.0`_ and allows to `Configure the dependencies and exports for older, traditional "browser globals" scripts that do not use define() to declare the dependencies and set a module value`. See `<http://requirejs.org/docs/api.html#config-shim>`_ for more details.
 
@@ -2168,22 +2168,10 @@ The syntax is elegant, it is very simple while very complete:
 
 It is so simple that the doc is self sufficient - see `here <http://github.com/madrobby/keymaster>`_
 
-Backbone Relational
--------------------
+Backbone Associations
+---------------------
 
-`Backbone Relational`_ provides one-to-one, one-to-many and many-to-one relations between models for Backbone. To use relations, extend Backbone.RelationalModel (instead of the regular Backbone.Model) and define a property relations, containing an array of option objects. Each relation must define (as a minimum) the type, key and relatedModel. Available relation types are Backbone.HasOne and Backbone.HasMany.
-
-Backbone-relational features:
-    * Bidirectional relations, which notify related models of changes through events.
-    * Control how relations are serialized using the includeInJSON option.
-    * Automatically convert nested objects in a model's attributes into Model instances using the createModels option.
-    * Lazily retrieve (a set of) related models through the fetchRelated(key<string>, [options<object>], update<bool>) method.
-    * Determine the type of HasMany collections with collectionType.
-    * Bind new events to a Backbone.RelationalModel for:
-    * addition to a HasMany relation (bind to add:<key>; arguments: (addedModel, relatedCollection)),
-    * removal from a HasMany relation (bind to remove:<key>; arguments: (removedModel, relatedCollection)),
-    * reset of a HasMany relation (bind to reset:<key>; arguments: (relatedCollection)),
-    * changes to the key itself on HasMany and HasOne relations (bind to update:<key>; arguments=(model, relatedModel/relatedCollection)). 
+`Backbone Associations`_ provides one-to-one, one-to-many and many-to-one relations between models for Backbone. To use relations, extend Backbone.AssociatedModel (instead of the regular Backbone.Model) and define a property relations, containing an array of option objects. Each relation must define (as a minimum) the type, key and relatedModel. Available relation types are Backbone.One and Backbone.Many.
 
 Moment
 ------
@@ -2364,5 +2352,5 @@ In order to avoid bugs (like no change displayed after an update) due to Interne
 .. _Async: http://github.com/caolan/async/
 .. _Keymaster: http://github.com/madrobby/keymaster
 .. _Backbone: http://backbonejs.org/
-.. _Backbone Relational: https://github.com/PaulUithol/Backbone-relational
+.. _Backbone Associations: http://dhruvaray.github.io/backbone-associations/
 .. _Moment: http://momentjs.com/

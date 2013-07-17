@@ -33,7 +33,7 @@ Find:
 
         .. code-block:: javascript
 
-            require(['models/task', 'views/task-view'], function(Task, TaskView) { ... });
+            require(['model/task', 'view/task-view'], function(Task, TaskView) { ... });
 
     - usage for config options shims and path
 
@@ -144,7 +144,7 @@ Do:
               window.taskView = new TaskView({model: task});
               taskView.render();
               
-        views/task.js: 
+        view/task.js: 
 
         .. code-block:: javascript
         
@@ -306,7 +306,7 @@ Step 2: Collections
 
         });
 
-2. **Create a TasksView** in ``views`` **and a tasks template in** ``templates``.
+2. **Create a TasksView** in ``view`` **and a tasks template in** ``template``.
 3. **Implement rendering in TasksView**
 4. **Pass the collection as context**
 5. **Iterate through the items in the collection in the template**. **Template should start with an** ``ul``
@@ -341,7 +341,7 @@ Step 2: Collections
 
     .. code-block:: javascript
     
-        require(['models/task', 'collections/tasks', 'views/tasks'], function(Task, Tasks, TasksView) {
+        require(['model/task', 'collection/tasks', 'view/tasks'], function(Task, Tasks, TasksView) {
 
           var tasks = new Tasks();
 
@@ -367,7 +367,7 @@ Step 2: Collections
 
     .. code-block:: javascript
     
-        require(['models/task', 'collections/tasks', 'views/tasks'], function(Task, Tasks, TasksView) {
+        require(['model/task', 'collection/tasks', 'view/tasks'], function(Task, Tasks, TasksView) {
 
           window.Task = Task;
           window.tasks = new Tasks();
@@ -461,7 +461,7 @@ Step 3: Nested Views
 
     .. code-block:: javascript
     
-        // views/tasks.js
+        // view/tasks.js
         render: function() {
           this.$el.html(tasksTemplate(this.collection.toJSON()));
           this.collection.forEach(this.add, this);
@@ -538,7 +538,7 @@ Step 3: Nested Views
     
         .. code-block:: javascript
         
-            // views/task.js
+            // view/task.js
             var TaskView = Backbone.View.extend({
                 
               tagName:'li',
@@ -578,7 +578,7 @@ Do:
 
     .. code-block:: javascript
     
-        // views/task.js
+        // view/task.js
         define(['backbone', 'resthub', hbs!template/task'], function(Backbone, Resthub, taskTemplate) {
 
           var TaskView = Resthub.View.extend({
@@ -604,7 +604,7 @@ Do:
           return TaskView;
         });
         
-        // views/tasks.js
+        // view/tasks.js
         ...
         add: function(task) {
           var taskView = new TaskView({root: this.$('.task-list'), model: task});
@@ -673,7 +673,7 @@ Do:
 
     .. code-block:: javascript
     
-        // views/task.js
+        // view/task.js
         define(['backbone', 'resthub', 'view/taskform-view', 'hbs!template/task'], function(Backbone, Resthub, TaskFormView, taskTemplate) {
 
           var TaskView = Resthub.View.extend({
@@ -698,7 +698,7 @@ Do:
           return TaskView;
         });
         
-        // views/taskform.js
+        // view/taskform.js
         define(['backbone', 'resthub', 'hbs!template/taskform'], function(Backbone, Resthub, ,taskFormTemplate) {
 
           var TaskFormView = Resthub.View.extend({
@@ -725,7 +725,7 @@ Do:
   
     .. code-block:: javascript
     
-        // views/taskform.js
+        // view/taskform.js
         
         ...
         save: function() {
@@ -784,7 +784,7 @@ Do:
    
     .. code-block:: html
 
-        <!-- templates/taskform.hbs -->
+        <!-- template/taskform.hbs -->
         ...
         <input type="button" class="btn cancel" value="Cancel" />
         
@@ -815,7 +815,7 @@ Do:
    
        .. code-block:: javascript
        
-            // views/taskform.js
+            // view/taskform.js
             var TaskFormView = Resthub.View.extend({
               ...
               events: {
@@ -829,7 +829,7 @@ Do:
               }
             });
             
-            // views/task.js
+            // view/task.js
             ...
             initialize: function() {
               this.listenTo(this.model, 'change', this.render);
@@ -982,7 +982,7 @@ Do:
 
     .. code-block:: javascript
     
-        // models/task.js
+        // model/task.js
         define(['backbone'], function(Backbone) {
 
           var Task = Backbone.Model.extend({
@@ -998,7 +998,7 @@ Do:
 
         });
         
-        // views/taskform.js
+        // view/taskform.js
         define(['backbone', 'hbs!template/taskform'], function(Backbone, taskFormTemplate) {
           ...
           initialize: function() {
@@ -1024,7 +1024,7 @@ Do:
         
     .. code-block:: javascript
         
-        // views/taskform.js
+        // view/taskform.js
         ...
         initialize: function() {
           Backbone.Validation.bind(this);
@@ -1079,8 +1079,8 @@ Step 8
 
 .. code-block:: javascript
 
-    // collections/tasks.js
-    define(['backbone', 'models/task'], function(Backbone, Task) {
+    // collection/tasks.js
+    define(['backbone', 'model/task'], function(Backbone, Task) {
       var Tasks = Backbone.Collection.extend({
         url: 'api/task',
         model: Task

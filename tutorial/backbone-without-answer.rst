@@ -110,7 +110,7 @@ Step 2: Collections
 
 1. **Create a Tasks collection in** ``collection`` **directory**
 
-2. **Create a TasksView** in ``views`` **and a tasks template in** ``templates``.
+2. **Create a TasksView** in ``view`` **and a tasks template in** ``template``.
 3. **Implement rendering in TasksView**
 4. **Pass the collection as context**
 5. **Iterate through the items in the collection in the template**. **Template should start with an** ``ul``
