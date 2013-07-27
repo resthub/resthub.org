@@ -45,15 +45,10 @@ The whole RESThub 2.1 Spring stack `Javadoc <http://resthub.org/javadoc/2.1/>`_ 
 Changelog
 =========
 
+* 2013-07-26: `RESThub Spring stack 2.1.2 <https://github.com/resthub/resthub-spring-stack/blob/master/CHANGELOG.rst>`_
 * 2013-05-17: `RESThub Spring stack 2.1.1 <https://github.com/resthub/resthub-spring-stack/issues?milestone=19&state=closed>`_
 * 2013-03-26: `RESThub Spring stack 2.1.0 <https://github.com/resthub/resthub-spring-stack/blob/master/CHANGELOG.rst>`_
 * 2012-12-04: `RESThub Spring stack 2.0.0 GA has been released <http://pullrequest.org/2012/12/04/resthub-2.html>`_!
-* 2012-11-13: RESThub Spring stack 2.0-rc4 has been released
-* 2012-10-24: RESThub Spring stack 2.0-rc3 has been released
-* 2012-10-22: `RESThub Spring stack 2.0-rc2 <https://github.com/resthub/resthub-spring-stack/issues?milestone=12&state=closed>`_ has been released
-* 2012-10-01: `RESThub Spring stack 2.0-rc1 <https://github.com/resthub/resthub-spring-stack/issues?milestone=13&state=closed>`_ has been released
-* 2012-08-29: `RESThub Spring stack 2.0-beta2 <https://github.com/resthub/resthub-spring-stack/issues?milestone=11&state=closed>`_  has been released
-* 2012-05-06: `RESThub Spring stack 2.0-beta1 <https://github.com/resthub/resthub-spring-stack/issues?milestone=8&state=closed>`_ has been released
 * 2011-06-19: RESThub 1.1 and RESThub JS 1.1 have been released
 * 2010-11-17: RESThub 1.0 has been released
 
@@ -74,10 +69,10 @@ To create your project based or RESThub archetypes, just open a command line ter
 
 .. code-block:: bash
 
-    mvn archetype:generate -DarchetypeArtifactId=resthub-jpa-backbonejs-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.0
-    mvn archetype:generate -DarchetypeArtifactId=resthub-mongodb-backbonejs-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.0
-    mvn archetype:generate -DarchetypeArtifactId=resthub-jpa-backbonejs-multi-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.0
-    mvn archetype:generate -DarchetypeArtifactId=resthub-mongodb-backbonejs-multi-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.0
+    mvn archetype:generate -DarchetypeArtifactId=resthub-jpa-backbonejs-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.2
+    mvn archetype:generate -DarchetypeArtifactId=resthub-mongodb-backbonejs-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.2
+    mvn archetype:generate -DarchetypeArtifactId=resthub-jpa-backbonejs-multi-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.2
+    mvn archetype:generate -DarchetypeArtifactId=resthub-mongodb-backbonejs-multi-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.2
  
 After choosing the right archetype and answering a few questions, your project is generated and ready to use.
 You can run it thanks to built-in Jetty support:
@@ -147,7 +142,7 @@ pom.xml example:
         <name>My project</name>
 
         <properties>
-            <resthub.spring.stack.version>2.1.0</resthub.spring.stack.version>
+            <resthub.spring.stack.version>2.1.2</resthub.spring.stack.version>
         </properties>
 
         <dependencies>
@@ -223,31 +218,31 @@ RESThub dependencies are available on Maven Central:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.1.1</version>
+        <version>2.1.2</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.1.1</version>
+        <version>2.1.2</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.1.1</version>
+        <version>2.1.2</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.1.1</version>
+        <version>2.1.2</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.1.1</version>
+        <version>2.1.2</version>
         <scope>test</scope>
     </dependency>
 
@@ -455,7 +450,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.1.1</version>
+        <version>2.1.2</version>
     </dependency>
 
 In order to import its `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-jpa/src/main/resources/resthubContext.xml>`_, your should activate the resthub-jpa Spring profile in your WebAppInitializer class:
@@ -563,7 +558,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.1.1</version>
+        <version>2.1.2</version>
     </dependency>
 
 In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-mongodb/src/main/resources/resthubContext.xml>`_, your should activate the resthub-mongodb Spring profile in your WebAppInitializer class:
@@ -622,7 +617,7 @@ Usage
 Web common
 ==========
 
-RESThub Web Common comes with built-in XML and JSON support for serialization based on `Jackson 2.1 <http://wiki.fasterxml.com/JacksonHome>`_. RESThub uses `Jackson 2.1 XML capabilities <https://github.com/FasterXML/jackson-dataformat-xml>`_ instead of JAXB since it is more flexible. For example, you don't need to add classes to a context. Please read `Jackson annotation guide <http://wiki.fasterxml.com/JacksonAnnotations>`_ for details about configuration capabilities.
+RESThub Web Common comes with built-in XML and JSON support for serialization based on `Jackson 2 <http://wiki.fasterxml.com/JacksonHome>`_. RESThub uses `Jackson 2 XML capabilities <https://github.com/FasterXML/jackson-dataformat-xml>`_ instead of JAXB since it is more flexible. For example, you don't need to add classes to a context. Please read `Jackson annotation guide <http://wiki.fasterxml.com/JacksonAnnotations>`_ for details about configuration capabilities.
 
 Maven dependency
 ----------------
@@ -634,7 +629,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-common</artifactId>
-        <version>2.1.1</version>
+        <version>2.1.2</version>
     </dependency>
 
 Usage
@@ -661,7 +656,7 @@ RESThub Web Server module is designed for REST webservices development. Both JSO
 
 It provides some abstract REST controller classes, and includes the following dependencies:
     * Spring MVC 3.2 (`reference manual <http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html/mvc.html>`_)
-    * Jackson 2.1 (`documentation <http://wiki.fasterxml.com/JacksonDocumentation>`_)
+    * Jackson 2 (`documentation <http://wiki.fasterxml.com/JacksonDocumentation>`_)
 
 RESThub exception resolver allow to map common exceptions (Spring, JPA) to the right HTTP status codes:
     * IllegalArgumentException -> 400
@@ -681,7 +676,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.1.1</version>
+        <version>2.1.2</version>
     </dependency>
 
 In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-web/resthub-web-server/src/main/resources/resthubContext.xml>`_, your should activate the resthub-web-server Spring profile in your WebAppInitializer class:
@@ -880,7 +875,7 @@ RESThub Web client module aims to give you an easy way to request other REST web
 
 In order to limit conflicts it has no dependency on Spring, but only on:
     * AsyncHttpClient `documentation <https://github.com/sonatype/async-http-client>`_ and `Javadoc <http://sonatype.github.com/async-http-client/apidocs/reference/packages.html>`_
-    * Jackson 2.1 (`documentation <http://wiki.fasterxml.com/JacksonDocumentation>`_)
+    * Jackson 2 (`documentation <http://wiki.fasterxml.com/JacksonDocumentation>`_)
 
 Configuration
 -------------
@@ -892,7 +887,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.1.1</version>
+        <version>2.1.2</version>
     </dependency>
 
 Usage
@@ -1159,7 +1154,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.1.1</version>
+        <version>2.1.2</version>
         <scope>test</scope>
     </dependency>
 
@@ -1254,7 +1249,7 @@ To use this phase, add the following snippet to your pom.xml:
     <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>2.12.4</version>
+        <version>2.15</version>
         <executions>
             <execution>
                 <goals>

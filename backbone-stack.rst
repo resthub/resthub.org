@@ -36,14 +36,10 @@ Before going deeper in the RESThub Backbone stack, you should read the great doc
 Changelog
 =========
 
+* 2013-07-26: `RESThub Backbone.js stack 2.1.2 has been released <https://github.com/resthub/resthub-backbone-stack/blob/master/CHANGELOG.rst>`_
 * 2013-05-17: `RESThub Backbone.js stack 2.1.1 has been released <https://github.com/resthub/resthub-backbone-stack/blob/master/CHANGELOG.rst>`_
 * 2013-03-26: `RESThub Backbone.js stack 2.1.0 has been released <https://github.com/resthub/resthub-backbone-stack/blob/master/CHANGELOG.rst>`_
 * 2012-12-04: `RESThub Backbone.js stack 2.0.0 has been released <http://pullrequest.org/2012/12/04/resthub-2.html>`_!
-* 2012-11-13: RESThub Backbone.js stack 2.0-rc4 has been released
-* 2012-10-24: RESThub Backbone.js stack 2.0-rc3 has been released
-* 2012-10-22: `RESThub Backbone.js stack 2.0-rc2 <https://github.com/resthub/resthub-backbone-stack/issues?milestone=4&state=closed>`_ has been released
-* 2012-10-01: `RESThub 2.0-rc1 <https://github.com/resthub/resthub-backbone-stack/issues?milestone=3&state=closed>`_ has been released
-* 2012-08-29: `RESThub 2.0-beta2 <https://github.com/resthub/resthub-backbone-stack/issues?milestone=1&state=closed>`_ has been released
 
 Bootstrap your project
 ======================
