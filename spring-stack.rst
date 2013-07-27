@@ -485,7 +485,7 @@ You also need to add an applicationContext.xml file in order to scan your reposi
 
     </beans>
 
-You can customize the default configuration by adding a database.properties resource with one or more of the following keys customized with your values (see `BoneCP documentation for details<http://jolbox.com/>`_). You should include only the customized ones.
+You can customize the default configuration by adding a database.properties resource with one or more of the following keys customized with your values (see `BoneCP documentation for details <http://jolbox.com/>`_). You should include only the customized ones.
 
 RESThub JPA default properties are:
     * dataSource.driverClassName = org.h2.Driver
