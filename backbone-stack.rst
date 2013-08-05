@@ -21,7 +21,7 @@ The Backbone.js 2.1.2 stack includes the following librairies:
       (`documentation <http://requirejs.org/docs/api.html>`_)
     * Handlebars 1.0 (`documentation <http://handlebarsjs.com>`_)
     * A console shim + client logging to server mechanism
-    * Twitter Bootstrap 2.3 (`documentation <http://twitter.github.com/bootstrap/>`_) and its JS plugins
+    * Twitter Bootstrap 2.3 (`documentation <http://getbootstrap.com/2.3.2/>`_) and its JS plugins
     * Form Validation: `Backbone Validation`_
     * Parameters support on view routing: `Backbone Query Parameters`_
     * Datagrid: `Backbone Datagrid`_
@@ -2341,7 +2341,7 @@ In order to avoid bugs (like no change displayed after an update) due to Interne
 .. _Require: http://requirejs.org
 .. _Handlebars: http://handlebarsjs.com
 .. _Backbone Validation: http://github.com/thedersen/backbone.validation
-.. _Twitter Bootstrap: http://twitter.github.com/bootstrap/
+.. _Twitter Bootstrap: http://getbootstrap.com/2.3.2/
 .. _Backbone Datagrid: http://loicfrering.github.com/backbone.datagrid/
 .. _Backbone Paginator: http://addyosmani.github.com/backbone.paginator/
 .. _Backbone Query Parameters: http://github.com/jhudson8/backbone-query-parameters
