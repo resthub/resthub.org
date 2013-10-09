@@ -341,7 +341,7 @@ Step 2: Collections
 
     .. code-block:: javascript
     
-        require(['model/task', 'collection/tasks', 'view/tasks'], function(Task, Tasks, TasksView) {
+        define(['model/task', 'collection/tasks', 'view/tasks'], function(Task, Tasks, TasksView) {
 
           var tasks = new Tasks();
 
