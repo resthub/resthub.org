@@ -229,7 +229,7 @@ Do:
 
     .. code-block:: javascript
     
-        define(['backbone', 'text!template/task', 'handlebars'], function(Backbone, taskTemplate, Handlebars) {
+        define(['backbone', 'text!template/task.hbs', 'handlebars'], function(Backbone, taskTemplate, Handlebars) {
 
           var TaskView = Backbone.View.extend({
           
