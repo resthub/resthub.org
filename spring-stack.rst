@@ -45,9 +45,10 @@ The whole RESThub 2.1 Spring stack `Javadoc <http://resthub.org/javadoc/2.1/>`_ 
 Changelog
 =========
 
-* 2013-07-26: `RESThub Spring stack 2.1.2 <https://github.com/resthub/resthub-spring-stack/blob/master/CHANGELOG.rst>`_
-* 2013-05-17: `RESThub Spring stack 2.1.1 <https://github.com/resthub/resthub-spring-stack/issues?milestone=19&state=closed>`_
-* 2013-03-26: `RESThub Spring stack 2.1.0 <https://github.com/resthub/resthub-spring-stack/blob/master/CHANGELOG.rst>`_
+* 2013-12-16: `RESThub Spring stack 2.1.3 <https://github.com/resthub/resthub-spring-stack/blob/master/CHANGELOG.rst#213-version-12-16-2013>`_
+* 2013-07-26: `RESThub Spring stack 2.1.2 <https://github.com/resthub/resthub-spring-stack/blob/master/CHANGELOG.rst#212-version-07-26-2013>`_
+* 2013-05-17: `RESThub Spring stack 2.1.1 <https://github.com/resthub/resthub-spring-stack/blob/master/CHANGELOG.rst#211-version-05-17-2013>`_
+* 2013-03-26: `RESThub Spring stack 2.1.0 <https://github.com/resthub/resthub-spring-stack/blob/master/CHANGELOG.rst#210-version-03-15-2013>`_
 * 2012-12-04: `RESThub Spring stack 2.0.0 GA has been released <http://pullrequest.org/2012/12/04/resthub-2.html>`_!
 * 2011-06-19: RESThub 1.1 and RESThub JS 1.1 have been released
 * 2010-11-17: RESThub 1.0 has been released
@@ -69,10 +70,10 @@ To create your project based or RESThub archetypes, just open a command line ter
 
 .. code-block:: bash
 
-    mvn archetype:generate -DarchetypeArtifactId=resthub-jpa-backbonejs-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.2
-    mvn archetype:generate -DarchetypeArtifactId=resthub-mongodb-backbonejs-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.2
-    mvn archetype:generate -DarchetypeArtifactId=resthub-jpa-backbonejs-multi-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.2
-    mvn archetype:generate -DarchetypeArtifactId=resthub-mongodb-backbonejs-multi-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.2
+    mvn archetype:generate -DarchetypeArtifactId=resthub-jpa-backbonejs-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.3
+    mvn archetype:generate -DarchetypeArtifactId=resthub-mongodb-backbonejs-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.3
+    mvn archetype:generate -DarchetypeArtifactId=resthub-jpa-backbonejs-multi-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.3
+    mvn archetype:generate -DarchetypeArtifactId=resthub-mongodb-backbonejs-multi-archetype -DarchetypeGroupId=org.resthub -DarchetypeVersion=2.1.3
  
 After choosing the right archetype and answering a few questions, your project is generated and ready to use.
 You can run it thanks to built-in Jetty support:
@@ -142,7 +143,7 @@ pom.xml example:
         <name>My project</name>
 
         <properties>
-            <resthub.spring.stack.version>2.1.2</resthub.spring.stack.version>
+            <resthub.spring.stack.version>2.1.3</resthub.spring.stack.version>
         </properties>
 
         <dependencies>
@@ -196,7 +197,7 @@ pom.xml example:
                 <plugin>
                     <groupId>org.mortbay.jetty</groupId>
                     <artifactId>jetty-maven-plugin</artifactId>
-                    <version>8.1.7.v20120910</version>
+                    <version>8.1.13.v20130916</version>
                     <configuration>
                         <!-- We use non NIO connector in order to avoid read only static files under windows -->
                         <connectors>
@@ -218,31 +219,31 @@ RESThub dependencies are available on Maven Central:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.1.2</version>
+        <version>2.1.3</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.1.2</version>
+        <version>2.1.3</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.1.2</version>
+        <version>2.1.3</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.1.2</version>
+        <version>2.1.3</version>
     </dependency>
 
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.1.2</version>
+        <version>2.1.3</version>
         <scope>test</scope>
     </dependency>
 
@@ -450,7 +451,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-jpa</artifactId>
-        <version>2.1.2</version>
+        <version>2.1.3</version>
     </dependency>
 
 In order to import its `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-jpa/src/main/resources/resthubContext.xml>`_, your should activate the resthub-jpa Spring profile in your WebAppInitializer class:
@@ -460,7 +461,7 @@ In order to import its `default configuration <https://github.com/resthub/resthu
     XmlWebApplicationContext appContext = new XmlWebApplicationContext();
     appContext.getEnvironment().setActiveProfiles("resthub-jpa", "resthub-web-server");
 
-Spring 3.1 allows to scan entities in different modules using the same PersitenceUnit, which is not possible with default JPA behaviour. You have to specify the packages where Spring should scan your entities by creating a database.properties file in your resources folder, with the following content:
+Since version 3.1, Spring allows to scan entities in different modules using the same PersitenceUnit, which is not possible with default JPA behaviour. You have to specify the packages where Spring should scan your entities by creating a database.properties file in your resources folder, with the following content:
 
 
 .. code-block:: properties
@@ -492,8 +493,8 @@ RESThub JPA default properties are:
     * dataSource.url = jdbc\:h2\:mem\:resthub;DB_CLOSE_DELAY=-1;MVCC=TRUE
     * dataSource.username = sa
     * dataSource.password =
-    * dataSource.minConnectionsPerPartition = 10
-    * dataSource.maxConnectionsPerPartition = 50
+    * dataSource.minConnectionsPerPartition = 2
+    * dataSource.maxConnectionsPerPartition = 4
     * dataSource.partitionCount = 3
     * dataSource.idleConnectionTestPeriodInSeconds = 60
     * dataSource.statementsCacheSize = 100
@@ -506,7 +507,7 @@ RESThub Hibernate default properties are:
     * hibernate.format_sql = true
     * hibernate.hbm2ddl.auto = update
     * hibernate.cache.use_second_level_cache = true
-    * hibernate.cache.provider_class = net.sf.ehcache.hibernate.SingletonEhCacheProvider
+    * hibernate.cache.provider_class = net.sf.ehcache.hibernate.EhCacheRegionFactory
     * hibernate.id.new_generator_mappings = true
     * persistenceUnit.packagesToScan = 
 
@@ -558,7 +559,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-mongodb</artifactId>
-        <version>2.1.2</version>
+        <version>2.1.3</version>
     </dependency>
 
 In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-mongodb/src/main/resources/resthubContext.xml>`_, your should activate the resthub-mongodb Spring profile in your WebAppInitializer class:
@@ -629,7 +630,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-common</artifactId>
-        <version>2.1.2</version>
+        <version>2.1.3</version>
     </dependency>
 
 Usage
@@ -676,7 +677,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-server</artifactId>
-        <version>2.1.2</version>
+        <version>2.1.3</version>
     </dependency>
 
 In order to import the `default configuration <https://github.com/resthub/resthub-spring-stack/blob/master/resthub-web/resthub-web-server/src/main/resources/resthubContext.xml>`_, your should activate the resthub-web-server Spring profile in your WebAppInitializer class:
@@ -887,7 +888,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-web-client</artifactId>
-        <version>2.1.2</version>
+        <version>2.1.3</version>
     </dependency>
 
 Usage
@@ -1154,7 +1155,7 @@ In order to use it in your project, add the following snippet to your pom.xml:
     <dependency>
         <groupId>org.resthub</groupId>
         <artifactId>resthub-test</artifactId>
-        <version>2.1.2</version>
+        <version>2.1.3</version>
         <scope>test</scope>
     </dependency>
 
