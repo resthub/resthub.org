@@ -225,14 +225,14 @@ Do:
    
   e.g.
    
-  .. code-block:: Java
+  .. code-block:: java
     
     Task findByTitle(String title);
   
 
   And in controller: 
   
-  .. code-block:: Java
+  .. code-block:: java
     
     @RequestMapping(value = "title/{title}", method = RequestMethod.GET) @ResponseBody
     public Task searchByTitle(@PathVariable String title) {
@@ -287,7 +287,7 @@ Do:
     Our test ``TaskControllerTest`` should extend resthub ``AbstractWebTest`` 
     (see `documentation <http://resthub.org/javadoc/latest/org/resthub/test/AbstractTest.html>`_)
     
-    .. code-block:: Java
+    .. code-block:: java
     
         public class TaskControllerTest extends AbstractWebTest {
             public TaskControllerTest() {
@@ -359,7 +359,7 @@ Find:
     
 4. **RESThub2 different kind of controllers documentation**
 
-    see `Web server<spring-stack.html#web-server>`_
+    see `Web server <../spring-stack.html#web-server>`_
     
 5. **Spring assertions documentation**
 
